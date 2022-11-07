@@ -6,7 +6,7 @@
 #    By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 07:05:44 by djedasch          #+#    #+#              #
-#    Updated: 2022/10/31 07:13:15 by djedasch         ###   ########.fr        #
+#    Updated: 2022/10/31 07:17:40 by djedasch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,17 +14,19 @@ NAME	= ./ft_containers
 
 SRCS	=  vector.cpp map.cpp stack.cpp main.cpp
 
+OBJS	= $(SRCS:.cpp=.o)
+
 CC		= c++
 
 CFLACS 	= -Wall -Werror -Wextra -std=c++98
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	$(CC) $(FLACS) $^ -o $(NAME)
+$(OBJS): $(SRCS)
+	$(CC) $(CFLACS) -c $^
 
-$(OBJS): %.o: %.cpp
-	$(CC) $(CFLAGS) -c $< -o $@
+$(NAME): $(OBJS)
+	$(CC) $(CFLACS) $^ -o $(NAME)
 
 clean: 
 	rm -f $(OBJS) 
