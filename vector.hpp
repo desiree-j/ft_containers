@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/07 20:15:33 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/07 21:15:45 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,10 @@ namespace ft
 		vector (const vector& x);
 		//todo destructor
 		~vector();
+		//todo get_allocator
+		allocator_type get_allocator() const;
+		//todo operator=
+		vector& operator= (const vector& x);
 
 		//& position
 		//todo begin
@@ -94,12 +98,15 @@ namespace ft
 		void reserve (size_type n);
 		size_type capacity() const;
 		
-		//& others
-		//todo get_allocator
-		allocator_type get_allocator() const;
-		//todo operator=
-		vector& operator= (const vector& x);
 		
+		//& comparison
+	
+		bool operator== (const vector &rhs) const;
+		bool operator!= (const vector &rhs) const;
+		bool operator< (const vector &rhs) const;
+		bool operator<= (const vector &rhs) const;
+		bool operator> (const vector &rhs) const;
+		bool operator>= (const vector &rhs) const;
 
 		private:
 		int _size;
@@ -107,14 +114,7 @@ namespace ft
 		T*	_array;
 
 	};
-	//& non-member functions
-	
-	operator==
-	operator!=
-	operator<
-	operator<=
-	operator>
-	operator>=
+
 }
 
 

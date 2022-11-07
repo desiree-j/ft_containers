@@ -6,22 +6,35 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:58:36 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/07 20:17:18 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/07 21:27:00 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vector.hpp"
 
 		//todo constructor
-		explicit vector::vector (const allocator_type& alloc = allocator_type()) : _size(0), _capacity(0)
+		explicit vector::vector (const allocator_type& alloc = allocator_type()) : _size(0), _capacity(5)
 		{
-
+			this->_array = alloc.allocate(this->_capacity);
 		}
-		explicit vector::vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()){}
+
+		explicit vector::vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : _size(n), capacity (n + 5)
+		{
+			this->_array = alloc.allocate(this->_capacity);
+			for (int i = 0; i < capacity; i++)
+			{
+				this->_array[i] = val;
+			}
+		}
+		
 		template <class InputIterator> vector::vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()){}	
 		vector::vector (const vector& x){}
 		//todo destructor
 		vector::~vector(){}
+		//todo get_allocator
+		allocator_type vector::get_allocator() const{}
+		//todo operator=
+		vector& vector::operator= (const vector& x){}
 
 		//& iterators
 		//todo begin
@@ -91,8 +104,25 @@
 			return (this->capacity);
 		}
 		
-		//& others
-		//todo get_allocator
-		allocator_type vector::get_allocator() const{}
-		//todo operator=
-		vector& vector::operator= (const vector& x){}
+
+		//& comparison
+		bool operator== (const vector &rhs) const
+		{
+			if(this->size() != rhs.size())
+				return (false);
+			for (int i = 0; i < this->size(); i++)
+			{
+				if (this->_array[i] != rhs->_array[i])
+					return (false);
+			}
+			return (true);
+		}
+
+		bool operator!= (const vector &rhs) const
+		{
+			return (!(*this == rhs));
+		}
+		bool operator< (const vector &rhs) const{}
+		bool operator<= (const vector &rhs) const{}
+		bool operator> (const vector &rhs) const{}
+		bool operator>= (const vector &rhs) const{}
