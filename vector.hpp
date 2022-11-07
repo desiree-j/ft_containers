@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/07 16:00:13 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/07 20:15:33 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ namespace ft
 		typedef typename allocator_type::size_type			size_type;
 
 		//todo constructor
-		explicit vector ();	
-		explicit vector (size_type n, const value_type& val = value_type());
-		template <class InputIterator> vector (InputIterator first, InputIterator last);	
+		explicit vector (const allocator_type& alloc = allocator_type());	
+		explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type());
+		template <class InputIterator> vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type());	
 		vector (const vector& x);
 		//todo destructor
 		~vector();
@@ -84,17 +84,14 @@ namespace ft
 		const_reference front() const;
 		
 		//& capacity
-		//todo size
 		size_type size() const;
 		//todo max_size
 		size_type max_size() const;
 		//todo resize
 		void resize (size_type n, value_type val = value_type());
-		//todo empty
 		bool empty() const;
 		//todo reserve
 		void reserve (size_type n);
-		//todo capacity
 		size_type capacity() const;
 		
 		//& others
@@ -103,15 +100,21 @@ namespace ft
 		//todo operator=
 		vector& operator= (const vector& x);
 		
-		
-		
-
-
-
 
 		private:
+		int _size;
+		int _capacity;
+		T*	_array;
 
 	};
+	//& non-member functions
+	
+	operator==
+	operator!=
+	operator<
+	operator<=
+	operator>
+	operator>=
 }
 
 
