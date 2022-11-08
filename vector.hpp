@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/08 15:08:26 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/08 15:25:03 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ namespace ft
 			this->_array = this->_alloc.allocate(this->_capacity);
 			for (size_type i = 0; i < this->_size; i++)
 			{
-				this->_array[i] = x->_array[i];
+				this->_array[i] = x._array[i];
 			}
 		}
 
@@ -67,9 +67,21 @@ namespace ft
 			return (this->_alloc);
 		}
 
-		//todo operator=
 		vector& operator= (const vector& x)
 		{
+			this->_alloc = x._alloc;
+			this->_size = x._size;
+			if (this->_capacity < x._capacity)
+			{
+				this->_alloc.deallocate(this->_array, this->_capacity);
+				this->_capacity = x._capacity;
+				this->_array = this->_alloc.allocate(this->_capacity);
+			}
+			for (size_type i = 0; i < this->_size; i++)
+			{
+				this->_array[i] = x._array[i];
+			}
+			return (*this);
 		}
 
 		////& position

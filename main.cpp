@@ -2,7 +2,7 @@
 #include <string>
 #include <deque>
 #include "incl.hpp"
-#if 1 //CREATE A REAL STL EXAMPLE
+#if 0 //CREATE A REAL STL EXAMPLE
 	#include <map>
 	#include <stack>
 	#include <vector>
@@ -51,14 +51,18 @@ int main(void)
 	ft::vector<int> vec;
 	std::cout << "size "<<vec.size() << std::endl;
 	std::cout <<"capa " << vec.capacity() << std::endl;
-	std::cout << C_BLUE << "pop back on empty vector" << C_DEF << std::endl;
-	vec.pop_back();
-	std::cout << "size "<<vec.size() << std::endl;
-	std::cout <<"capa " << vec.capacity() << std::endl;
 	std::cout << C_BLUE << "constructor 2" << C_DEF << std::endl;
 	ft::vector<int> vec2(5,5);
 	std::cout << "size "<<vec2.size() << std::endl;
 	std::cout <<"capa " << vec2.capacity() << std::endl;
+	std::cout << C_BLUE << "copy constructor" << C_DEF << std::endl;
+	ft::vector<int> vec3(vec2);
+	std::cout << "size "<<vec3.size() << std::endl;
+	std::cout <<"capa " << vec3.capacity() << std::endl;
+	std::cout << C_BLUE << "copy assignment overload constructor" << C_DEF << std::endl;
+	vec3 = vec;
+	std::cout << "size "<<vec3.size() << std::endl;
+	std::cout <<"capa " << vec3.capacity() << std::endl;
 	std::cout << C_BLUE << "add to empty vector" << C_DEF << std::endl;
 	for(int i = 0; i < 15; i++)
 	{
@@ -71,6 +75,10 @@ int main(void)
 	std::cout << "size "<<vec.size() << std::endl;
 	std::cout <<"capa " << vec.capacity() << std::endl;
 	std::cout << "---------------------------------------------" << std::endl;
+	std::cout << C_BLUE << "pop back on empty vector" << C_DEF << std::endl;
+	vec.pop_back();
+	std::cout << "size "<<vec.size() << std::endl;
+	std::cout <<"capa " << vec.capacity() << std::endl;
 	//std::cout << C_BLUE << "push back on vector with size -1" << C_DEF << std::endl;
 	//for(int i = 0; i < 5; i++)
 	//{
