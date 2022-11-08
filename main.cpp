@@ -2,7 +2,7 @@
 #include <string>
 #include <deque>
 #include "incl.hpp"
-#if 0 //CREATE A REAL STL EXAMPLE
+#if 1 //CREATE A REAL STL EXAMPLE
 	#include <map>
 	#include <stack>
 	#include <vector>
@@ -51,14 +51,18 @@ int main(void)
 	ft::vector<int> vec;
 	std::cout << "size "<<vec.size() << std::endl;
 	std::cout <<"capa " << vec.capacity() << std::endl;
+	std::cout << C_BLUE << "pop back on empty vector" << C_DEF << std::endl;
+	vec.pop_back();
+	std::cout << "size "<<vec.size() << std::endl;
+	std::cout <<"capa " << vec.capacity() << std::endl;
 	std::cout << C_BLUE << "constructor 2" << C_DEF << std::endl;
-	ft::vector<int> vec2(28,5);
+	ft::vector<int> vec2(5,5);
 	std::cout << "size "<<vec2.size() << std::endl;
 	std::cout <<"capa " << vec2.capacity() << std::endl;
 	std::cout << C_BLUE << "add to empty vector" << C_DEF << std::endl;
 	for(int i = 0; i < 15; i++)
 	{
-		vec2.push_back(5);
+		vec2.push_back(i);
 		std::cout << "size "<<vec2.size() << std::endl;
 		std::cout <<"capa " << vec2.capacity() << std::endl;
 		std::cout << "---------------------------------------------" << std::endl;
@@ -67,13 +71,24 @@ int main(void)
 	std::cout << "size "<<vec.size() << std::endl;
 	std::cout <<"capa " << vec.capacity() << std::endl;
 	std::cout << "---------------------------------------------" << std::endl;
-	for(int i = 0; i < 5; i++)
-	{
-		vec.push_back(5);
-		std::cout << "size "<<vec.size() << std::endl;
-		std::cout <<"capa " << vec.capacity() << std::endl;
-		std::cout << "---------------------------------------------" << std::endl;
-	}
+	//std::cout << C_BLUE << "push back on vector with size -1" << C_DEF << std::endl;
+	//for(int i = 0; i < 5; i++)
+	//{
+	//	vec.push_back(i);
+	//	std::cout << "size "<<vec.size() << std::endl;
+	//	std::cout <<"capa " << vec.capacity() << std::endl;
+	//	std::cout << "---------------------------------------------" << std::endl;
+	//}
+	//& element access	
+	std::cout << C_RED << "Test element access functions" << C_DEF << std::endl;
+	std::cout << C_BLUE << "front of vec2" << C_DEF << std::endl;
+	std::cout << vec2.front() << std::endl;
+	std::cout << C_BLUE << "back of vec2" << C_DEF << std::endl;
+	std::cout << vec2.back() << std::endl;
+	std::cout << C_BLUE << "at position 6 of vec2" << C_DEF << std::endl;
+	std::cout << vec2.at(6) << std::endl;
+	std::cout << C_BLUE << " [6] of vec2" << C_DEF << std::endl;
+	std::cout << vec2[6] << std::endl;
 }
 //	int main(int argc, char** argv) 
 //{

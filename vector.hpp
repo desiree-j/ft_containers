@@ -6,13 +6,14 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/08 13:45:00 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/08 15:08:26 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 # include <cmath>
+# include <stdexcept> 
 
 namespace ft
 {
@@ -93,8 +94,11 @@ namespace ft
 		////todo assign
 		//template <class InputIterator>  void assign (InputIterator first, InputIterator last);	
 		//void assign (size_type n, const value_type& val);
-		////todo pop_back
-		//void pop_back();
+		//todo pop_back
+		void pop_back()
+		{
+			this->_size--;
+		}
 
 		void push_back (const value_type& val)
 		{
@@ -128,19 +132,43 @@ namespace ft
 		//void insert (iterator position, size_type n, const value_type& val);
 		//template <class InputIterator>    void insert (iterator position, InputIterator first, InputIterator last);
 
-		////& element access	
-		////todo operator[]
-		//reference operator[] (size_type n);
-		//const_reference operator[] (size_type n) const;
-		////todo at
-		//reference at (size_type n);
-		//const_reference at (size_type n) const;
-		////todo back
-		//reference back();
-		//const_reference back() const;
-		////todo front
-		//reference front();
-		//const_reference front() const;
+		//& element access	
+		reference operator[] (size_type n)
+		{
+			return(this->_array[n]);
+		}
+		const_reference operator[] (size_type n) const
+		{
+			return(this->_array[n]);
+		}
+		reference at (size_type n)
+		{
+			if (n >= this->_size)
+				throw std::out_of_range("vector::_M_range_check");
+			return(this->_array[n]);
+		}
+		const_reference at (size_type n) const
+		{
+			if (n >= this->_size)
+				throw std::out_of_range("vector::_M_range_check");
+			return(this->_array[n]);
+		}
+		reference back()
+		{
+			return(this->_array[this->_size - 1]);
+		}
+		const_reference back() const
+		{
+			return(this->_array[this->_size - 1]);
+		}
+		reference front()
+		{
+			return(this->_array[0]);
+		}
+		const_reference front() const
+		{
+			return(this->_array[0]);
+		}
 		
 		//& capacity
 		size_type size() const
