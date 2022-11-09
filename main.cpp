@@ -59,10 +59,14 @@ int main(void)
 	ft::vector<int> vec3(vec2);
 	std::cout << "size "<<vec3.size() << std::endl;
 	std::cout <<"capa " << vec3.capacity() << std::endl;
-	std::cout << C_BLUE << "copy assignment overload constructor" << C_DEF << std::endl;
-	vec3 = vec;
-	std::cout << "size "<<vec3.size() << std::endl;
+	vec3.push_back(12);
+		std::cout << "size "<<vec3.size() << std::endl;
 	std::cout <<"capa " << vec3.capacity() << std::endl;
+	ft::vector<int> vec4(6,6);
+	std::cout << C_BLUE << "copy assignment overload constructor" << C_DEF << std::endl;
+	vec4 = vec3;
+	std::cout << "size "<<vec4.size() << std::endl;
+	std::cout <<"capa " << vec4.capacity() << std::endl;
 	std::cout << C_BLUE << "add to empty vector" << C_DEF << std::endl;
 	for(int i = 0; i < 15; i++)
 	{

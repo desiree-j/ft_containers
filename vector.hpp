@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/08 15:25:03 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/09 16:36:57 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,63 @@
 
 namespace ft
 {
+
+	template <typename Vector>
+	class vectorIterator
+	{
+		public:
+		typedef typename Vector::pointer					pointer;
+		typedef typename Vector::reference					reference;
+		typedef typename Vector::value_type					value_type;
+		typedef typename std::ptrdiff_t 					difference_type;
+		typedef typename std::random_access_iterator_tag	iterator_category;
+
+		public:
+		vectorIterator(pointer ptr) : _ptr(ptr){}
+		~vectorIterator(void){}
+		//todo copy constructor, copy assignment operator
+		bool operator==(const vector &rhs) const
+		{
+			if(this->_ptr == rhs._ptr)
+				return (true);
+			return (false);
+		}
+		bool operator!=(const vector &rhs) const
+		{
+			return(!(this == rhs));
+		}
+		//todo *a, a->, *a++, *a--, *a=t
+		vectorIterator& operator++()
+		{
+			_ptr++;
+			return (*this);
+		}
+		vectorIterator& operator++(int)
+		{
+			VectorIterator tmp = *this;
+			++(*this);
+			return (tmp);
+		}
+		vectorIterator& operator--()
+		{
+			_ptr--;
+			return (*this);
+		}
+		vectorIterator& operator--(int)
+		{
+			VectorIterator tmp = *this;
+			--(*this);
+			return (tmp);
+		}
+		//todo a +n, n+a, a-n, n-a
+		//todo a<b, a>b, a<=b, a>=b
+		//todo a +=n, a-=n, a[n]
+
+		private:
+		pointer _ptr;
+	}
+
+
 	template <class T, class Alloc =  std::allocator<T> >
 	class vector
 	{
@@ -29,8 +86,9 @@ namespace ft
 		typedef typename allocator_type::pointer			pointer;
 		typedef typename allocator_type::const_pointer		const_pointer;
 		typedef typename allocator_type::size_type			size_type;
+		typedef typename vectorIterator<Vector<T> >			iterator;
 
-	
+		public:
 		explicit vector (const allocator_type& alloc = allocator_type()) : _size(0), _capacity(0), _array(NULL), _alloc(alloc)
 		{
 		}
@@ -71,7 +129,7 @@ namespace ft
 		{
 			this->_alloc = x._alloc;
 			this->_size = x._size;
-			if (this->_capacity < x._capacity)
+			if (this->_capacity < x._size)
 			{
 				this->_alloc.deallocate(this->_array, this->_capacity);
 				this->_capacity = x._capacity;
@@ -123,7 +181,7 @@ namespace ft
 			{
 				size_type newCapa = 1;
 				if (this->_capacity > 0)
-					newCapa = pow(2, (floor(log2(this->_capacity)) + 1));
+					newCapa = this->_capacity * 2; //pow(2, (floor(log2(this->_capacity)) + 1));
 				T* temp = this->_alloc.allocate(newCapa);
 				for (size_type i = 0; i < this->_size; i++)
 				{
@@ -187,8 +245,11 @@ namespace ft
 		{
 			return (this->_size);
 		}
-		////todo max_size
-		//size_type max_size() const;
+		//todo max_size
+		size_type max_size() const
+		{
+			return (this->_alloc.max_size());
+		}
 		////todo resize
 		//void resize (size_type n, value_type val = value_type());
 		bool empty() const
