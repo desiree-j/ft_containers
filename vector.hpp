@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/10 14:16:02 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/10 14:52:36 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,7 +214,38 @@ namespace ft
 		//void swap (vector& x);	
 		////todo assign
 		//template <class InputIterator>  void assign (InputIterator first, InputIterator last);	
-		//void assign (size_type n, const value_type& val);
+		void assign (size_type n, const value_type& val)
+		{
+			if (n > this->_capacity)
+			{
+				while (this->_capacity < n)
+				{
+					this->_capacity *=2;
+				}
+				T* temp = this->_alloc.allocate(this->_capacity);
+				for (size_type i = 0; i < this->_size; i++)
+				{
+					temp[i] = val;
+					this->_alloc.destroy(this->_array.at(i));
+				}
+				for (size_type i = this->_size; i < n; i++)
+				{
+					temp[i] = val;
+				}
+				this->_alloc.deallocate(this->_array, this->_capacity);
+				this->_array = temp;
+			}
+			else
+			{
+				for (int i = 0; i < min(n, this->_size); i++)
+				{
+					this->_alloc.destroy(this->_array[i]);
+					this->_array[i] = val;
+				}
+			}
+			if (this->_size < n)
+				this->_size = n;
+		}
 		//todo pop_back
 		void pop_back()
 		{
@@ -232,15 +263,8 @@ namespace ft
 			{
 				size_type newCapa = 1;
 				if (this->_capacity > 0)
-					newCapa = this->_capacity * 2; //pow(2, (floor(log2(this->_capacity)) + 1));
-				T* temp = this->_alloc.allocate(newCapa);
-				for (size_type i = 0; i < this->_size; i++)
-				{
-					temp[i] = this->_array[i];
-				}
-				this->_alloc.deallocate(this->_array, this->_capacity);
-				this->_capacity = newCapa;
-				this->_array = temp;
+					newCapa = this->_capacity * 2; 
+				realloc(newCapa);
 				this->_array[this->_size] = val;
 				this->_size++;
 			}
@@ -306,8 +330,17 @@ namespace ft
 		{
 			return (this->_size == 0);
 		}
-		////todo reserve
-		//void reserve (size_type n);
+		void reserve (size_type n)
+		{
+			if (this->_capacity >= n)
+				return;
+			size_type capa = this->_capacity;
+			while (capa < n)
+			{
+				capa *=2;
+			}
+			realloc(capa);
+		}
 		size_type capacity() const
 		{
 			return (this->_capacity);
@@ -365,6 +398,18 @@ namespace ft
 		size_type				_capacity;
 		T*						_array;
 		allocator_type			_alloc;
+
+		void	realloc(size_type capa)
+		{
+			T* temp = this->_alloc.allocate(capa);
+			for (size_type i = 0; i < this->_size; i++)
+			{
+				temp[i] = this->_array[i];
+			}
+			this->_alloc.deallocate(this->_array, this->_capacity);
+			this->_capacity = capa;
+			this->_array = temp;
+		}
 		
 
 	};
