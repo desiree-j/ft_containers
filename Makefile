@@ -6,13 +6,13 @@
 #    By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 07:05:44 by djedasch          #+#    #+#              #
-#    Updated: 2022/11/08 10:55:33 by djedasch         ###   ########.fr        #
+#    Updated: 2022/11/10 12:30:00 by djedasch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= ./ft_containers
 
-SRCS	=  main.cpp
+SRCS	=  main_vector.cpp
 
 OBJS	= $(SRCS:.cpp=.o)
 

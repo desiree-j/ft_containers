@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/09 16:36:57 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/10 14:16:02 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@
 namespace ft
 {
 
-	template <typename Vector>
+	template <typename vector>
 	class vectorIterator
 	{
 		public:
-		typedef typename Vector::pointer					pointer;
-		typedef typename Vector::reference					reference;
-		typedef typename Vector::value_type					value_type;
+		typedef typename vector::pointer					pointer;
+		typedef typename vector::reference					reference;
+		typedef typename vector::value_type					value_type;
 		typedef typename std::ptrdiff_t 					difference_type;
 		typedef typename std::random_access_iterator_tag	iterator_category;
 
@@ -32,46 +32,87 @@ namespace ft
 		vectorIterator(pointer ptr) : _ptr(ptr){}
 		~vectorIterator(void){}
 		//todo copy constructor, copy assignment operator
-		bool operator==(const vector &rhs) const
+		bool operator==(const vectorIterator &rhs) const
 		{
 			if(this->_ptr == rhs._ptr)
 				return (true);
 			return (false);
 		}
-		bool operator!=(const vector &rhs) const
+		bool operator!=(const vectorIterator &rhs) const
 		{
-			return(!(this == rhs));
+			return(!(*this == rhs));
 		}
-		//todo *a, a->, *a++, *a--, *a=t
+		bool operator<(const vectorIterator &rhs) const
+		{
+			if (this->_ptr < rhs._ptr)
+				return (true);
+			return(false);
+		}
+		bool operator>(const vectorIterator &rhs) const
+		{
+			return(rhs < *this);
+		}
+		bool operator<=(const vectorIterator &rhs) const
+		{
+			return(!(*this > rhs));
+		}
+		bool operator>=(const vectorIterator &rhs) const
+		{
+			return(!(*this < rhs));
+		}
+		//todo a->, *a=t
+		value_type operator*(void)
+		{
+			return (*this->_ptr);
+		}
 		vectorIterator& operator++()
 		{
-			_ptr++;
+			this->_ptr++;
 			return (*this);
 		}
 		vectorIterator& operator++(int)
 		{
-			VectorIterator tmp = *this;
+			vectorIterator &tmp = *this;
 			++(*this);
 			return (tmp);
 		}
 		vectorIterator& operator--()
 		{
-			_ptr--;
+			this->_ptr--;
 			return (*this);
 		}
 		vectorIterator& operator--(int)
 		{
-			VectorIterator tmp = *this;
+			vectorIterator tmp = *this;
 			--(*this);
 			return (tmp);
 		}
-		//todo a +n, n+a, a-n, n-a
-		//todo a<b, a>b, a<=b, a>=b
-		//todo a +=n, a-=n, a[n]
+		//todo n+a, n-a
+		vectorIterator& operator+(int n)
+		{
+			this->_ptr = this->_ptr + n;
+			return (*this);
+		}
+		vectorIterator& operator-(int n)
+		{
+			this->_ptr = this->_ptr - n;
+			return (*this);
+		}
+		vectorIterator& operator-=(int n)
+		{
+			this->_ptr = this->_ptr - n;
+			return (*this);
+		}
+		vectorIterator& operator+=(int n)
+		{
+			this->_ptr = this->_ptr + n;
+			return (*this);
+		}
+		//todo a[n]
 
 		private:
 		pointer _ptr;
-	}
+	};
 
 
 	template <class T, class Alloc =  std::allocator<T> >
@@ -86,8 +127,8 @@ namespace ft
 		typedef typename allocator_type::pointer			pointer;
 		typedef typename allocator_type::const_pointer		const_pointer;
 		typedef typename allocator_type::size_type			size_type;
-		typedef typename vectorIterator<Vector<T> >			iterator;
-
+		typedef vectorIterator<vector>						iterator;
+		typedef const vectorIterator<vector>				const_iterator;
 		public:
 		explicit vector (const allocator_type& alloc = allocator_type()) : _size(0), _capacity(0), _array(NULL), _alloc(alloc)
 		{
@@ -142,13 +183,23 @@ namespace ft
 			return (*this);
 		}
 
-		////& position
-		////todo begin
-		//iterator begin();
-		//const_iterator begin() const;
-		////todo end
-		//iterator end();
-		//const_iterator end() const;
+		//& position
+		iterator begin()
+		{
+			return (iterator(&this->_array[0]));
+		}
+		const_iterator begin() const
+		{
+			return (iterator(&this->_array[0]));
+		}
+		iterator end()
+		{
+			return (iterator(&this->_array[this->_size]));
+		}
+		const_iterator end() const
+		{
+			return (iterator(&this->_array[this->_size]));
+		}
 		////todo rbegin
 		//reverse_iterator rbegin();
 		//const_reverse_iterator rbegin() const;
@@ -245,7 +296,6 @@ namespace ft
 		{
 			return (this->_size);
 		}
-		//todo max_size
 		size_type max_size() const
 		{
 			return (this->_alloc.max_size());
@@ -281,10 +331,34 @@ namespace ft
 		{
 			return (!(*this == rhs));
 		}
-		//bool operator< (const vector &rhs) const;
-		//bool operator<= (const vector &rhs) const;
-		//bool operator> (const vector &rhs) const;
-		//bool operator>= (const vector &rhs) const;
+		bool operator< (const vector &rhs) const
+		{
+			int end = rhs._size;
+			if (this->_size < rhs._size)
+				end = this->_size;
+			for (int i = 0; i < end; i++)
+			{
+				if (this->_array[i] < rhs._array[i])
+					return (true);
+				else if (this->_array[i] > rhs._array[i])
+					return (false);
+			}
+			if (this->_size < rhs._size)
+				return (true);
+			return (false);
+		}
+		bool operator<= (const vector &rhs) const
+		{
+			return (!(*this < rhs));
+		}
+		bool operator> (const vector &rhs) const
+		{
+			return (rhs < *this);
+		}
+		bool operator>= (const vector &rhs) const
+		{
+			return (!(*this > rhs));
+		}
 
 		private:
 		size_type				_size;
