@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 12:29:11 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/11 12:07:15 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/11 12:18:08 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,48 +25,38 @@
 
 int main(void) 
 {
-	{
-		//&constructor, destructor
+	{	//&constructor, destructor
 	}
-	{
-		//&capacity
+	{	//&capacity
 		//todo reserve
 		std::cout << C_BLUE << "default constructor" << C_DEF << std::endl;
 		ft::vector<int> vec;
-		std::cout << "size "<<vec.size() << std::endl;
-		std::cout <<"capa " << vec.capacity() << std::endl;
+		std::cout << "size "<<vec.size() << ", capa " << vec.capacity() << std::endl;
 		std::cout << C_BLUE << "constructor 2" << C_DEF << std::endl;
 		ft::vector<int> vec2(5,5);
-		std::cout << "size "<<vec2.size() << std::endl;
-		std::cout <<"capa " << vec2.capacity() << std::endl;
+		std::cout << "size "<<vec2.size() << ", capa " << vec2.capacity() << std::endl;
 		std::cout << C_BLUE << "copy constructor" << C_DEF << std::endl;
 		ft::vector<int> vec3(vec2);
-		std::cout << "size "<<vec3.size() << std::endl;
-		std::cout <<"capa " << vec3.capacity() << std::endl;
+		std::cout << "size "<<vec3.size() << ", capa " << vec3.capacity() << std::endl;
 		vec3.push_back(12);
-			std::cout << "size "<<vec3.size() << std::endl;
-		std::cout <<"capa " << vec3.capacity() << std::endl;
+		std::cout << "size "<<vec3.size() << ", capa " << vec3.capacity() << std::endl;
 		ft::vector<int> vec4(6,6);
 		std::cout << C_BLUE << "copy assignment overload constructor" << C_DEF << std::endl;
 		vec4 = vec3;
-		std::cout << "size "<<vec4.size() << std::endl;
-		std::cout <<"capa " << vec4.capacity() << std::endl;
+		std::cout << "size "<<vec4.size() << ", capa " << vec4.capacity() << std::endl;
 		std::cout << C_BLUE << "add to empty vector" << C_DEF << std::endl;
 		for(int i = 0; i < 15; i++)
 		{
 			vec2.push_back(i);
-			std::cout << "size "<<vec2.size() << std::endl;
-			std::cout <<"capa " << vec2.capacity() << std::endl;
-			std::cout << "---------------------------------------------" << std::endl;
+			std::cout << "size "<<vec2.size() << ", capa " << vec2.capacity() << std::endl;
 		}
-		//vec.reserve(18);
-		std::cout << "size "<<vec.size() << std::endl;
-		std::cout <<"capa " << vec.capacity() << std::endl;
-		std::cout << "---------------------------------------------" << std::endl;
+		std::cout << C_BLUE << "reserve space" << C_DEF << std::endl;
+		std::cout << "size "<<vec3.size() << ", capa " << vec3.capacity() << std::endl;
+		vec3.reserve(18);
+		std::cout << "size "<<vec3.size() << ", capa " << vec3.capacity() << std::endl;
 		std::cout << C_BLUE << "pop back on empty vector" << C_DEF << std::endl;
 		vec.pop_back();
-		std::cout << "size "<<vec.size() << std::endl;
-		std::cout <<"capa " << vec.capacity() << std::endl;
+		std::cout << "size "<<vec.size() << ", capa " << vec.capacity() << std::endl;
 		//std::cout << C_BLUE << "push back on vector with size -1" << C_DEF << std::endl;
 		//for(int i = 0; i < 5; i++)
 		//{

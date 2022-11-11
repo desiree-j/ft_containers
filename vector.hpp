@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/11 12:08:52 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/11 12:21:49 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -440,12 +440,8 @@ namespace ft
 		{
 			if (this->_capacity >= n)
 				return;
-			size_type capa = this->_capacity;
-			while (capa < n)
-			{
-				capa *=2;
-			}
-			realloc(capa);
+			realloc(n);
+			this->_capacity = n;
 		}
 		size_type capacity() const
 		{
@@ -486,7 +482,7 @@ namespace ft
 		}
 		bool operator<= (const vector &rhs) const
 		{
-			return (!(*this < rhs));
+			return (!(*this > rhs));
 		}
 		bool operator> (const vector &rhs) const
 		{
@@ -494,7 +490,7 @@ namespace ft
 		}
 		bool operator>= (const vector &rhs) const
 		{
-			return (!(*this > rhs));
+			return (!(*this < rhs));
 		}
 
 		private:
