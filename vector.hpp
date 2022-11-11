@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/11 11:58:44 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/11 12:08:52 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,7 +264,9 @@ namespace ft
 		template <class InputIterator>  
 		void assign (InputIterator first, InputIterator last)
 		{
-			n = last - first;
+			if (last <= first)
+				return;
+			size_type n = last - first;
 			if (n > this->_capacity)
 			{
 				while (this->_capacity < n)
@@ -288,7 +290,7 @@ namespace ft
 			}
 			else
 			{
-				for (int i = 0; i < n, ; i++)
+				for (int i = 0; i < n; i++)
 				{
 					this->_alloc.destroy(&this->_array[i]);
 					this->_array[i] = *first;

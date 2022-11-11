@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 12:29:11 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/11 11:14:08 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/11 12:07:15 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@
 int main(void) 
 {
 	{
-		//&capacity and constructor
+		//&constructor, destructor
+	}
+	{
+		//&capacity
 		//todo reserve
 		std::cout << C_BLUE << "default constructor" << C_DEF << std::endl;
 		ft::vector<int> vec;
@@ -73,8 +76,25 @@ int main(void)
 		//	std::cout << "---------------------------------------------" << std::endl;
 		//}
 		std::cout << "max_size: " << vec.max_size() << std::endl;
-		//& element access	
+	}
+	{	//& element access
+		ft::vector<int> vec;	
+		const ft::vector<int> vec2(10, 1);	
+		for(int i = 0; i < 15; i++)
+		{
+			vec.push_back(i);
+		}
 		std::cout << C_RED << "Test element access functions" << C_DEF << std::endl;
+		std::cout << C_BLUE << "front of vec" << C_DEF << std::endl;
+		std::cout << vec.front() << std::endl;
+		std::cout << C_BLUE << "back of vec" << C_DEF << std::endl;
+		std::cout << vec.back() << std::endl;
+		std::cout << C_BLUE << "at position 6 of vec" << C_DEF << std::endl;
+		std::cout << vec.at(6) << std::endl;
+		std::cout << C_BLUE << " [6] of vec" << C_DEF << std::endl;
+		std::cout << vec[6] << std::endl;
+
+		std::cout << C_RED << "Test const element access functions" << C_DEF << std::endl;
 		std::cout << C_BLUE << "front of vec2" << C_DEF << std::endl;
 		std::cout << vec2.front() << std::endl;
 		std::cout << C_BLUE << "back of vec2" << C_DEF << std::endl;
@@ -83,10 +103,12 @@ int main(void)
 		std::cout << vec2.at(6) << std::endl;
 		std::cout << C_BLUE << " [6] of vec2" << C_DEF << std::endl;
 		std::cout << vec2[6] << std::endl;
-		//& comparison
-		vec = vec2;
+	}
+	{	//& comparison
+		ft::vector<int> vec(5,5);
+		ft::vector<int> vec2(vec);
 		vec2.push_back(1);
-		std::cout << C_BLUE << "vector comparison" << C_DEF << std::endl;
+		std::cout << std::endl << C_RED << "vector comparison" << C_DEF << std::endl;
 		bool comp = vec < vec2;
 		std::cout << "vec < vec2: " << std::boolalpha << comp << std::endl;
 		comp = vec > vec2;
@@ -95,10 +117,8 @@ int main(void)
 		std::cout << "vec >= vec2: " << std::boolalpha << comp << std::endl;
 		comp = vec <= vec2;
 		std::cout << "vec <= vec2: " << std::boolalpha << comp << std::endl;
-	
 	}
-	{
-		//&i vector iterator
+	{	//&i vector iterator
 		std::cout << C_RED << "iterator test" << C_DEF << std::endl;
 		ft::vector<int> vec;
 		for (int i = 0; i< 5; i++)
