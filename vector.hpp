@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/11 11:31:08 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/11 11:47:43 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,15 @@ namespace ft
 		public:
 		vectorIterator(pointer ptr) : _ptr(ptr){}
 		~vectorIterator(void){}
-		//todo copy constructor, copy assignment operator
-		//vectorIterator(const vectorIterator&);
-		//vectorIterator& operator=(const vectorIterator&);
+		vectorIterator(const vectorIterator& rhs)
+		{
+			this->_ptr = rhs._ptr;
+		}
+		vectorIterator& operator=(const vectorIterator& rhs)
+		{
+			this->_ptr = rhs._ptr;
+			return (*this);
+		}
 		//& comparison
 		bool operator==(const vectorIterator &rhs) const
 		{
@@ -79,7 +85,7 @@ namespace ft
 		{
 			return (*this->_ptr);
 		}
-		//& increament, decrement
+		//& increment, decrement
 		vectorIterator& operator++()
 		{
 			this->_ptr++;
@@ -153,7 +159,6 @@ namespace ft
 		explicit vector (const allocator_type& alloc = allocator_type()) : _size(0), _capacity(0), _array(NULL), _alloc(alloc)
 		{
 		}
-
 		explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : _size(n), _capacity (n), _alloc(alloc)
 		{
 			this->_array = this->_alloc.allocate(this->_capacity);
@@ -162,14 +167,12 @@ namespace ft
 				this->_array[i] = val;
 			}
 		}
-
 		//todo constructor 3
 		//template <class InputIterator> 
 		//vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIterator>::value, T> type = 0)
 		//{
 			
 		//}
-
 		vector (const vector& x) : _size(x._size), _capacity(x._capacity), _alloc(x._alloc)
 		{
 			this->_array = this->_alloc.allocate(this->_capacity);
@@ -178,17 +181,14 @@ namespace ft
 				this->_array[i] = x._array[i];
 			}
 		}
-
 		~vector()
 		{
 			this->_alloc.deallocate(this->_array, this->_capacity);
 		}
-
 		allocator_type get_allocator() const
 		{
 			return (this->_alloc);
 		}
-
 		vector& operator= (const vector& x)
 		{
 			this->_alloc = x._alloc;
@@ -289,7 +289,7 @@ namespace ft
 			{
 				for (int i = 0; i < min(n, this->_size); i++)
 				{
-					this->_alloc.destroy(this->_array[i]);
+					this->_alloc.destroy(&this->_array[i]);
 					this->_array[i] = val;
 				}
 			}
@@ -298,10 +298,9 @@ namespace ft
 		}
 		void pop_back()
 		{
-			this->_alloc.destroy(this->_array[this->_size - 1]);
+			this->_alloc.destroy(&this->_array[this->_size - 1]);
 			this->_size--;
 		}
-
 		void push_back (const value_type& val)
 		{
 			if (this->_size < this->_capacity)
@@ -374,8 +373,28 @@ namespace ft
 		{
 			return (this->_alloc.max_size());
 		}
-		////todo resize
-		//void resize (size_type n, value_type val = value_type());
+		void resize (size_type n, value_type val = value_type())
+		{
+			if (n < this->_size)
+			{
+				for (size_type i = n; i < this->_size; i++)
+				{
+					this->_alloc.destroy(&(this->_array[i]));
+				}
+			}
+			else if (n > this->_size)
+			{
+				if (n > this->_capacity)
+				{
+					realloc(n);
+				}
+				for (size_type i = this->_size; i < n; i++)
+				{
+					this->_array[i] = val;
+				}
+			}
+			this->_size = n;
+		}
 		bool empty() const
 		{
 			return (this->_size == 0);
@@ -409,7 +428,6 @@ namespace ft
 			}
 			return (true);
 		}
-
 		bool operator!= (const vector &rhs) const
 		{
 			return (!(*this == rhs));
