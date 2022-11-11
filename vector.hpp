@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/10 14:52:36 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/11 10:09:44 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,16 @@ namespace ft
 		typedef typename vector::value_type					value_type;
 		typedef typename std::ptrdiff_t 					difference_type;
 		typedef typename std::random_access_iterator_tag	iterator_category;
+		typedef typename vector::size_type					size_type;
+		
 
 		public:
 		vectorIterator(pointer ptr) : _ptr(ptr){}
 		~vectorIterator(void){}
 		//todo copy constructor, copy assignment operator
+		//vectorIterator(const vectorIterator&);
+		//vectorIterator& operator=(const vectorIterator&);
+		//& comparison
 		bool operator==(const vectorIterator &rhs) const
 		{
 			if(this->_ptr == rhs._ptr)
@@ -60,11 +65,20 @@ namespace ft
 		{
 			return(!(*this < rhs));
 		}
-		//todo a->, *a=t
-		value_type operator*(void)
+		//& (de)referencing
+        pointer operator->() const
+		{
+			return (this->_ptr);
+		}
+        reference operator[](size_type n) const
+		{
+			return (*(this->_ptr + n));
+		}
+		reference operator*(void) const
 		{
 			return (*this->_ptr);
 		}
+		//& increament, decrement
 		vectorIterator& operator++()
 		{
 			this->_ptr++;
@@ -87,28 +101,30 @@ namespace ft
 			--(*this);
 			return (tmp);
 		}
-		//todo n+a, n-a
-		vectorIterator& operator+(int n)
+		friend vectorIterator operator+(size_type n , const vectorIterator& it)
+		{
+			return(vectorIterator(it._ptr + n));
+		}
+		vectorIterator& operator+(size_type n)
 		{
 			this->_ptr = this->_ptr + n;
 			return (*this);
 		}
-		vectorIterator& operator-(int n)
+		vectorIterator& operator-(size_type n)
 		{
 			this->_ptr = this->_ptr - n;
 			return (*this);
 		}
-		vectorIterator& operator-=(int n)
+		vectorIterator& operator-=(size_type n)
 		{
 			this->_ptr = this->_ptr - n;
 			return (*this);
 		}
-		vectorIterator& operator+=(int n)
+		vectorIterator& operator+=(size_type n)
 		{
 			this->_ptr = this->_ptr + n;
 			return (*this);
 		}
-		//todo a[n]
 
 		private:
 		pointer _ptr;
