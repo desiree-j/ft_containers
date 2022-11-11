@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/11 11:15:26 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/11 11:31:08 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,8 @@ namespace ft
 		}
 
 		//todo constructor 3
-		//template <class InputIterator> vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIterator>::value, T> type = 0)
+		//template <class InputIterator> 
+		//vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIterator>::value, T> type = 0)
 		//{
 			
 		//}
@@ -230,21 +231,37 @@ namespace ft
 		{
 			return (const_reverse_iterator(&this->_array[this->_size - 1]));
 		}
-		//todo rend
 		reverse_iterator rend()
 		{
 			return (reverse_iterator(&this->_array[- 1]));
 		}
 		const_reverse_iterator rend() const
 		{
-			return (const_reverse_iterator(&this->_array[this->_size - 1]));
+			return (const_reverse_iterator(&this->_array[- 1]));
 		}
 
-		////& modifiers
-		////todo clear
-		//void clear();
-		////todo swap
-		//void swap (vector& x);	
+		//& modifiers
+		void clear()
+		{
+			for (size_type i = 0; i < this->_size; i++)
+			{
+				this->_alloc.destroy(this->_array[i]);
+			}
+			this->_size = 0;
+		}
+		void swap (vector& x)
+		{
+			size_type 	tmpSize = this->_size;
+			T 			*tmpArray = this->_array;
+			size_type 	tmpCapacity = this->_capacity;
+			
+			this->_size = x._size;
+			this->_array = x._array;
+			this->_capacity = x._capacity;
+			x._size = tmpSize;
+			x._array = tmpArray;
+			x._capacity = tmpCapacity;
+		}
 		////todo assign
 		//template <class InputIterator>  void assign (InputIterator first, InputIterator last);	
 		void assign (size_type n, const value_type& val)
@@ -279,9 +296,9 @@ namespace ft
 			if (this->_size < n)
 				this->_size = n;
 		}
-		//todo pop_back
 		void pop_back()
 		{
+			this->_alloc.destroy(this->_array[this->_size - 1]);
 			this->_size--;
 		}
 
