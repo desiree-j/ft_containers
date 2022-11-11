@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/11 11:47:43 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/11 11:58:44 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,6 @@ namespace ft
 		//template <class InputIterator> 
 		//vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIterator>::value, T> type = 0)
 		//{
-			
 		//}
 		vector (const vector& x) : _size(x._size), _capacity(x._capacity), _alloc(x._alloc)
 		{
@@ -262,8 +261,44 @@ namespace ft
 			x._array = tmpArray;
 			x._capacity = tmpCapacity;
 		}
-		////todo assign
-		//template <class InputIterator>  void assign (InputIterator first, InputIterator last);	
+		template <class InputIterator>  
+		void assign (InputIterator first, InputIterator last)
+		{
+			n = last - first;
+			if (n > this->_capacity)
+			{
+				while (this->_capacity < n)
+				{
+					this->_capacity *=2;
+				}
+				T* temp = this->_alloc.allocate(this->_capacity);
+				for (size_type i = 0; i < this->_size; i++)
+				{
+					temp[i] = *first;
+					this->_alloc.destroy(this->_array.at(i));
+					first++;
+				}
+				for (size_type i = this->_size; i < n; i++)
+				{
+					temp[i] = *first;
+					first++;
+				}
+				this->_alloc.deallocate(this->_array, this->_capacity);
+				this->_array = temp;
+			}
+			else
+			{
+				for (int i = 0; i < n, ; i++)
+				{
+					this->_alloc.destroy(&this->_array[i]);
+					this->_array[i] = *first;
+					first++;
+				}
+			}
+			if (this->_size < n)
+				this->_size = n;
+			
+		}
 		void assign (size_type n, const value_type& val)
 		{
 			if (n > this->_capacity)
@@ -287,7 +322,7 @@ namespace ft
 			}
 			else
 			{
-				for (int i = 0; i < min(n, this->_size); i++)
+				for (int i = 0; i < n; i++)
 				{
 					this->_alloc.destroy(&this->_array[i]);
 					this->_array[i] = val;
@@ -415,7 +450,6 @@ namespace ft
 			return (this->_capacity);
 		}
 		
-		
 		//& comparisons
 		bool operator== (const vector &rhs) const
 		{
@@ -479,7 +513,6 @@ namespace ft
 			this->_array = temp;
 		}
 		
-
 	};
 
 }
