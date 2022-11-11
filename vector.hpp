@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/11 10:09:44 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/11 11:15:26 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define VECTOR_HPP
 # include <cmath>
 # include <stdexcept> 
+# include "utils.hpp"
 
 namespace ft
 {
@@ -145,6 +146,9 @@ namespace ft
 		typedef typename allocator_type::size_type			size_type;
 		typedef vectorIterator<vector>						iterator;
 		typedef const vectorIterator<vector>				const_iterator;
+		typedef vectorIterator<vector>						reverse_iterator; //!change when implemented
+		typedef const vectorIterator<vector>				const_reverse_iterator;//!change when implemented
+
 		public:
 		explicit vector (const allocator_type& alloc = allocator_type()) : _size(0), _capacity(0), _array(NULL), _alloc(alloc)
 		{
@@ -160,8 +164,10 @@ namespace ft
 		}
 
 		//todo constructor 3
-		//template <class InputIterator> vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type())
-		//{}
+		//template <class InputIterator> vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIterator>::value, T> type = 0)
+		//{
+			
+		//}
 
 		vector (const vector& x) : _size(x._size), _capacity(x._capacity), _alloc(x._alloc)
 		{
@@ -216,12 +222,23 @@ namespace ft
 		{
 			return (iterator(&this->_array[this->_size]));
 		}
-		////todo rbegin
-		//reverse_iterator rbegin();
-		//const_reverse_iterator rbegin() const;
-		////todo rend
-		//reverse_iterator rend();
-		//const_reverse_iterator rend() const;
+		reverse_iterator rbegin()
+		{
+			return (reverse_iterator(&this->_array[this->_size - 1]));
+		}
+		const_reverse_iterator rbegin() const
+		{
+			return (const_reverse_iterator(&this->_array[this->_size - 1]));
+		}
+		//todo rend
+		reverse_iterator rend()
+		{
+			return (reverse_iterator(&this->_array[- 1]));
+		}
+		const_reverse_iterator rend() const
+		{
+			return (const_reverse_iterator(&this->_array[this->_size - 1]));
+		}
 
 		////& modifiers
 		////todo clear

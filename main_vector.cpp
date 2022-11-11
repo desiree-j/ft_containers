@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 12:29:11 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/11 10:09:07 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/11 11:14:08 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,17 +86,16 @@ int main(void)
 		//& comparison
 		vec = vec2;
 		vec2.push_back(1);
-		std::cout << C_BLUE << "iterator comparison" << C_DEF << std::endl;
+		std::cout << C_BLUE << "vector comparison" << C_DEF << std::endl;
 		bool comp = vec < vec2;
 		std::cout << "vec < vec2: " << std::boolalpha << comp << std::endl;
-		//comp = it2 > it3;
-		//std::cout << "it2 > it3: " << std::boolalpha << comp << std::endl;
-		//comp = it2 <= it3;
-		//std::cout << "it2 <= it3: " << std::boolalpha << comp << std::endl;
-		//comp = it2 >= it3;
-		//std::cout << "it2 >= it3: " << std::boolalpha << comp << std::endl;
-
-
+		comp = vec > vec2;
+		std::cout << "vec > vec2: " << std::boolalpha << comp << std::endl;
+		comp = vec >= vec2;
+		std::cout << "vec >= vec2: " << std::boolalpha << comp << std::endl;
+		comp = vec <= vec2;
+		std::cout << "vec <= vec2: " << std::boolalpha << comp << std::endl;
+	
 	}
 	{
 		//&i vector iterator
