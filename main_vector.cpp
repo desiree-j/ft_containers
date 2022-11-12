@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 12:29:11 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/11 12:18:08 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/11 12:40:09 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,33 @@
 int main(void) 
 {
 	{	//&constructor, destructor
-	}
-	{	//&capacity
-		//todo reserve
+		std::cout << C_RED << "Test constructors" << C_DEF << std::endl;
 		std::cout << C_BLUE << "default constructor" << C_DEF << std::endl;
 		ft::vector<int> vec;
 		std::cout << "size "<<vec.size() << ", capa " << vec.capacity() << std::endl;
-		std::cout << C_BLUE << "constructor 2" << C_DEF << std::endl;
+		std::cout << C_BLUE << "constructor 2 (fill)" << C_DEF << std::endl;
 		ft::vector<int> vec2(5,5);
+		std::cout << "size "<<vec2.size() << ", capa " << vec2.capacity() << std::endl;
+		//todo range constructor
+		std::cout << C_BLUE << "copy constructor" << C_DEF << std::endl;
+		ft::vector<int> vec3(vec2);
+		std::cout << "size "<<vec3.size() << ", capa " << vec3.capacity() << std::endl;
+		std::cout << C_BLUE << "copy assignment overload constructor" << C_DEF << std::endl;
+		ft::vector<int> vec4(6,6);
+		vec4 = vec3;
+		//todo get_allocator
+		//todo check memory leaks
+	}
+	{	//&capacity
+		//todo empty, resize
+		std::cout << C_RED << "Test capacity" << C_DEF << std::endl;
+		std::cout << C_BLUE << "default constructor" << C_DEF << std::endl;
+		ft::vector<int> vec;
+		std::cout << "vec is empty: " <<std::boolalpha <<  vec.empty() << std::endl;
+		std::cout << "size "<<vec.size() << ", capa " << vec.capacity() << std::endl;
+		std::cout << C_BLUE << "constructor 2 with size 5" << C_DEF << std::endl;
+		ft::vector<int> vec2(5,5);
+		std::cout << "vec2 is empty: "<<std::boolalpha << vec2.empty() << std::endl;
 		std::cout << "size "<<vec2.size() << ", capa " << vec2.capacity() << std::endl;
 		std::cout << C_BLUE << "copy constructor" << C_DEF << std::endl;
 		ft::vector<int> vec3(vec2);
@@ -41,9 +60,6 @@ int main(void)
 		vec3.push_back(12);
 		std::cout << "size "<<vec3.size() << ", capa " << vec3.capacity() << std::endl;
 		ft::vector<int> vec4(6,6);
-		std::cout << C_BLUE << "copy assignment overload constructor" << C_DEF << std::endl;
-		vec4 = vec3;
-		std::cout << "size "<<vec4.size() << ", capa " << vec4.capacity() << std::endl;
 		std::cout << C_BLUE << "add to empty vector" << C_DEF << std::endl;
 		for(int i = 0; i < 15; i++)
 		{
@@ -57,14 +73,6 @@ int main(void)
 		std::cout << C_BLUE << "pop back on empty vector" << C_DEF << std::endl;
 		vec.pop_back();
 		std::cout << "size "<<vec.size() << ", capa " << vec.capacity() << std::endl;
-		//std::cout << C_BLUE << "push back on vector with size -1" << C_DEF << std::endl;
-		//for(int i = 0; i < 5; i++)
-		//{
-		//	vec.push_back(i);
-		//	std::cout << "size "<<vec.size() << std::endl;
-		//	std::cout <<"capa " << vec.capacity() << std::endl;
-		//	std::cout << "---------------------------------------------" << std::endl;
-		//}
 		std::cout << "max_size: " << vec.max_size() << std::endl;
 	}
 	{	//& element access
@@ -73,6 +81,8 @@ int main(void)
 		for(int i = 0; i < 15; i++)
 		{
 			vec.push_back(i);
+			std::cout << "size "<<vec.size() << ", capa " << vec.capacity() << std::endl;
+
 		}
 		std::cout << C_RED << "Test element access functions" << C_DEF << std::endl;
 		std::cout << C_BLUE << "front of vec" << C_DEF << std::endl;

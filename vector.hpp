@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/11 12:21:49 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/12 08:46:57 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ namespace ft
 		
 
 		public:
+		vectorIterator() : _ptr(NULL) {}
 		vectorIterator(pointer ptr) : _ptr(ptr){}
 		~vectorIterator(void){}
 		vectorIterator(const vectorIterator& rhs)
@@ -182,6 +183,11 @@ namespace ft
 		}
 		~vector()
 		{
+			if (this->_size < this->_capa)
+			{
+				for (size_type i = 0; i < this->_size; i++)
+					this->_alloc.destroy(&this->_array[i]);
+			}
 			this->_alloc.deallocate(this->_array, this->_capacity);
 		}
 		allocator_type get_allocator() const
