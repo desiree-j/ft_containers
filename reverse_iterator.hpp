@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reverse_iterator.hpp                               :+:      :+:    :+:   */
+/*   reverseIterator.hpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:53:38 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/12 08:50:23 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/14 15:52:20 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,32 +16,77 @@
 namespace ft
 {
 
-	template< class Iter >
-	class reverse_iterator
-	//class reverse_iterator : std::iterator<std::iterator_traits<Iter>::iterator_category
+	template <class Iter>
+	class reverseIterator : public Iter
+	//class reverseIterator : std::iterator<std::iterator_traits<Iter>::iterator_category
 	//, std::iterator_traits<Iter>::value_type
 	//, std::iterator_traits<Iter>::difference_type
 	//, std::iterator_traits<Iter>::pointer
 	//, std::iterator_traits<Iter>::reference>
 	{
 		public:
-			typedef	Iter											iterator_type;
-			typedef std::iterator_traits<Iter>::pointer				pointer;
-			typedef std::iterator_traits<Iter>::reference			reference;
-			typedef std::iterator_traits<Iter>::value_type			value_type;
-			typedef std::iterator_traits<Iter>::difference_type		difference_type;
-			typedef std::iterator_traits<Iter>::iterator_category	iterator_category;
+			typedef	Iter													iterator_type;
+			typedef typename std::iterator_traits<Iter>::pointer			pointer;
+			typedef typename std::iterator_traits<Iter>::reference			reference;
+			typedef typename std::iterator_traits<Iter>::value_type			value_type;
+			typedef typename std::iterator_traits<Iter>::difference_type	difference_type;
+			typedef typename std::iterator_traits<Iter>::iterator_category	iterator_category;
 
 		public:
-			reverse_iterator() : _it(Iter()){}
-			reverse_iterator(Iter it) : _it(it){}
-			~reverse_iterator(void) : ~Iter(){}
-			reverse_iterator(const reverse_iterator& rhs) 
-			reverse_iterator& operator=(const reverse_iterator& rhs)
-		private:
-			Iter _it;
+			reverseIterator() : _it(Iter()){}
+			reverseIterator(Iter it) : _it(it){}
+			//~reverseIterator(void) : ~Iter(){}
+			//reverseIterator(const reverseIterator& rhs){}
+			//reverseIterator& operator=(const reverseIterator& rhs){}
+			reverseIterator& operator++()
+			{
+	
+				return (--this->_it);
+			}
+			reverseIterator& operator++(int)
+			{
+				reverseIterator &tmp = *this;
+				this->_it--;
+				return (tmp);
+			}
+			reverseIterator& operator--()
+			{
+				return (++this->_it);
+			}
+			reverseIterator& operator--(int)
+			{
+				reverseIterator &tmp = *this;
+				this->_it++;
+				return (tmp);
+			}
+			 reference operator[](int n) const
+			{
+				return (this->_it[-n]);
+			}
+		//	friend reverseIterator operator+(size_type n , const reverseIterator& it)
+		//	{
+		//		return(reverseIterator(it._ptr + n));
+		//	}
+		//	reverseIterator& operator+(size_type n)
+		//	{
+		//		this->_ptr = this->_ptr + n;
+		//		return (*this);
+		//	}
+		//	reverseIterator& operator-(size_type n)
+		//	{
+		//		this->_ptr = this->_ptr - n;
+		//		return (*this);
+		//	}
+		//	reverseIterator& operator-=(size_type n)
+		//	{
+		//		this->_ptr = this->_ptr - n;
+		//		return (*this);
+		//	}
+		//	reverseIterator& operator+=(size_type n)
+			private:
+				Iter _it;
 
-	};
+		};
 }
 
 #endif

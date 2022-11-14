@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/12 08:46:57 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/14 17:35:48 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include <cmath>
 # include <stdexcept> 
 # include "utils.hpp"
+# include "reverse_iterator.hpp"
 
 namespace ft
 {
@@ -26,8 +27,8 @@ namespace ft
 		typedef typename vector::pointer					pointer;
 		typedef typename vector::reference					reference;
 		typedef typename vector::value_type					value_type;
-		typedef typename std::ptrdiff_t 					difference_type;
-		typedef typename std::random_access_iterator_tag	iterator_category;
+		typedef std::ptrdiff_t 								difference_type;
+		typedef std::random_access_iterator_tag				iterator_category;
 		typedef typename vector::size_type					size_type;
 		
 
@@ -78,7 +79,7 @@ namespace ft
 		{
 			return (this->_ptr);
 		}
-        reference operator[](size_type n) const
+        reference operator[](int n) const
 		{
 			return (*(this->_ptr + n));
 		}
@@ -105,7 +106,7 @@ namespace ft
 		}
 		vectorIterator& operator--(int)
 		{
-			vectorIterator tmp = *this;
+			vectorIterator &tmp = *this;
 			--(*this);
 			return (tmp);
 		}
@@ -133,7 +134,10 @@ namespace ft
 			this->_ptr = this->_ptr + n;
 			return (*this);
 		}
-
+		pointer	getPointer()
+		{
+			return (this->_ptr);
+		}
 		private:
 		pointer _ptr;
 	};
@@ -144,17 +148,17 @@ namespace ft
 	{
 		public:
 		//& typedefs
-		typedef T											value_type;
-		typedef Alloc										allocator_type;
-		typedef typename allocator_type::reference			reference;
-		typedef typename allocator_type::const_reference	const_reference;
-		typedef typename allocator_type::pointer			pointer;
-		typedef typename allocator_type::const_pointer		const_pointer;
-		typedef typename allocator_type::size_type			size_type;
-		typedef vectorIterator<vector>						iterator;
-		typedef const vectorIterator<vector>				const_iterator;
-		typedef vectorIterator<vector>						reverse_iterator; //!change when implemented
-		typedef const vectorIterator<vector>				const_reverse_iterator;//!change when implemented
+		typedef T																value_type;
+		typedef Alloc															allocator_type;
+		typedef typename allocator_type::reference								reference;
+		typedef typename allocator_type::const_reference						const_reference;
+		typedef typename allocator_type::pointer								pointer;
+		typedef typename allocator_type::const_pointer							const_pointer;
+		typedef typename allocator_type::size_type								size_type;
+		typedef vectorIterator<vector>											iterator;
+		typedef const vectorIterator<vector>									const_iterator;
+		typedef  reverseIterator<vectorIterator<vector> >				reverse_iterator; //!change when implemented
+		typedef  const reverseIterator<const vectorIterator<vector> >	const_reverse_iterator;//!change when implemented
 
 		public:
 		explicit vector (const allocator_type& alloc = allocator_type()) : _size(0), _capacity(0), _array(NULL), _alloc(alloc)
@@ -183,7 +187,7 @@ namespace ft
 		}
 		~vector()
 		{
-			if (this->_size < this->_capa)
+			if (this->_size < this->_capacity)
 			{
 				for (size_type i = 0; i < this->_size; i++)
 					this->_alloc.destroy(&this->_array[i]);
@@ -361,12 +365,60 @@ namespace ft
 				this->_size++;
 			}
 		}
-		////todo erase
-		//iterator erase (iterator position);
-		//iterator erase (iterator first, iterator last);
-		////todo insert	
-		//iterator insert (iterator position, const value_type& val);	
-		//void insert (iterator position, size_type n, const value_type& val);
+		iterator erase (iterator position)
+		{
+			this->_alloc.destroy(position.getPointer()); //! is the getPointer function allowed???
+			iterator tmp = position;
+			for (; position < (this->end() - 1); position++)
+			{
+				position[0] = position[1];
+			}
+			this->_size--;
+			return(tmp);
+		}
+		iterator erase (iterator first, iterator last)
+		{
+			size_type len = last.getPointer() - first.getPointer();
+			//std::cout << len << std::endl;
+			iterator tmp = first;
+			for (; first < (this->end() - len); first++)
+			{
+				if (first < last)
+					this->_alloc.destroy(&(*first));
+				first[0] = first[len];
+			}
+			this->_size -= len;
+			return(tmp);
+		}
+		//todo insert	
+		iterator insert (iterator position, const value_type& val)
+		{
+			if (this->_size == this->_capacity)
+				realloc(this->_capacity * 2);
+			for (iterator it = this->end() - 1; it != position; it--)
+			{
+				//std::cout << "it[1]: "<< it[1]<< " = " << it[0] << std::endl;
+				it[1] = it[0];
+			}
+			position[1] = position[0];
+			this->_size++;
+			position[0] = val;
+			return (position);
+		}
+		void insert (iterator position, size_type n, const value_type& val)
+		{
+			if (this->_size == this->_capacity)
+				realloc(this->_capacity + n);
+			this->_size += n;
+			for (reverse_iterator it = this->rbegin(); it != (position + n); it++)
+			{
+				it[1] = it[0];
+			}
+			for (size_type i = 0; i < n; i++)
+			{
+				position[i] = val;
+			}
+		}
 		//template <class InputIterator>    void insert (iterator position, InputIterator first, InputIterator last);
 
 		//& element access	
