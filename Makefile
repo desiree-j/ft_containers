@@ -6,27 +6,45 @@
 #    By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 07:05:44 by djedasch          #+#    #+#              #
-#    Updated: 2022/11/10 12:30:00 by djedasch         ###   ########.fr        #
+#    Updated: 2022/11/15 14:16:40 by djedasch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= ./ft_containers
+NAME		= ./ft_containers
 
-SRCS	=  main_vector.cpp
+SRCS		= main.cpp
 
-OBJS	= $(SRCS:.cpp=.o)
+VEC_SRCS 	= main_vector.cpp
 
-CC		= c++
+UTIL_SRCS 	= main_reverse_iterator.cpp
 
-CFLACS 	= -Wall -Werror -Wextra -std=c++98
+OBJS		= $(SRCS:.cpp=.o)
+
+VEC_OBJS	= $(VEC_SRCS:.cpp=.o)
+
+UTIL_OBJS	= $(UTIL_SRCS:.cpp=.o)
+
+CC			= c++
+
+CFLACS 		= -Wall -Werror -Wextra -std=c++98
 
 all: $(NAME)
 
 $(OBJS): $(SRCS)
 	$(CC) $(CFLACS) -c $^
+$(VEC_OBJS): $(VEC_SRCS)
+	$(CC) $(CFLACS) -c $^
+$(UTI_OBJS): $(UTIL_SRCS)
+	$(CC) $(CFLACS) -c $^
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLACS) $^ -o $(NAME)
+
+vector: $(VEC_OBJS)
+	$(CC) $(CFLACS) $^ -o ft_vector
+
+utils: $(UTIL_OBJS)
+	$(CC) $(CFLACS) $^ -o ft_utils
 
 clean: 
 	rm -f $(OBJS) 

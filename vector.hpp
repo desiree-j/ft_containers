@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/15 13:43:22 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/15 13:54:04 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,8 +157,8 @@ namespace ft
 		typedef typename allocator_type::size_type								size_type;
 		typedef vectorIterator<vector>											iterator;
 		typedef const vectorIterator<vector>									const_iterator;
-		typedef  reverseIterator<vectorIterator<vector> >				reverse_iterator; //!change when implemented
-		typedef  const reverseIterator<const vectorIterator<vector> >	const_reverse_iterator;//!change when implemented
+		typedef ft::reverse_iterator<iterator>									reverse_iterator;
+		typedef const ft::reverse_iterator<const_iterator>						const_reverse_iterator;
 
 		public:
 		explicit vector (const allocator_type& alloc = allocator_type()) : _size(0), _capacity(0), _array(NULL), _alloc(alloc)

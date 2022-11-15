@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reverseIterator.hpp                               :+:      :+:    :+:   */
+/*   reverse_iterator.hpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:53:38 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/14 15:52:20 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/15 13:46:43 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ namespace ft
 {
 
 	template <class Iter>
-	class reverseIterator : public Iter
+	class reverse_iterator : public Iter
 	{
 		public:
 			typedef	Iter													iterator_type;
@@ -28,17 +28,17 @@ namespace ft
 			typedef typename std::iterator_traits<Iter>::iterator_category	iterator_category;
 
 		public:
-			reverseIterator() : _it(Iter()){}
-			reverseIterator(iterator_type it) : _it(it){}
-			~reverseIterator(void)
+			reverse_iterator() : _it(Iter()){}
+			reverse_iterator(iterator_type it) : _it(it){}
+			~reverse_iterator(void)
 			{
 				~this->_it;
 			}
-			reverseIterator(const reverseIterator& rhs)
+			reverse_iterator(const reverse_iterator& rhs)
 			{
 				this->_it = rhs._it;
 			}
-			reverseIterator& operator=(const reverseIterator& rhs)
+			reverse_iterator& operator=(const reverse_iterator& rhs)
 			{
 				this->_it = rhs._it;
 				return (*this);
@@ -47,23 +47,23 @@ namespace ft
 			{
 				return (this->_it);
 			}
-			reverseIterator& operator++()
+			reverse_iterator& operator++()
 			{
 				return (--this->_it);
 			}
-			reverseIterator& operator++(int)
+			reverse_iterator& operator++(int)
 			{
-				reverseIterator &tmp = *this;
+				reverse_iterator &tmp = *this;
 				this->_it--;
 				return (tmp);
 			}
-			reverseIterator& operator--()
+			reverse_iterator& operator--()
 			{
 				return (++this->_it);
 			}
-			reverseIterator& operator--(int)
+			reverse_iterator& operator--(int)
 			{
-				reverseIterator &tmp = *this;
+				reverse_iterator &tmp = *this;
 				this->_it++;
 				return (tmp);
 			}
@@ -76,43 +76,43 @@ namespace ft
 				return (*(this->_it - 1));
 			}
 			//! pointer operator->() const
-			reverseIterator& operator+(difference_type n)
+			reverse_iterator& operator+(difference_type n)
 			{
 				return (this->_it - n);
 			}
-			reverseIterator& operator-(difference_type n)
+			reverse_iterator& operator-(difference_type n)
 			{
 				return (this->_it + n);
 			}
-			reverseIterator& operator-=(difference_type n)
+			reverse_iterator& operator-=(difference_type n)
 			{
 				return (this->_it += n);
 			}
-			reverseIterator& operator+=(difference_type n)
+			reverse_iterator& operator+=(difference_type n)
 			{
 				return (this->_it -= n);
 			}
-			bool operator==(const reverseIterator &rhs) const
+			bool operator==(const reverse_iterator &rhs) const
 			{
 				return (this->_it == rhs._it);
 			}
-			bool operator!=(const reverseIterator &rhs) const
+			bool operator!=(const reverse_iterator &rhs) const
 			{
 				return(!(*this == rhs));
 			}
-			bool operator<(const reverseIterator &rhs) const
+			bool operator<(const reverse_iterator &rhs) const
 			{
 				return(this->_it > rhs._it);
 			}
-			bool operator>(const reverseIterator &rhs) const
+			bool operator>(const reverse_iterator &rhs) const
 			{
 				return(rhs < *this);
 			}
-			bool operator<=(const reverseIterator &rhs) const
+			bool operator<=(const reverse_iterator &rhs) const
 			{
 				return(!(*this > rhs));
 			}
-			bool operator>=(const reverseIterator &rhs) const
+			bool operator>=(const reverse_iterator &rhs) const
 			{
 				return(!(*this < rhs));
 			}
