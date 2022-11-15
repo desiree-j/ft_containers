@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:53:38 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/15 13:46:43 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/15 17:29:23 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ namespace ft
 			reverse_iterator(iterator_type it) : _it(it){}
 			~reverse_iterator(void)
 			{
-				~this->_it;
+				this->_it.~Iter();
 			}
 			reverse_iterator(const reverse_iterator& rhs)
 			{
@@ -45,7 +45,7 @@ namespace ft
 			}
 			iterator_type base() const
 			{
-				return (this->_it);
+				return (this->_it - 1);
 			}
 			reverse_iterator& operator++()
 			{
@@ -69,7 +69,7 @@ namespace ft
 			}
 			reference operator[](difference_type n) const
 			{
-				return (this->_it[- n - 1]);
+				return (this->_it[- 1 - n]);
 			}
 			reference operator*() const
 			{
@@ -82,7 +82,10 @@ namespace ft
 			}
 			reverse_iterator& operator-(difference_type n)
 			{
-				return (this->_it + n);
+				reverse_iterator &tmp = *this;
+				tmp._it = tmp._it + n;
+				//this->_it = this->_it + n;
+				return (tmp);
 			}
 			reverse_iterator& operator-=(difference_type n)
 			{

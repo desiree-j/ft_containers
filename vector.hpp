@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/15 13:54:04 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/15 14:35:17 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -397,7 +397,6 @@ namespace ft
 				realloc(this->_capacity * 2);
 			for (iterator it = this->end() - 1; it != position; it--)
 			{
-				//std::cout << "it[1]: "<< it[1]<< " = " << it[0] << std::endl;
 				it[1] = it[0];
 			}
 			position[1] = position[0];
@@ -562,6 +561,8 @@ namespace ft
 
 		void	realloc(size_type capa)
 		{
+			if (capa == 0)
+				capa = 1;
 			T* temp = this->_alloc.allocate(capa);
 			for (size_type i = 0; i < this->_size; i++)
 			{

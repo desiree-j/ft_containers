@@ -6,7 +6,7 @@
 #    By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 07:05:44 by djedasch          #+#    #+#              #
-#    Updated: 2022/11/15 14:16:40 by djedasch         ###   ########.fr        #
+#    Updated: 2022/11/15 14:50:09 by djedasch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,10 +47,10 @@ utils: $(UTIL_OBJS)
 	$(CC) $(CFLACS) $^ -o ft_utils
 
 clean: 
-	rm -f $(OBJS) 
+	rm -f $(OBJS) $(UTIL_OBJS) $(VEC_OBJS)
 
 fclean: 
-	rm -f $(NAME) $(OBJS) 
+	rm -f $(NAME) $(OBJS) $(UTIL_OBJS) $(VEC_OBJS)
 
 re: fclean all
 
