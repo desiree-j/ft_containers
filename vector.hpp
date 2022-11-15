@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/14 17:35:48 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/15 13:43:22 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -419,7 +419,10 @@ namespace ft
 				position[i] = val;
 			}
 		}
-		//template <class InputIterator>    void insert (iterator position, InputIterator first, InputIterator last);
+		//template <class InputIterator>    
+		//void insert (iterator position, InputIterator first, InputIterator last)
+		//{
+		//}
 
 		//& element access	
 		reference operator[] (size_type n)

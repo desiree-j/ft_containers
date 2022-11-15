@@ -18,11 +18,6 @@ namespace ft
 
 	template <class Iter>
 	class reverseIterator : public Iter
-	//class reverseIterator : std::iterator<std::iterator_traits<Iter>::iterator_category
-	//, std::iterator_traits<Iter>::value_type
-	//, std::iterator_traits<Iter>::difference_type
-	//, std::iterator_traits<Iter>::pointer
-	//, std::iterator_traits<Iter>::reference>
 	{
 		public:
 			typedef	Iter													iterator_type;
@@ -34,13 +29,26 @@ namespace ft
 
 		public:
 			reverseIterator() : _it(Iter()){}
-			reverseIterator(Iter it) : _it(it){}
-			//~reverseIterator(void) : ~Iter(){}
-			//reverseIterator(const reverseIterator& rhs){}
-			//reverseIterator& operator=(const reverseIterator& rhs){}
+			reverseIterator(iterator_type it) : _it(it){}
+			~reverseIterator(void)
+			{
+				~this->_it;
+			}
+			reverseIterator(const reverseIterator& rhs)
+			{
+				this->_it = rhs._it;
+			}
+			reverseIterator& operator=(const reverseIterator& rhs)
+			{
+				this->_it = rhs._it;
+				return (*this);
+			}
+			iterator_type base() const
+			{
+				return (this->_it);
+			}
 			reverseIterator& operator++()
 			{
-	
 				return (--this->_it);
 			}
 			reverseIterator& operator++(int)
@@ -59,32 +67,58 @@ namespace ft
 				this->_it++;
 				return (tmp);
 			}
-			 reference operator[](int n) const
+			reference operator[](difference_type n) const
 			{
-				return (this->_it[-n]);
+				return (this->_it[- n - 1]);
 			}
-		//	friend reverseIterator operator+(size_type n , const reverseIterator& it)
-		//	{
-		//		return(reverseIterator(it._ptr + n));
-		//	}
-		//	reverseIterator& operator+(size_type n)
-		//	{
-		//		this->_ptr = this->_ptr + n;
-		//		return (*this);
-		//	}
-		//	reverseIterator& operator-(size_type n)
-		//	{
-		//		this->_ptr = this->_ptr - n;
-		//		return (*this);
-		//	}
-		//	reverseIterator& operator-=(size_type n)
-		//	{
-		//		this->_ptr = this->_ptr - n;
-		//		return (*this);
-		//	}
-		//	reverseIterator& operator+=(size_type n)
+			reference operator*() const
+			{
+				return (*(this->_it - 1));
+			}
+			//! pointer operator->() const
+			reverseIterator& operator+(difference_type n)
+			{
+				return (this->_it - n);
+			}
+			reverseIterator& operator-(difference_type n)
+			{
+				return (this->_it + n);
+			}
+			reverseIterator& operator-=(difference_type n)
+			{
+				return (this->_it += n);
+			}
+			reverseIterator& operator+=(difference_type n)
+			{
+				return (this->_it -= n);
+			}
+			bool operator==(const reverseIterator &rhs) const
+			{
+				return (this->_it == rhs._it);
+			}
+			bool operator!=(const reverseIterator &rhs) const
+			{
+				return(!(*this == rhs));
+			}
+			bool operator<(const reverseIterator &rhs) const
+			{
+				return(this->_it > rhs._it);
+			}
+			bool operator>(const reverseIterator &rhs) const
+			{
+				return(rhs < *this);
+			}
+			bool operator<=(const reverseIterator &rhs) const
+			{
+				return(!(*this > rhs));
+			}
+			bool operator>=(const reverseIterator &rhs) const
+			{
+				return(!(*this < rhs));
+			}
+
 			private:
-				Iter _it;
+				iterator_type _it;
 
 		};
 }
