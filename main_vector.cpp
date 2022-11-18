@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 12:29:11 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/18 12:05:15 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/18 12:24:55 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <string>
 #include <deque>
 #include "incl.hpp"
-#if 0  //CREATE A REAL STL EXAMPLE
+#if 1  //CREATE A REAL STL EXAMPLE
 	#include <vector>
 	namespace ft = std; 
 #else
@@ -192,7 +192,9 @@ int main(void)
 		std::cout << "it2 = 1 + it2; "<< *it2 << std::endl;
 		it2 -= 2;
 		std::cout << "it2 -= 2; "<<*it2 << std::endl;
-		//it2 = it3;
+		it2 = it3;
+		std::cout <<"it2 + 2: "<< *(it2 + 2) << std::endl;
+		std::cout << "it2:"<< *it2 << std::endl;
 		std::cout << "*it2 = " << *it2 << ", *it3 = " << *it3 <<std::endl;
 		std::cout << C_BLUE << "iterator comparison" << C_DEF << std::endl;
 		bool comp = it2 < it3;

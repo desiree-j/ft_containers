@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/18 12:04:21 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/18 12:24:25 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ namespace ft
 			return (*(this->_ptr));
 		}
 		//& increment, decrement
-		vectorIterator& operator++()
+		vectorIterator operator++()
 		{
 			this->_ptr++;
 			return (*this);
@@ -99,7 +99,7 @@ namespace ft
 			this->_ptr++;
 			return (tmp);
 		}
-		vectorIterator& operator--()
+		vectorIterator operator--()
 		{
 			this->_ptr--;
 			return (*this);
@@ -114,22 +114,20 @@ namespace ft
 		{
 			return(vectorIterator(it._ptr + n));
 		}
-		vectorIterator& operator+(difference_type n)
+		vectorIterator operator+(difference_type n)
 		{
-			this->_ptr = this->_ptr + n;
-			return (*this);
+			return (this->_ptr + n);
 		}
-		vectorIterator& operator-(difference_type n)
+		vectorIterator operator-(difference_type n)
 		{
-			this->_ptr = this->_ptr - n;
-			return (*this);
+			return (this->_ptr - n);
 		}
-		vectorIterator& operator-=(difference_type n)
+		vectorIterator operator-=(difference_type n)
 		{
 			this->_ptr = this->_ptr - n;
 			return (*this);
 		}
-		vectorIterator& operator+=(difference_type n)
+		vectorIterator operator+=(difference_type n)
 		{
 			this->_ptr = this->_ptr + n;
 			return (*this);
