@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 12:29:11 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/14 17:34:31 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/18 12:05:15 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 #include <string>
 #include <deque>
 #include "incl.hpp"
-#if 0 //CREATE A REAL STL EXAMPLE
+#if 0  //CREATE A REAL STL EXAMPLE
 	#include <vector>
-	namespace ft = std;
+	namespace ft = std; 
 #else
 	#include "vector.hpp"
 #endif
@@ -44,7 +44,6 @@ int main(void)
 	//	//todo check memory leaks
 	//}
 	//{	//&capacity
-	//	//todo empty, resize
 	//	std::cout << C_RED << "Test capacity" << C_DEF << std::endl;
 	//	std::cout << C_BLUE << "default constructor" << C_DEF << std::endl;
 	//	ft::vector<int> vec;
@@ -66,6 +65,8 @@ int main(void)
 	//		vec2.push_back(i);
 	//		std::cout << "size "<<vec2.size() << ", capa " << vec2.capacity() << std::endl;
 	//	}
+	//	std::cout << C_BLUE << "resize to 20" << C_DEF << std::endl;
+	//	vec2.resize(20, 5);
 	//	std::cout << C_BLUE << "reserve space" << C_DEF << std::endl;
 	//	std::cout << "size "<<vec3.size() << ", capa " << vec3.capacity() << std::endl;
 	//	vec3.reserve(18);
@@ -75,38 +76,43 @@ int main(void)
 	//	std::cout << "size "<<vec.size() << ", capa " << vec.capacity() << std::endl;
 	//	std::cout << "max_size: " << vec.max_size() << std::endl;
 	//}
-	{	//& modifiers
-		std::cout << C_RED << "Test modifier functions" << C_DEF << std::endl;
-		ft::vector<int> vec;	
-		std::cout << C_BLUE << "before erase" << C_DEF << std::endl;
-		for(int i = 0; i < 15; i++)
-		{
-			vec.push_back(i);
-			std::cout << "element "<< i << " = " << vec[i] << std::endl;
-			//std::cout << "size "<<vec2.size() << ", capa " << vec2.capacity() << std::endl;
-		}
-		ft::vector<int>::iterator it = vec.begin();
-		ft::vector<int>::iterator it2 = vec.end() - 5;
-		it = vec.erase(it);
-		vec.insert(it, 42);
-		it++;
-		//it2 = it + 5;
-		it += 2;
-		it = vec.erase(it, it2);
-		std::cout << C_BLUE << "after erase" << C_DEF << std::endl;
-		for(size_t i = 0; i < vec.size(); i++)
-		{
-			std::cout << "element "<< i << " = " << vec[i] << std::endl;
-		}
-		//vec.insert(it, 5, 24);
-		//std::cout << C_BLUE << "after insert" << C_DEF << std::endl;
-		//for(size_t i = 0; i < vec.size(); i++)
-		//{
-		//	std::cout << "element "<< i << " = " << vec[i] << std::endl;
-		//}
-		//std::cout << "size "<<vec.size() << ", capa " << vec.capacity() << std::endl;
+	//{	//& modifiers
+	//	std::cout << C_RED << "Test modifier functions" << C_DEF << std::endl;
+	//	ft::vector<int> vec(1, 1);	
+	//	std::cout << C_BLUE << "before erase" << C_DEF << std::endl;
+	//	for(int i = 0; i < 15; i++)
+	//	{
+	//		vec.push_back(i);
+	//		//std::cout << "element "<< i << " = " << vec[i] << std::endl;
+	//		//std::cout << "size "<<vec2.size() << ", capa " << vec2.capacity() << std::endl;
+	//	}
+	//	for(size_t i = 0; i < vec.size(); i++)
+	//	{
+	//		std::cout << "element "<< i << " = " << vec[i] << std::endl;
+	//	}
+	//	ft::vector<int>::iterator it = vec.begin();
+	//	//ft::vector<int>::iterator it2 = vec.end();
+	//	it = vec.insert(it, 42);
+	//	std::cout << "new element = " << *it << std::endl;
+	//	//it+=1;
+	//	//it = vec.erase(it);
+	//	//it2 = it + 5;
+	//	//it += 2;
+	//	//it = vec.erase(it, it2);
+	//	std::cout << C_BLUE << "after erase" << C_DEF << std::endl;
+	//	for(size_t i = 0; i < vec.size(); i++)
+	//	{
+	//		std::cout << "element "<< i << " = " << vec[i] << std::endl;
+	//	}
+	//	//vec.insert(it, 5, 24);
+	//	//std::cout << C_BLUE << "after insert" << C_DEF << std::endl;
+	//	//for(size_t i = 0; i < vec.size(); i++)
+	//	//{
+	//	//	std::cout << "element "<< i << " = " << vec[i] << std::endl;
+	//	//}
+	//	//std::cout << "size "<<vec.size() << ", capa " << vec.capacity() << std::endl;
 
-	}
+	//}
 
 	//{	//& element access
 	//	std::cout << C_RED << "Test element access functions" << C_DEF << std::endl;
@@ -151,42 +157,53 @@ int main(void)
 	//	comp = vec <= vec2;
 	//	std::cout << "vec <= vec2: " << std::boolalpha << comp << std::endl;
 	//}
-	//{	//&i vector iterator
-	//	std::cout << C_RED << "iterator test" << C_DEF << std::endl;
-	//	ft::vector<int> vec;
-	//	for (int i = 0; i< 5; i++)
-	//	{
-	//		vec.push_back(i);
-	//	}
-	//	for (ft::vector<int>::iterator it = vec.begin(); it != vec.end(); it++)
-	//	{
-	//		std::cout << *it << std::endl;
-	//		//std::cout << "test" << std::endl;
-	//	}
-	//	ft::vector<int>::iterator it2 = vec.begin();
-	//	ft::vector<int>::iterator it3 = vec.begin();
-	//	*it2++;
-	//	std::cout << *it2 << std::endl;
-	//	*it2 = 42;
-	//	it2 = it2 + 2;
-	//	it2 = 1 + it2;
-	//	it2 -= 2;
-	//	//it2 = it3;
-	//	for (ft::vector<int>::iterator it = vec.begin(); it != vec.end(); it++)
-	//	{
-	//		std::cout << *it << std::endl;
-	//	}
-	//	std::cout << "*it2 = " << *it2 << ", *it3 = " << *it3 <<std::endl;
-	//	std::cout << C_BLUE << "iterator comparison" << C_DEF << std::endl;
-	//	bool comp = it2 < it3;
-	//	std::cout << "it2 < it3: " << std::boolalpha << comp << std::endl;
-	//	comp = it2 > it3;
-	//	std::cout << "it2 > it3: " << std::boolalpha << comp << std::endl;
-	//	comp = it2 <= it3;
-	//	std::cout << "it2 <= it3: " << std::boolalpha << comp << std::endl;
-	//	comp = it2 >= it3;
-	//	std::cout << "it2 >= it3: " << std::boolalpha << comp << std::endl;
+	{	//&i vector iterator
+		std::cout << C_RED << "iterator test" << C_DEF << std::endl;
+		ft::vector<int> vec;
+		for (int i = 0; i< 5; i++)
+		{
+			vec.push_back(i);
+		}
+		std::cout << C_BLUE <<"all elements" << C_DEF << std:: endl;
+		for (ft::vector<int>::iterator it = vec.begin(); it != vec.end(); it++)
+		{
+			std::cout << *it << ", ";
+		}
+		std::cout << std::endl;
+		ft::vector<int>::iterator it2 = vec.begin();
+		ft::vector<int>::iterator it3 = vec.begin();
+		std::cout << "*it2: "<<*it2 << std::endl;
+		std::cout << "*it2++: "<< *(it2++) << std::endl; 
+		std::cout << "*it2: "<<*it2 << std::endl;
+		std::cout << "*it2[0]: "<< it2[0] << std::endl; 
+		it2[0] = 23;
+		std::cout << "*it2[0] = 23: "<< it2[0] << std::endl; 
+		std::cout << "*++it2: "<< *++it2 << std::endl; 
+		*it2 = 42;
+		std::cout << C_BLUE <<"all elements" << C_DEF << std:: endl;
+		for (ft::vector<int>::iterator it = vec.begin(); it != vec.end(); it++)
+		{
+			std::cout << *it << ", ";
+		}
+		std::cout << std::endl;
+		it2 = it2 + 2;
+		std::cout << "it2 = it2 + 2; "<<*it2 << std::endl;
+		it2 = 1 + it2;
+		std::cout << "it2 = 1 + it2; "<< *it2 << std::endl;
+		it2 -= 2;
+		std::cout << "it2 -= 2; "<<*it2 << std::endl;
+		//it2 = it3;
+		std::cout << "*it2 = " << *it2 << ", *it3 = " << *it3 <<std::endl;
+		std::cout << C_BLUE << "iterator comparison" << C_DEF << std::endl;
+		bool comp = it2 < it3;
+		std::cout << "it2 < it3: " << std::boolalpha << comp << std::endl;
+		comp = it2 > it3;
+		std::cout << "it2 > it3: " << std::boolalpha << comp << std::endl;
+		comp = it2 <= it3;
+		std::cout << "it2 <= it3: " << std::boolalpha << comp << std::endl;
+		comp = it2 >= it3;
+		std::cout << "it2 >= it3: " << std::boolalpha << comp << std::endl;
 
 
-	//}
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:53:38 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/15 17:29:23 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/16 13:53:31 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ namespace ft
 			{
 				this->_it.~Iter();
 			}
-			reverse_iterator(const reverse_iterator& rhs)
+			reverse_iterator(const reverse_iterator& rhs) //! doesn't work
 			{
 				this->_it = rhs._it;
 			}

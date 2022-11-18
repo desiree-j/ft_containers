@@ -6,7 +6,7 @@
 #    By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 07:05:44 by djedasch          #+#    #+#              #
-#    Updated: 2022/11/15 14:50:09 by djedasch         ###   ########.fr        #
+#    Updated: 2022/11/16 13:55:54 by djedasch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,9 +20,9 @@ UTIL_SRCS 	= main_reverse_iterator.cpp
 
 OBJS		= $(SRCS:.cpp=.o)
 
-VEC_OBJS	= $(VEC_SRCS:.cpp=.o)
+#VEC_OBJS	= $(VEC_SRCS:.cpp=.o)
 
-UTIL_OBJS	= $(UTIL_SRCS:.cpp=.o)
+#UTIL_OBJS	= $(UTIL_SRCS:.cpp=.o)
 
 CC			= c++
 
@@ -40,18 +40,17 @@ $(UTI_OBJS): $(UTIL_SRCS)
 $(NAME): $(OBJS)
 	$(CC) $(CFLACS) $^ -o $(NAME)
 
-vector: $(VEC_OBJS)
+vector: $(VEC_SRCS)
 	$(CC) $(CFLACS) $^ -o ft_vector
 
-utils: $(UTIL_OBJS)
+utils: $(UTIL_SRCS)
 	$(CC) $(CFLACS) $^ -o ft_utils
 
 clean: 
-	rm -f $(OBJS) $(UTIL_OBJS) $(VEC_OBJS)
+	rm -f $(OBJS) 
 
 fclean: 
-	rm -f $(NAME) $(OBJS) $(UTIL_OBJS) $(VEC_OBJS)
-
+	rm -f $(NAME) $(OBJS) 
 re: fclean all
 
 .PHONY: all fclean re 

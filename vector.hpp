@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/15 14:35:17 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/18 12:04:21 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ namespace ft
 		}
 		reference operator*(void) const
 		{
-			return (*this->_ptr);
+			return (*(this->_ptr));
 		}
 		//& increment, decrement
 		vectorIterator& operator++()
@@ -93,10 +93,10 @@ namespace ft
 			this->_ptr++;
 			return (*this);
 		}
-		vectorIterator& operator++(int)
+		vectorIterator operator++(int)
 		{
-			vectorIterator &tmp = *this;
-			++(*this);
+			vectorIterator tmp = *this;
+			this->_ptr++;
 			return (tmp);
 		}
 		vectorIterator& operator--()
@@ -104,32 +104,32 @@ namespace ft
 			this->_ptr--;
 			return (*this);
 		}
-		vectorIterator& operator--(int)
+		vectorIterator operator--(int)
 		{
-			vectorIterator &tmp = *this;
+			vectorIterator tmp = *this;
 			--(*this);
 			return (tmp);
 		}
-		friend vectorIterator operator+(size_type n , const vectorIterator& it)
+		friend vectorIterator operator+(difference_type n , const vectorIterator& it)
 		{
 			return(vectorIterator(it._ptr + n));
 		}
-		vectorIterator& operator+(size_type n)
+		vectorIterator& operator+(difference_type n)
 		{
 			this->_ptr = this->_ptr + n;
 			return (*this);
 		}
-		vectorIterator& operator-(size_type n)
+		vectorIterator& operator-(difference_type n)
 		{
 			this->_ptr = this->_ptr - n;
 			return (*this);
 		}
-		vectorIterator& operator-=(size_type n)
+		vectorIterator& operator-=(difference_type n)
 		{
 			this->_ptr = this->_ptr - n;
 			return (*this);
 		}
-		vectorIterator& operator+=(size_type n)
+		vectorIterator& operator+=(difference_type n)
 		{
 			this->_ptr = this->_ptr + n;
 			return (*this);
@@ -393,29 +393,42 @@ namespace ft
 		//todo insert	
 		iterator insert (iterator position, const value_type& val)
 		{
+			if (this->_capacity == 0)
+			{
+				this->push_back(val);
+				return (this->begin());
+			}
 			if (this->_size == this->_capacity)
 				realloc(this->_capacity * 2);
-			for (iterator it = this->end() - 1; it != position; it--)
+			for (iterator it = this->end() + 1; it != position; it--)
 			{
 				it[1] = it[0];
 			}
-			position[1] = position[0];
 			this->_size++;
 			position[0] = val;
 			return (position);
 		}
 		void insert (iterator position, size_type n, const value_type& val)
 		{
-			if (this->_size == this->_capacity)
+			if (this->_capacity == 0)
+			{
+				this->realloc(n);
+				//this->_array = this->_alloc.allocate(n);
+				//this->_capacity = n;
+				position = this->begin();
+			}
+			else if (this->_size == this->_capacity)
 				realloc(this->_capacity + n);
 			this->_size += n;
-			for (reverse_iterator it = this->rbegin(); it != (position + n); it++)
+			
+			for (iterator it = this->end() + n; it < (position + n); it--)
 			{
 				it[1] = it[0];
 			}
 			for (size_type i = 0; i < n; i++)
 			{
 				position[i] = val;
+				std::cout << C_GREEN <<"test" << position[i]<< C_DEF << std::endl;
 			}
 		}
 		//template <class InputIterator>    
@@ -568,7 +581,9 @@ namespace ft
 			{
 				temp[i] = this->_array[i];
 			}
-			this->_alloc.deallocate(this->_array, this->_capacity);
+			//std::cout << C_GREEN << capa  << " size "<< this->_size<< ", capa " << this->_capacity<< C_DEF << std::endl;
+			if (this->_capacity > 0)
+				this->_alloc.deallocate(this->_array, this->_capacity);
 			this->_capacity = capa;
 			this->_array = temp;
 		}

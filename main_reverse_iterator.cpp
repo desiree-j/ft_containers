@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 14:09:01 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/15 17:29:29 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/18 10:11:09 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <deque>
 #include <vector>
 #include "incl.hpp"
-#if 0 //CREATE A REAL STL EXAMPLE
+#if 1 //CREATE A REAL STL EXAMPLE
 	namespace ft = std;
 #else
 	#include "utils.hpp"
@@ -35,14 +35,15 @@ int	main(void)
 	it+=2;
 	ft::reverse_iterator<std::vector<int>::iterator> rev(it);
 	std::cout << *it <<" "<<*rev << std::endl;
-	std::cout << *rev++ << std::endl;
+	std::cout << *(rev++) << std::endl;
 	std::cout << *rev << std::endl;
-	std::cout << *rev-- << std::endl;
+	std::cout << *(rev--) << std::endl;
 	std::cout << *rev << std::endl;
 	std::cout << *(rev - 2) << std::endl;
 	std::cout << *rev << std::endl;
 	std::cout << *rev.base() << std::endl;
 	std::cout << *rev << std::endl;
+	rev[0] = 42;
 	std::cout << rev[0] << std::endl;
 
 }
