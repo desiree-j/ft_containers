@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/18 12:24:25 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/21 14:11:29 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -397,13 +397,19 @@ namespace ft
 				return (this->begin());
 			}
 			if (this->_size == this->_capacity)
-				realloc(this->_capacity * 2);
-			for (iterator it = this->end() + 1; it != position; it--)
 			{
+				size_type elem = position.getPointer() - this->begin().getPointer();
+				realloc(this->_capacity * 2);
+				position = this->begin() + elem;
+			}
+			for (iterator it = this->end() - 1; it != (position - 1); it--)
+			{
+				std::cout << C_GREEN << "it[0]: " << *it << ", it[1]: " << it[1] << C_DEF<< std::endl;
 				it[1] = it[0];
 			}
 			this->_size++;
 			position[0] = val;
+			std::cout << std::endl;
 			return (position);
 		}
 		void insert (iterator position, size_type n, const value_type& val)
