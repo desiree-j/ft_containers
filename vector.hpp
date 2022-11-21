@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/21 17:02:21 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/21 17:43:07 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,10 +132,10 @@ namespace ft
 			this->_ptr = this->_ptr + n;
 			return (*this);
 		}
-		pointer	getPointer()
-		{
-			return (this->_ptr);
-		}
+		//pointer	getPointer()
+		//{
+		//	return (this->_ptr);
+		//}
 		private:
 		pointer _ptr;
 	};
@@ -167,7 +167,7 @@ namespace ft
 			this->_array = this->_alloc.allocate(this->_capacity);
 			for (size_type i = 0; i < this->_capacity; i++)
 			{
-				this->_array[i] = val;
+				this->_alloc.construct(&this->_array[i], val);
 			}
 		}
 		template <class InputIterator> 
@@ -180,7 +180,7 @@ namespace ft
 			this->_array = this->_alloc.allocate(this->_capacity);
 			for (size_type i = 0; i < this->_size; i++)
 			{
-				this->_array[i] = x._array[i];
+				this->_alloc.construct(&this->_array[i], x._array[i]);
 			}
 		}
 		~vector()
@@ -208,7 +208,7 @@ namespace ft
 			}
 			for (size_type i = 0; i < this->_size; i++)
 			{
-				this->_array[i] = x._array[i];
+				this->_alloc.construct(&this->_array[i], x._array[i]);
 			}
 			return (*this);
 		}
@@ -287,13 +287,13 @@ namespace ft
 				T* temp = this->_alloc.allocate(this->_capacity);
 				for (size_type i = 0; i < this->_size; i++)
 				{
-					temp[i] = *first;
+					this->_alloc.construct(&temp[i], *first);
 					this->_alloc.destroy(&this->_array[i]);
 					first++;
 				}
 				for (size_type i = this->_size; i < n; i++)
 				{
-					temp[i] = *first;
+					this->_alloc.construct(&temp[i], *first);
 					first++;
 				}
 				this->_alloc.deallocate(this->_array, this->_capacity);
@@ -304,7 +304,7 @@ namespace ft
 				for (size_type i = 0; i < n; i++)
 				{
 					this->_alloc.destroy(&this->_array[i]);
-					this->_array[i] = *first;
+					this->_alloc.construct(&this->_array[i], *first);
 					first++;
 				}
 			}
@@ -323,12 +323,12 @@ namespace ft
 				T* temp = this->_alloc.allocate(this->_capacity);
 				for (size_type i = 0; i < this->_size; i++)
 				{
-					temp[i] = val;
+					this->_alloc.construct(&temp[i], val);
 					this->_alloc.destroy(&(this->_array[i]));
 				}
 				for (size_type i = this->_size; i < n; i++)
 				{
-					temp[i] = val;
+					this->_alloc.construct(&temp[i], val);
 				}
 				this->_alloc.deallocate(this->_array, this->_capacity);
 				this->_array = temp;
@@ -338,7 +338,7 @@ namespace ft
 				for (size_type i = 0; i < n; i++)
 				{
 					this->_alloc.destroy(&this->_array[i]);
-					this->_array[i] = val;
+					this->_alloc.construct(&this->_array[i], val);
 				}
 				for (size_type i = n; i < this->_size; i++)
 				{
@@ -356,7 +356,7 @@ namespace ft
 		{
 			if (this->_size < this->_capacity)
 			{
-				this->_array[this->_size] = val;
+				this->_alloc.construct(&this->_array[this->_size], val);
 				this->_size++;
 			}
 			else
@@ -365,31 +365,30 @@ namespace ft
 				if (this->_capacity > 0)
 					newCapa = this->_capacity * 2; 
 				realloc(newCapa);
-				this->_array[this->_size] = val;
+				this->_alloc.construct(&this->_array[this->_size], val);
 				this->_size++;
 			}
 		}
 		iterator erase (iterator position)
 		{
-			this->_alloc.destroy(position.getPointer()); //! is the getPointer function allowed???
+			this->_alloc.destroy(&(*position));
 			iterator tmp = position;
 			for (; position < (this->end() - 1); position++)
 			{
-				position[0] = position[1];
+				this->_alloc.construct(position, position[1]);
 			}
 			this->_size--;
 			return(tmp);
 		}
 		iterator erase (iterator first, iterator last)
 		{
-			size_type len = last.getPointer() - first.getPointer();
-			//std::cout << len << std::endl;
+			size_type len = &(*(last)) - &(*(first));
 			iterator tmp = first;
 			for (; first < (this->end() - len); first++)
 			{
 				if (first < last)
 					this->_alloc.destroy(&(*first));
-				first[0] = first[len];
+				this->_alloc.construct(first, first[len]);
 			}
 			this->_size -= len;
 			return(tmp);
@@ -403,16 +402,16 @@ namespace ft
 			}
 			if (this->_size == this->_capacity)
 			{
-				size_type elem = position.getPointer() - this->begin().getPointer();
+				size_type elem = &(*position)- &(*this->begin());
 				realloc(this->_capacity * 2);
 				position = this->begin() + elem;
 			}
 			for (iterator it = this->end() - 1; it != (position - 1); it--)
 			{
-				it[1] = it[0];
+				this->_alloc.construct(&it[1], it[0]);
 			}
 			this->_size++;
-			position[0] = val;
+			this->_alloc.construct(&(*position), val);
 			return (position);
 		}
 		void insert (iterator position, size_type n, const value_type& val)
@@ -424,7 +423,7 @@ namespace ft
 			}
 			else if (this->_size + n > this->_capacity)
 			{
-				size_type elem = position.getPointer() - this->begin().getPointer();
+				size_type elem = &(*position) - &(*this->begin());
 				realloc(this->_size + n);
 				position = this->begin() + elem;
 			}
@@ -432,14 +431,13 @@ namespace ft
 			
 			for (iterator it = this->end() + n; it < (position + n); it--)
 			{
-				it[1] = it[0];
+				this->_alloc.construct(&it[1], it[0]);
 			}
 			for (size_type i = 0; i < n; i++)
 			{
-				position[i] = val;
+				this->_alloc.construct(&position[i], val);
 			}
-		}
-		//todo insert	
+		}	
 		template <class InputIterator>    
 		void insert (iterator position, InputIterator first, InputIterator last)
 		{
@@ -459,14 +457,14 @@ namespace ft
 			}
 			else if (this->_size + n > this->_capacity)
 			{
-				size_type elem = position.getPointer() - this->begin().getPointer();
+				size_type elem = &(*position) - &(*this->begin());
 				realloc(this->_size + n);
 				position = this->begin() + elem;
 			}
 			this->_size += n;
 			for (size_type i = 0; i < n; i++)
 			{
-				position[i] = first;
+				this->_alloc.construct(&position[i], *first);
 				first++;
 			}
 		}
@@ -535,7 +533,7 @@ namespace ft
 				}
 				for (size_type i = this->_size; i < n; i++)
 				{
-					this->_array[i] = val;
+					this->_alloc.construct(&this->_array[i], val);
 				}
 			}
 			this->_size = n;
@@ -614,9 +612,8 @@ namespace ft
 			T* temp = this->_alloc.allocate(capa);
 			for (size_type i = 0; i < this->_size; i++)
 			{
-				temp[i] = this->_array[i];
+				this->_alloc.construct(&temp[i], this->_array[i]);
 			}
-			//std::cout << C_GREEN << capa  << " size "<< this->_size<< ", capa " << this->_capacity<< C_DEF << std::endl;
 			if (this->_capacity > 0)
 				this->_alloc.deallocate(this->_array, this->_capacity);
 			this->_capacity = capa;
