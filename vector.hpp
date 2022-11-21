@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/21 14:19:17 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/21 17:02:21 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,11 +170,11 @@ namespace ft
 				this->_array[i] = val;
 			}
 		}
-		//todo constructor 3
-		//template <class InputIterator> 
-		//vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIterator>::value, T> type = 0)
-		//{
-		//}
+		template <class InputIterator> 
+		vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(), typename enable_if<!is_integral<InputIterator>::value>::type* = 0) : _size(0), _capacity (0), _alloc(alloc)
+		{
+			this->assign(first, last);
+		}
 		vector (const vector& x) : _size(x._size), _capacity(x._capacity), _alloc(x._alloc)
 		{
 			this->_array = this->_alloc.allocate(this->_capacity);
@@ -270,22 +270,25 @@ namespace ft
 			x._capacity = tmpCapacity;
 		}
 		template <class InputIterator>  
-		void assign (InputIterator first, InputIterator last)
-		{
+		void assign (InputIterator first, InputIterator last, typename enable_if<!is_integral<InputIterator>::value>::type* = 0)
+		{ 
 			if (last <= first)
 				return;
-			size_type n = last - first;
+			InputIterator tmp = first;
+			size_type n = 0;
+			while (tmp != last)
+			{
+				tmp++;
+				n++;
+			}
 			if (n > this->_capacity)
 			{
-				while (this->_capacity < n)
-				{
-					this->_capacity *=2;
-				}
+				this->_capacity = n;
 				T* temp = this->_alloc.allocate(this->_capacity);
 				for (size_type i = 0; i < this->_size; i++)
 				{
 					temp[i] = *first;
-					this->_alloc.destroy(this->_array.at(i));
+					this->_alloc.destroy(&this->_array[i]);
 					first++;
 				}
 				for (size_type i = this->_size; i < n; i++)
@@ -298,7 +301,7 @@ namespace ft
 			}
 			else
 			{
-				for (int i = 0; i < n; i++)
+				for (size_type i = 0; i < n; i++)
 				{
 					this->_alloc.destroy(&this->_array[i]);
 					this->_array[i] = *first;
@@ -321,7 +324,7 @@ namespace ft
 				for (size_type i = 0; i < this->_size; i++)
 				{
 					temp[i] = val;
-					this->_alloc.destroy(this->_array.at(i));
+					this->_alloc.destroy(&(this->_array[i]));
 				}
 				for (size_type i = this->_size; i < n; i++)
 				{
@@ -332,14 +335,17 @@ namespace ft
 			}
 			else
 			{
-				for (int i = 0; i < n; i++)
+				for (size_type i = 0; i < n; i++)
 				{
 					this->_alloc.destroy(&this->_array[i]);
 					this->_array[i] = val;
 				}
+				for (size_type i = n; i < this->_size; i++)
+				{
+					this->_alloc.destroy(&(this->_array[i]));
+				}
 			}
-			if (this->_size < n)
-				this->_size = n;
+			this->_size = n;
 		}
 		void pop_back()
 		{
@@ -388,7 +394,6 @@ namespace ft
 			this->_size -= len;
 			return(tmp);
 		}
-		//todo insert	
 		iterator insert (iterator position, const value_type& val)
 		{
 			if (this->_capacity == 0)
@@ -434,10 +439,37 @@ namespace ft
 				position[i] = val;
 			}
 		}
-		//template <class InputIterator>    
-		//void insert (iterator position, InputIterator first, InputIterator last)
-		//{
-		//}
+		//todo insert	
+		template <class InputIterator>    
+		void insert (iterator position, InputIterator first, InputIterator last)
+		{
+			if (last <= first)
+				return;
+			InputIterator tmp = first;
+			size_type n = 0;
+			while (tmp != last)
+			{
+				tmp++;
+				n++;
+			}
+			if (this->_capacity == 0)
+			{
+				this->realloc(n);
+				position = this->begin();
+			}
+			else if (this->_size + n > this->_capacity)
+			{
+				size_type elem = position.getPointer() - this->begin().getPointer();
+				realloc(this->_size + n);
+				position = this->begin() + elem;
+			}
+			this->_size += n;
+			for (size_type i = 0; i < n; i++)
+			{
+				position[i] = first;
+				first++;
+			}
+		}
 
 		//& element access	
 		reference operator[] (size_type n)
