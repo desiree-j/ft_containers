@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 12:29:11 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/21 14:01:26 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/21 14:18:34 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,15 @@ int main(void)
 		}
 		std::cout << std::endl << "size "<<vec.size() << ", capa " << vec.capacity() << std::endl;
 		it = vec.begin();
-		it = vec.insert(vec.begin(), 33);
+		it = vec.insert(it, 33);
 		std::cout << "new element "<< *it << std::endl;
 		std::cout << C_BLUE <<"all elements" << C_DEF << std:: endl;
+		for (size_t i = 0; i < vec.size(); i++)
+		{
+			std::cout << vec[i] << ", ";
+		}
+		std::cout << std::endl << "size "<<vec.size() << ", capa " << vec.capacity() << std::endl;
+		vec.insert(vec.end(), 33, 42);
 		for (size_t i = 0; i < vec.size(); i++)
 		{
 			std::cout << vec[i] << ", ";
