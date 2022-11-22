@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/22 13:09:07 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/22 13:34:08 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -403,7 +403,7 @@ namespace ft
 				realloc(this->_capacity * 2);
 				position = this->begin() + elem;
 			}
-			for (iterator it = this->end() - 1; it != (position - 1); it--)
+			for (iterator it = this->end() - 1; it > (position - 1); it--)
 			{
 				this->_alloc.construct(&it[1], it[0]);
 			}
@@ -436,7 +436,7 @@ namespace ft
 			}
 		}	
 		template <class InputIterator>    
-		void insert (iterator position, InputIterator first, InputIterator last)
+		void insert (iterator position, InputIterator first, InputIterator last, typename enable_if<!is_integral<InputIterator>::value>::type* = 0)
 		{
 			if (last <= first)
 				return;
