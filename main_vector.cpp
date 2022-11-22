@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 12:29:11 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/22 15:35:12 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/22 17:08:29 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -261,7 +261,7 @@ int main(void)
 		for (ft::vector<int>::const_iterator cit = cvec.begin(); cit != cvec.end(); cit++)
 		{
 			std::cout << *cit << " ";
-			*cit = 0;
+			*cit+=2;
 		}
 		std::cout << std::endl;
 		for (ft::vector<int>::const_iterator cit = cvec.begin(); cit != cvec.end(); cit++)

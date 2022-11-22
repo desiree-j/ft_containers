@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:53:38 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/21 13:54:50 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/22 16:15:44 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ namespace ft
 			{
 				return (*(this->_it - 1));
 			}
-			//! pointer operator->() const
 			reverse_iterator operator+(difference_type n)
 			{
 				return (this->_it - n);

@@ -133,12 +133,12 @@
 	class const_vectorIterator
 	{
 		public:
-		typedef typename vector::pointer					pointer;
-		typedef typename vector::reference					reference;
-		typedef typename vector::value_type					value_type;
-		typedef std::ptrdiff_t 								difference_type;
-		typedef std::random_access_iterator_tag				iterator_category;
-		typedef typename vector::size_type					size_type;
+		typedef typename vector::pointer				pointer;
+		typedef typename vector::value_type				value_type;
+		typedef const value_type&						reference;
+		typedef std::ptrdiff_t 							difference_type;
+		typedef std::random_access_iterator_tag			iterator_category;
+		typedef typename vector::size_type				size_type;
 		
 
 		public:
@@ -188,13 +188,15 @@
 		{
 			return (this->_ptr);
 		}
-        const reference operator[](int n) const
+        reference operator[](int n) const
 		{
-			return (*(this->_ptr + n));
+			const value_type ret= *(this->_ptr + n);
+			return (ret);
 		}
-		const reference operator*(void) const
+		reference operator*(void) const
 		{
-			return (*(this->_ptr));
+			const value_type *tmp = (this->_ptr);
+			return (*tmp);
 		}
 		//& increment, decrement
 		const_vectorIterator operator++()
