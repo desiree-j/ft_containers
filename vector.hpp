@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/22 13:34:08 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/22 14:48:13 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -618,7 +618,70 @@ namespace ft
 		}
 		
 	};
-
+	template <class T, class Alloc>  
+	bool operator== (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+	{
+		if(lhs.size() != rhs.size())
+			return (false);
+		for (int i = 0; i < lhs.size(); i++)
+		{
+			if (lhs._array[i] != rhs->_array[i])
+				return (false);
+		}
+		return (true);
+	}
+	template <class T, class Alloc>  
+	bool operator!= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+	{
+		return (!(lhs == rhs));
+	}
+	template <class T, class Alloc>  
+	bool operator<  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+	{
+		int end = rhs._size;
+		if (lhs._size < rhs._size)
+			end = lhs._size;
+		for (int i = 0; i < end; i++)
+		{
+			if (lhs._array[i] < rhs._array[i])
+				return (true);
+			else if (lhs._array[i] > rhs._array[i])
+				return (false);
+		}
+		if (lhs._size < rhs._size)
+			return (true);
+		return (false);
+	}
+	template <class T, class Alloc>  
+	bool operator<= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+	{
+		return (!(lhs > rhs));
+	}
+	template <class T, class Alloc>  
+	bool operator>  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+	{
+		return (rhs < lhs);
+	}
+	template <class T, class Alloc>  
+	bool operator>= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+	{
+		return (!(lhs < rhs));
+	}
+	template <class T, class Alloc>  
+	void swap (vector<T,Alloc>& x, vector<T,Alloc>& y)
+	{
+		
+		size_type 	tmpSize = y._size;
+		T 			*tmpArray = y._array;
+		size_type 	tmpCapacity = y._capacity;
+		
+		y._size = x._size;
+		y._array = x._array;
+		y._capacity = x._capacity;
+		x._size = tmpSize;
+		x._array = tmpArray;
+		x._capacity = tmpCapacity;
+	}
 }
 
 

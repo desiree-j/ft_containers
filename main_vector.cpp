@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 12:29:11 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/22 14:00:59 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/22 14:39:59 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <string>
 #include <deque>
 #include "incl.hpp"
-#if 1  //CREATE A REAL STL EXAMPLE
+#if 0  //CREATE A REAL STL EXAMPLE
 	#include <vector>
 	namespace ft = std; 
 #else
@@ -36,7 +36,7 @@ void	print_vector(ft::vector<T> vec)
 			std::cout << vec[i] << " ";
 		}
 	}
-	std::cout << std::endl << "size "<<vec.size() << ", capacity " << vec.capacity() << std::endl;
+	std::cout << std::endl;
 }
 
 int main(void) 
@@ -69,17 +69,20 @@ int main(void)
 		std::cout << C_BLUE << "default constructor" << C_DEF << std::endl;
 		ft::vector<int> vec;
 		print_vector(vec);
+		std::cout << "size "<<vec.size() << ", capacity " << vec.capacity() << std::endl;
 		std::cout << C_BLUE << "constructor 2 with size 5" << C_DEF << std::endl;
 		ft::vector<int> vec2(5,5);
 		print_vector(vec2);
+		std::cout << "size "<<vec2.size() << ", capacity " << vec2.capacity() << std::endl;
 		ft::vector<int> vec3(vec2);
 		vec3.push_back(12);
 		ft::vector<int> vec4(6,6);
 		std::cout << C_BLUE << "add to empty vector" << C_DEF << std::endl;
-		for(int i = 0; i < 15; i++)
+		for(int i = 0; i < 14; i++)
 		{
 			vec.push_back(i);
 			print_vector(vec);
+			std::cout << "size "<<vec.size() << ", capacity " << vec.capacity() << std::endl;
 		}
 		std::cout << C_BLUE << "resize to 20" << C_DEF << std::endl;
 		vec.resize(20, 5);
@@ -87,9 +90,11 @@ int main(void)
 		std::cout << C_BLUE << "reserve space" << C_DEF << std::endl;
 		std::cout << C_BLUE << "before" << C_DEF << std::endl;
 		print_vector(vec3);
+		std::cout << "size "<<vec3.size() << ", capacity " << vec3.capacity() << std::endl;
 		vec3.reserve(18);
 		std::cout << C_BLUE << "after" << C_DEF << std::endl;
 		print_vector(vec3);
+		std::cout << "size "<<vec3.size() << ", capacity " << vec3.capacity() << std::endl;
 		std::cout <<  C_BLUE <<"max_size: " << vec.max_size() << C_DEF << std::endl;
 		std::cout << "---------------------------------------------------" << std::endl;
 	}
@@ -123,23 +128,30 @@ int main(void)
 		}
 		print_vector(vec);
 		ft::vector<int>::iterator it = vec.begin();
-		//ft::vector<int>::iterator it2 = vec.end();
 		it = vec.insert(it, 42);
 		std::cout << "new element = " << *it << std::endl;
 		std::cout << C_BLUE << "after erase" << C_DEF << std::endl;
 		print_vector(vec);
-		//vec.insert(it, 5, 24);
-		//std::cout << C_BLUE << "after insert" << C_DEF << std::endl;
-		//for(size_t i = 0; i < vec.size(); i++)
-		//{
-		//	std::cout << "element "<< i << " = " << vec[i] << std::endl;
-		//}
-		//std::cout << "size "<<vec.size() << ", capa " << vec.capacity() << std::endl;
+		
+		ft::vector<int> vec2(7, 1);	
+		std::cout << C_BLUE << "swap vec and vec2" << C_DEF << std::endl;
+		std::cout << C_BLUE << "before" << C_DEF << std::endl;
+		print_vector(vec);
+		std::cout << "size "<<vec.size() << ", capacity " << vec.capacity() << std::endl;
+		print_vector(vec2);
+		std::cout << "size "<<vec2.size() << ", capacity " << vec2.capacity() << std::endl;
+		vec.swap(vec2);
+		std::cout << C_BLUE << "after" << C_DEF << std::endl;
+		print_vector(vec);
+		std::cout << "size "<<vec.size() << ", capacity " << vec.capacity() << std::endl;
+		print_vector(vec2);
+		std::cout << "size "<<vec2.size() << ", capacity " << vec2.capacity() << std::endl;
+		
 		std::cout << C_BLUE << "assign size 25, value 5" << C_DEF << std::endl;
+		print_vector(vec2);
 		vec.assign(25, 5);
 		print_vector(vec);
 		std::cout << C_BLUE << "assign range" << C_DEF << std::endl;
-		ft::vector<int> vec2(7, 1);	
 		it = vec.begin();
 		ft::vector<int>::iterator it2 = vec.end();
 		vec2.assign(it, it2);
