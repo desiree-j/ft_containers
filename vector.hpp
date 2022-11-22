@@ -6,136 +6,19 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/22 14:48:13 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/22 15:15:49 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
-# include <cmath>
 # include <stdexcept> 
 # include "utils.hpp"
 # include "reverse_iterator.hpp"
+# include "vectorIterator.hpp"
 
 namespace ft
 {
-
-	template <typename vector>
-	class vectorIterator
-	{
-		public:
-		typedef typename vector::pointer					pointer;
-		typedef typename vector::reference					reference;
-		typedef typename vector::value_type					value_type;
-		typedef std::ptrdiff_t 								difference_type;
-		typedef std::random_access_iterator_tag				iterator_category;
-		typedef typename vector::size_type					size_type;
-		
-
-		public:
-		vectorIterator() : _ptr(NULL) {}
-		vectorIterator(pointer ptr) : _ptr(ptr){}
-		~vectorIterator(void){}
-		vectorIterator(const vectorIterator& rhs)
-		{
-			this->_ptr = rhs._ptr;
-		}
-		vectorIterator& operator=(const vectorIterator& rhs)
-		{
-			this->_ptr = rhs._ptr;
-			return (*this);
-		}
-		//& comparison
-		bool operator==(const vectorIterator &rhs) const
-		{
-			if(this->_ptr == rhs._ptr)
-				return (true);
-			return (false);
-		}
-		bool operator!=(const vectorIterator &rhs) const
-		{
-			return(!(*this == rhs));
-		}
-		bool operator<(const vectorIterator &rhs) const
-		{
-			if (this->_ptr < rhs._ptr)
-				return (true);
-			return(false);
-		}
-		bool operator>(const vectorIterator &rhs) const
-		{
-			return(rhs < *this);
-		}
-		bool operator<=(const vectorIterator &rhs) const
-		{
-			return(!(*this > rhs));
-		}
-		bool operator>=(const vectorIterator &rhs) const
-		{
-			return(!(*this < rhs));
-		}
-		//& (de)referencing
-        pointer operator->() const
-		{
-			return (this->_ptr);
-		}
-        reference operator[](int n) const
-		{
-			return (*(this->_ptr + n));
-		}
-		reference operator*(void) const
-		{
-			return (*(this->_ptr));
-		}
-		//& increment, decrement
-		vectorIterator operator++()
-		{
-			this->_ptr++;
-			return (*this);
-		}
-		vectorIterator operator++(int)
-		{
-			vectorIterator tmp = *this;
-			this->_ptr++;
-			return (tmp);
-		}
-		vectorIterator operator--()
-		{
-			this->_ptr--;
-			return (*this);
-		}
-		vectorIterator operator--(int)
-		{
-			vectorIterator tmp = *this;
-			--(*this);
-			return (tmp);
-		}
-		friend vectorIterator operator+(difference_type n , const vectorIterator& it)
-		{
-			return(vectorIterator(it._ptr + n));
-		}
-		vectorIterator operator+(difference_type n)
-		{
-			return (this->_ptr + n);
-		}
-		vectorIterator operator-(difference_type n)
-		{
-			return (this->_ptr - n);
-		}
-		vectorIterator operator-=(difference_type n)
-		{
-			this->_ptr = this->_ptr - n;
-			return (*this);
-		}
-		vectorIterator operator+=(difference_type n)
-		{
-			this->_ptr = this->_ptr + n;
-			return (*this);
-		}
-		private:
-		pointer _ptr;
-	};
-
 
 	template <class T, class Alloc =  std::allocator<T> >
 	class vector
@@ -149,10 +32,11 @@ namespace ft
 		typedef typename allocator_type::pointer								pointer;
 		typedef typename allocator_type::const_pointer							const_pointer;
 		typedef typename allocator_type::size_type								size_type;
+		typedef typename allocator_type::difference_type						difference_type;
 		typedef vectorIterator<vector>											iterator;
-		typedef const vectorIterator<vector>									const_iterator;
+		typedef const_vectorIterator<vector>									const_iterator;
 		typedef ft::reverse_iterator<iterator>									reverse_iterator;
-		typedef const ft::reverse_iterator<const_iterator>						const_reverse_iterator;
+		typedef ft::reverse_iterator<const_iterator>							const_reverse_iterator;
 
 		public:
 		explicit vector (const allocator_type& alloc = allocator_type()) : _size(0), _capacity(0), _array(NULL), _alloc(alloc)
@@ -216,7 +100,7 @@ namespace ft
 		}
 		const_iterator begin() const
 		{
-			return (iterator(&this->_array[0]));
+			return (const_iterator(&this->_array[0]));
 		}
 		iterator end()
 		{
@@ -224,7 +108,7 @@ namespace ft
 		}
 		const_iterator end() const
 		{
-			return (iterator(&this->_array[this->_size]));
+			return (const_iterator(&this->_array[this->_size]));
 		}
 		reverse_iterator rbegin()
 		{
@@ -551,50 +435,50 @@ namespace ft
 			return (this->_capacity);
 		}
 		
-		//& comparisons
-		bool operator== (const vector &rhs) const
-		{
-			if(this->size() != rhs.size())
-				return (false);
-			for (int i = 0; i < this->size(); i++)
-			{
-				if (this->_array[i] != rhs->_array[i])
-					return (false);
-			}
-			return (true);
-		}
-		bool operator!= (const vector &rhs) const
-		{
-			return (!(*this == rhs));
-		}
-		bool operator< (const vector &rhs) const
-		{
-			int end = rhs._size;
-			if (this->_size < rhs._size)
-				end = this->_size;
-			for (int i = 0; i < end; i++)
-			{
-				if (this->_array[i] < rhs._array[i])
-					return (true);
-				else if (this->_array[i] > rhs._array[i])
-					return (false);
-			}
-			if (this->_size < rhs._size)
-				return (true);
-			return (false);
-		}
-		bool operator<= (const vector &rhs) const
-		{
-			return (!(*this > rhs));
-		}
-		bool operator> (const vector &rhs) const
-		{
-			return (rhs < *this);
-		}
-		bool operator>= (const vector &rhs) const
-		{
-			return (!(*this < rhs));
-		}
+		////& comparisons
+		//bool operator== (const vector &rhs) const
+		//{
+		//	if(this->size() != rhs.size())
+		//		return (false);
+		//	for (int i = 0; i < this->size(); i++)
+		//	{
+		//		if (this->_array[i] != rhs->_array[i])
+		//			return (false);
+		//	}
+		//	return (true);
+		//}
+		//bool operator!= (const vector &rhs) const
+		//{
+		//	return (!(*this == rhs));
+		//}
+		//bool operator< (const vector &rhs) const
+		//{
+		//	int end = rhs._size;
+		//	if (this->_size < rhs._size)
+		//		end = this->_size;
+		//	for (int i = 0; i < end; i++)
+		//	{
+		//		if (this->_array[i] < rhs._array[i])
+		//			return (true);
+		//		else if (this->_array[i] > rhs._array[i])
+		//			return (false);
+		//	}
+		//	if (this->_size < rhs._size)
+		//		return (true);
+		//	return (false);
+		//}
+		//bool operator<= (const vector &rhs) const
+		//{
+		//	return (!(*this > rhs));
+		//}
+		//bool operator> (const vector &rhs) const
+		//{
+		//	return (rhs < *this);
+		//}
+		//bool operator>= (const vector &rhs) const
+		//{
+		//	return (!(*this < rhs));
+		//}
 
 		private:
 		size_type				_size;
@@ -638,17 +522,17 @@ namespace ft
 	template <class T, class Alloc>  
 	bool operator<  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 	{
-		int end = rhs._size;
-		if (lhs._size < rhs._size)
-			end = lhs._size;
+		int end = rhs.size();
+		if (lhs.size() < rhs.size())
+			end = lhs.size();
 		for (int i = 0; i < end; i++)
 		{
-			if (lhs._array[i] < rhs._array[i])
+			if (lhs[i] < rhs[i])
 				return (true);
-			else if (lhs._array[i] > rhs._array[i])
+			else if (lhs[i] > rhs[i])
 				return (false);
 		}
-		if (lhs._size < rhs._size)
+		if (lhs.size() < rhs.size())
 			return (true);
 		return (false);
 	}
@@ -670,17 +554,9 @@ namespace ft
 	template <class T, class Alloc>  
 	void swap (vector<T,Alloc>& x, vector<T,Alloc>& y)
 	{
-		
-		size_type 	tmpSize = y._size;
-		T 			*tmpArray = y._array;
-		size_type 	tmpCapacity = y._capacity;
-		
-		y._size = x._size;
-		y._array = x._array;
-		y._capacity = x._capacity;
-		x._size = tmpSize;
-		x._array = tmpArray;
-		x._capacity = tmpCapacity;
+		vector<T, Alloc> &tmp(x);
+		x = y;
+		y = x;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 12:29:11 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/22 14:39:59 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/22 15:35:12 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,5 +255,19 @@ int main(void)
 		std::cout << "it2 <= it3: " << std::boolalpha << comp << std::endl;
 		comp = it2 >= it3;
 		std::cout << "it2 >= it3: " << std::boolalpha << comp << std::endl;
+
+		std::cout << C_BLUE << "const iterator" << C_DEF << std::endl;
+		const ft::vector<int> cvec(10, 5);
+		for (ft::vector<int>::const_iterator cit = cvec.begin(); cit != cvec.end(); cit++)
+		{
+			std::cout << *cit << " ";
+			*cit = 0;
+		}
+		std::cout << std::endl;
+		for (ft::vector<int>::const_iterator cit = cvec.begin(); cit != cvec.end(); cit++)
+		{
+			std::cout << *cit << " ";
+		}
+		std::cout << std::endl;
 	}
 }

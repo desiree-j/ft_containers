@@ -6,7 +6,7 @@
 #    By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 07:05:44 by djedasch          #+#    #+#              #
-#    Updated: 2022/11/16 13:55:54 by djedasch         ###   ########.fr        #
+#    Updated: 2022/11/22 15:30:09 by djedasch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,8 +43,8 @@ $(NAME): $(OBJS)
 vector: $(VEC_SRCS)
 	$(CC) $(CFLACS) $^ -o ft_vector
 
-utils: $(UTIL_SRCS)
-	$(CC) $(CFLACS) $^ -o ft_utils
+iterator: $(UTIL_SRCS)
+	$(CC) $(CFLACS) $^ -o ft_iterator
 
 clean: 
 	rm -f $(OBJS) 
