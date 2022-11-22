@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 12:29:11 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/21 16:52:35 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/22 13:09:12 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,35 +26,37 @@
 template <class T>
 void	print_vector(ft::vector<T> vec)
 {
-	std::cout << C_BLUE <<"all elements" << C_DEF << std:: endl;
+	std::cout << C_YELLOW <<"all elements" << C_DEF << std:: endl;
 	for (size_t i = 0; i < vec.size(); i++)
 	{
-		std::cout << vec[i] << ", ";
+		std::cout << vec[i] << " ";
 	}
 	std::cout << std::endl << "size "<<vec.size() << ", capa " << vec.capacity() << std::endl;
 }
 
 int main(void) 
 {
-	//{	//&constructor, destructor
-	//	std::cout << C_RED << "Test constructors" << C_DEF << std::endl;
-	//	std::cout << C_BLUE << "default constructor" << C_DEF << std::endl;
-	//	ft::vector<int> vec;
-	//	std::cout << "size "<<vec.size() << ", capa " << vec.capacity() << std::endl;
-	//	std::cout << C_BLUE << "constructor 2 (fill)" << C_DEF << std::endl;
-	//	ft::vector<int> vec2(5,5);
-	//	std::cout << "size "<<vec2.size() << ", capa " << vec2.capacity() << std::endl;
-	//	//todo range constructor
-	//	std::cout << C_BLUE << "copy constructor" << C_DEF << std::endl;
-	//	ft::vector<int> vec3(vec2);
-	//	std::cout << "size "<<vec3.size() << ", capa " << vec3.capacity() << std::endl;
-	//	std::cout << C_BLUE << "copy assignment overload constructor" << C_DEF << std::endl;
-	//	ft::vector<int> vec4(6,6);
-	//	vec4 = vec3;
-	//	//todo get_allocator
-	//	//todo check memory leaks
-	//}
-
+	{	//&constructor, destructor
+		std::cout << C_RED << "Test constructors" << C_DEF << std::endl;
+		std::cout << C_BLUE << "default constructor" << C_DEF << std::endl;
+		ft::vector<int> vec;
+		print_vector(vec);
+		std::cout << C_BLUE << "constructor 2 (fill)" << C_DEF << std::endl;
+		ft::vector<int> vec2(5,5);
+		print_vector(vec2);
+		std::cout << C_BLUE << "constructor 3 (range)" << C_DEF << std::endl;
+		ft::vector<int>vec5(vec2.begin(), vec2.end());
+		print_vector(vec5);
+		std::cout << C_BLUE << "copy constructor" << C_DEF << std::endl;
+		ft::vector<int> vec3(vec2);
+		print_vector(vec3);
+		std::cout << C_BLUE << "copy assignment overload constructor" << C_DEF << std::endl;
+		ft::vector<int> vec4(6,6);
+		print_vector(vec4);
+		vec4 = vec3;
+		print_vector(vec3);
+		//todo get_allocator
+	}
 	//{	//&capacity
 	//	std::cout << C_RED << "Test capacity" << C_DEF << std::endl;
 	//	std::cout << C_BLUE << "default constructor" << C_DEF << std::endl;
@@ -89,71 +91,71 @@ int main(void)
 	//	std::cout << "max_size: " << vec.max_size() << std::endl;
 	//}
 
-	{ //&insert
-		//std::cout << C_RED << "Test insert" << C_DEF << std::endl;
-		//ft::vector<int> vec;
-		//ft::vector<int>::iterator it = vec.begin();
-		//it = vec.insert(it, 42);
-		//std::cout << "new element "<< *it << std::endl;
-		//for(int i = 0; i < 15; i++)
-		//{
-		//	vec.push_back(i);
-		//}
-		//std::cout << C_BLUE <<"all elements" << C_DEF << std:: endl;
-		//for (size_t i = 0; i < vec.size(); i++)
-		//{
-		//	std::cout << vec[i] << ", ";
-		//}
-		//std::cout << std::endl << "size "<<vec.size() << ", capa " << vec.capacity() << std::endl;
-		//it = vec.begin();
-		//it = vec.insert(it, 33);
-		//std::cout << "new element "<< *it << std::endl;
-		//std::cout << C_BLUE <<"all elements" << C_DEF << std:: endl;
-		//for (size_t i = 0; i < vec.size(); i++)
-		//{
-		//	std::cout << vec[i] << ", ";
-		//}
-		//std::cout << std::endl << "size "<<vec.size() << ", capa " << vec.capacity() << std::endl;
-		//vec.insert(vec.end(), 33, 42);
-		//for (size_t i = 0; i < vec.size(); i++)
-		//{
-		//	std::cout << vec[i] << ", ";
-		//}
-		//std::cout << std::endl << "size "<<vec.size() << ", capa " << vec.capacity() << std::endl;
-	}
-	{	//& modifiers
-		std::cout << C_RED << "Test modifier functions" << C_DEF << std::endl;
-		ft::vector<int> vec(1, 1);	
-		std::cout << C_BLUE << "before erase" << C_DEF << std::endl;
-		for(int i = 0; i < 15; i++)
-		{
-			vec.push_back(i);
-		}
-		print_vector(vec);
-		ft::vector<int>::iterator it = vec.begin();
-		//ft::vector<int>::iterator it2 = vec.end();
-		it = vec.insert(it, 42);
-		std::cout << "new element = " << *it << std::endl;
-		std::cout << C_BLUE << "after erase" << C_DEF << std::endl;
-		print_vector(vec);
-		//vec.insert(it, 5, 24);
-		//std::cout << C_BLUE << "after insert" << C_DEF << std::endl;
-		//for(size_t i = 0; i < vec.size(); i++)
-		//{
-		//	std::cout << "element "<< i << " = " << vec[i] << std::endl;
-		//}
-		//std::cout << "size "<<vec.size() << ", capa " << vec.capacity() << std::endl;
-		std::cout << C_BLUE << "assign size 25, value 5" << C_DEF << std::endl;
-		vec.assign(25, 5);
-		print_vector(vec);
-		std::cout << C_BLUE << "assign range" << C_DEF << std::endl;
-		ft::vector<int> vec2(7, 1);	
-		it = vec.begin();
-		ft::vector<int>::iterator it2 = vec.end();
-		vec2.assign(it, it2);
-		print_vector(vec2);
+	//{ //&insert
+	//	//std::cout << C_RED << "Test insert" << C_DEF << std::endl;
+	//	//ft::vector<int> vec;
+	//	//ft::vector<int>::iterator it = vec.begin();
+	//	//it = vec.insert(it, 42);
+	//	//std::cout << "new element "<< *it << std::endl;
+	//	//for(int i = 0; i < 15; i++)
+	//	//{
+	//	//	vec.push_back(i);
+	//	//}
+	//	//std::cout << C_BLUE <<"all elements" << C_DEF << std:: endl;
+	//	//for (size_t i = 0; i < vec.size(); i++)
+	//	//{
+	//	//	std::cout << vec[i] << ", ";
+	//	//}
+	//	//std::cout << std::endl << "size "<<vec.size() << ", capa " << vec.capacity() << std::endl;
+	//	//it = vec.begin();
+	//	//it = vec.insert(it, 33);
+	//	//std::cout << "new element "<< *it << std::endl;
+	//	//std::cout << C_BLUE <<"all elements" << C_DEF << std:: endl;
+	//	//for (size_t i = 0; i < vec.size(); i++)
+	//	//{
+	//	//	std::cout << vec[i] << ", ";
+	//	//}
+	//	//std::cout << std::endl << "size "<<vec.size() << ", capa " << vec.capacity() << std::endl;
+	//	//vec.insert(vec.end(), 33, 42);
+	//	//for (size_t i = 0; i < vec.size(); i++)
+	//	//{
+	//	//	std::cout << vec[i] << ", ";
+	//	//}
+	//	//std::cout << std::endl << "size "<<vec.size() << ", capa " << vec.capacity() << std::endl;
+	//}
+	//{	//& modifiers
+	//	std::cout << C_RED << "Test modifier functions" << C_DEF << std::endl;
+	//	ft::vector<int> vec(1, 1);	
+	//	std::cout << C_BLUE << "before erase" << C_DEF << std::endl;
+	//	for(int i = 0; i < 15; i++)
+	//	{
+	//		vec.push_back(i);
+	//	}
+	//	print_vector(vec);
+	//	ft::vector<int>::iterator it = vec.begin();
+	//	//ft::vector<int>::iterator it2 = vec.end();
+	//	it = vec.insert(it, 42);
+	//	std::cout << "new element = " << *it << std::endl;
+	//	std::cout << C_BLUE << "after erase" << C_DEF << std::endl;
+	//	print_vector(vec);
+	//	//vec.insert(it, 5, 24);
+	//	//std::cout << C_BLUE << "after insert" << C_DEF << std::endl;
+	//	//for(size_t i = 0; i < vec.size(); i++)
+	//	//{
+	//	//	std::cout << "element "<< i << " = " << vec[i] << std::endl;
+	//	//}
+	//	//std::cout << "size "<<vec.size() << ", capa " << vec.capacity() << std::endl;
+	//	std::cout << C_BLUE << "assign size 25, value 5" << C_DEF << std::endl;
+	//	vec.assign(25, 5);
+	//	print_vector(vec);
+	//	std::cout << C_BLUE << "assign range" << C_DEF << std::endl;
+	//	ft::vector<int> vec2(7, 1);	
+	//	it = vec.begin();
+	//	ft::vector<int>::iterator it2 = vec.end();
+	//	vec2.assign(it, it2);
+	//	print_vector(vec2);
 
-	}
+	//}
 
 	//{	//& element access
 	//	std::cout << C_RED << "Test element access functions" << C_DEF << std::endl;

@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/21 17:43:07 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/22 13:09:07 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,10 +132,6 @@ namespace ft
 			this->_ptr = this->_ptr + n;
 			return (*this);
 		}
-		//pointer	getPointer()
-		//{
-		//	return (this->_ptr);
-		//}
 		private:
 		pointer _ptr;
 	};
@@ -283,8 +279,7 @@ namespace ft
 			}
 			if (n > this->_capacity)
 			{
-				this->_capacity = n;
-				T* temp = this->_alloc.allocate(this->_capacity);
+				T* temp = this->_alloc.allocate(n);
 				for (size_type i = 0; i < this->_size; i++)
 				{
 					this->_alloc.construct(&temp[i], *first);
@@ -296,8 +291,10 @@ namespace ft
 					this->_alloc.construct(&temp[i], *first);
 					first++;
 				}
-				this->_alloc.deallocate(this->_array, this->_capacity);
+				if (this->_capacity > 0)
+					this->_alloc.deallocate(this->_array, this->_capacity);
 				this->_array = temp;
+				this->_capacity = n;
 			}
 			else
 			{
