@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:56:26 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/23 15:10:07 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/23 16:05:11 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ namespace ft
 	};
 
 	//& ft::is_integral
-	 template <class T, T v>
+	template <class T, T v>
     struct integral_constant 
     {
         static const T value = v;
@@ -112,7 +112,6 @@ namespace ft
     }
 
 	//& ft::lexicographical_compare
-	// 1 < 2
 	template <class InputIterator1, class InputIterator2>  
 	bool lexicographical_compare (InputIterator1 first1, InputIterator1 last1, InputIterator2 first2, InputIterator2 last2)
 	{
