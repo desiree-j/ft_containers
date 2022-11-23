@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:56:26 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/11 10:47:25 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/23 14:40:38 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,36 @@
 namespace ft
 {
 
-	//todo ft::iterator_traits
+	//& ft::iterator_traits
+    template <class Iterator> 
+    class iterator_traits
+    {
+        typedef typename Iterator::value_type            value_type;
+        typedef typename Iterator::difference_type       difference_type;
+        typedef typename Iterator::iterator_category     iterator_category;
+        typedef typename Iterator::pointer               pointer;
+        typedef typename Iterator::reference             reference;
+    }
+    template <class T> 
+    class iterator_traits<T*>
+    {
+        typedef ptrdiff_t                    difference_type;
+        typedef T                            value_type;
+        typedef T*                           pointer;
+        typedef T&                           reference;
+        typedef random_access_iterator_tag   iterator_category;
+    }
+    template <class T> 
+    class iterator_traits<const T*>
+    {
+        typedef ptrdiff_t                    difference_type;
+        typedef T                            value_type;
+        typedef const T*                     pointer;
+        typedef const T&                     reference;
+        typedef random_access_iterator_tag   iterator_category;
+    }
+
+
 	//& ft::enable_if
 	template <bool, typename T = void>
 	struct enable_if
@@ -57,6 +86,22 @@ namespace ft
 	
 	//todo ft::equal and/or ft::lexicographical_compare
 	//todo ft::pair
+    template <class T1, class T2> 
+    struct pair
+    {
+        typedef T1 first_type;
+        typedef T2 second_type;
+
+        public:
+        pair();
+        template<class U, class V> pair (const pair<U,V>& pr);
+        pair (const first_type& a, const second_type& b);
+
+        private:
+        first_type  first;
+        second_type second;
+    }
+    
 	//todo ft::make_pair
 
 }
