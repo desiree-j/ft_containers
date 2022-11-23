@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:34 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/23 14:24:42 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/23 14:59:01 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,11 @@ namespace ft
 		container_type c;
 
 	};
-	//template <class T, class Container>  bool operator== (const stack<T,Container>& lhs, const stack<T,Container>& rhs);
+	template <class T, class Container>  
+	bool operator== (const stack<T,Container>& lhs, const stack<T,Container>& rhs)
+	{
+		return (equal(lhs.c.begin(), lhs.c.end(), rhs.c.begin()));
+	}
 	//template <class T, class Container>  bool operator!= (const stack<T,Container>& lhs, const stack<T,Container>& rhs);
 	//template <class T, class Container>  bool operator<  (const stack<T,Container>& lhs, const stack<T,Container>& rhs);
 	//template <class T, class Container>  bool operator<= (const stack<T,Container>& lhs, const stack<T,Container>& rhs);
