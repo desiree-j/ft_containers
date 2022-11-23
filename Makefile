@@ -6,7 +6,7 @@
 #    By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 07:05:44 by djedasch          #+#    #+#              #
-#    Updated: 2022/11/22 15:30:09 by djedasch         ###   ########.fr        #
+#    Updated: 2022/11/23 15:13:33 by djedasch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,11 +18,11 @@ VEC_SRCS 	= main_vector.cpp
 
 UTIL_SRCS 	= main_reverse_iterator.cpp
 
+STACK_SRCS	= main_stack.cpp
+
+MAP_SRCS	= main_map.cpp
+
 OBJS		= $(SRCS:.cpp=.o)
-
-#VEC_OBJS	= $(VEC_SRCS:.cpp=.o)
-
-#UTIL_OBJS	= $(UTIL_SRCS:.cpp=.o)
 
 CC			= c++
 
@@ -45,6 +45,12 @@ vector: $(VEC_SRCS)
 
 iterator: $(UTIL_SRCS)
 	$(CC) $(CFLACS) $^ -o ft_iterator
+
+stack: $(STACK_SRCS)
+	$(CC) $(CFLACS) $^ -o ft_stack
+
+map: $(MAP_SRCS)
+	$(CC) $(CFLACS) $^ -o ft_map
 
 clean: 
 	rm -f $(OBJS) 
