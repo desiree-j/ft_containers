@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/22 16:08:29 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/23 14:07:01 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -435,52 +435,7 @@ namespace ft
 			return (this->_capacity);
 		}
 		
-		////& comparisons
-		//bool operator== (const vector &rhs) const
-		//{
-		//	if(this->size() != rhs.size())
-		//		return (false);
-		//	for (int i = 0; i < this->size(); i++)
-		//	{
-		//		if (this->_array[i] != rhs->_array[i])
-		//			return (false);
-		//	}
-		//	return (true);
-		//}
-		//bool operator!= (const vector &rhs) const
-		//{
-		//	return (!(*this == rhs));
-		//}
-		//bool operator< (const vector &rhs) const
-		//{
-		//	int end = rhs._size;
-		//	if (this->_size < rhs._size)
-		//		end = this->_size;
-		//	for (int i = 0; i < end; i++)
-		//	{
-		//		if (this->_array[i] < rhs._array[i])
-		//			return (true);
-		//		else if (this->_array[i] > rhs._array[i])
-		//			return (false);
-		//	}
-		//	if (this->_size < rhs._size)
-		//		return (true);
-		//	return (false);
-		//}
-		//bool operator<= (const vector &rhs) const
-		//{
-		//	return (!(*this > rhs));
-		//}
-		//bool operator> (const vector &rhs) const
-		//{
-		//	return (rhs < *this);
-		//}
-		//bool operator>= (const vector &rhs) const
-		//{
-		//	return (!(*this < rhs));
-		//}
-
-		private:
+		protected:
 		size_type				_size;
 		size_type				_capacity;
 		T*						_array;
