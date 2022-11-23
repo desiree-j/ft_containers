@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:56:26 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/23 14:40:38 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/23 14:52:36 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,9 @@ namespace ft
     template <> struct is_integral<unsigned long long> : public true_type { };
 	
 	//todo ft::equal and/or ft::lexicographical_compare
-	//todo ft::pair
+
+    
+	//& ft::pair
     template <class T1, class T2> 
     struct pair
     {
@@ -93,16 +95,38 @@ namespace ft
         typedef T2 second_type;
 
         public:
-        pair();
-        template<class U, class V> pair (const pair<U,V>& pr);
-        pair (const first_type& a, const second_type& b);
+        pair() : first(first_type()), second(second_type()) {}
+        template<class U, class V> 
+        pair (const pair<U,V>& pr)
+        {
+            this->first = first_type(pr.first);
+            this->second = second_type(pr.second);
+        }
+        pair (const first_type& a, const second_type& b) : first(a), second(b) {}
+        pair& operator= (const pair& pr)
+        {
+            this->first = first_type(pr.first);
+            this->second = second_type(pr.second);
+            return (*this);            
+        }
 
         private:
         first_type  first;
         second_type second;
-    }
+    };
+    template <class T1, class T2>  bool operator== (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs);
+    template <class T1, class T2>  bool operator!= (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs);
+    template <class T1, class T2>  bool operator<  (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs);
+    template <class T1, class T2>  bool operator<= (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs);
+    template <class T1, class T2>  bool operator>  (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs);
+    template <class T1, class T2>  bool operator>= (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs);
     
-	//todo ft::make_pair
+	//& ft::make_pair
+    template <class T1, class T2>  
+    pair<T1,T2> make_pair (T1 x, T2 y)
+    {
+        return (pair<T1,T2>(x,y));
+    }
 
 }
 #endif
