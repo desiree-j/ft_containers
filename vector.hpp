@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/23 16:45:33 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/23 16:57:25 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -461,14 +461,6 @@ namespace ft
 	bool operator== (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 	{
 		return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
-		//if(lhs.size() != rhs.size())
-		//	return (false);
-		//for (int i = 0; i < lhs.size(); i++)
-		//{
-		//	if (lhs._array[i] != rhs->_array[i])
-		//		return (false);
-		//}
-		//return (true);
 	}
 	template <class T, class Alloc>  
 	bool operator!= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
@@ -479,19 +471,6 @@ namespace ft
 	bool operator<  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 	{
 		return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), lhs.end()));
-		//int end = rhs.size();
-		//if (lhs.size() < rhs.size())
-		//	end = lhs.size();
-		//for (int i = 0; i < end; i++)
-		//{
-		//	if (lhs[i] < rhs[i])
-		//		return (true);
-		//	else if (lhs[i] > rhs[i])
-		//		return (false);
-		//}
-		//if (lhs.size() < rhs.size())
-		//	return (true);
-		//return (false);
 	}
 	template <class T, class Alloc>  
 	bool operator<= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
