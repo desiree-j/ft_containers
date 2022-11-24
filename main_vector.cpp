@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 12:29:11 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/22 17:08:29 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/23 18:13:30 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <string>
 #include <deque>
 #include "incl.hpp"
-#if 0  //CREATE A REAL STL EXAMPLE
+#if 1  //CREATE A REAL STL EXAMPLE
 	#include <vector>
 	namespace ft = std; 
 #else
@@ -204,6 +204,10 @@ int main(void)
 		std::cout << "vec >= vec2: " << std::boolalpha << comp << std::endl;
 		comp = vec <= vec2;
 		std::cout << "vec <= vec2: " << std::boolalpha << comp << std::endl;
+		comp = vec == vec2;
+		std::cout << "vec == vec2: " << std::boolalpha << comp << std::endl;
+		comp = vec != vec2;
+		std::cout << "vec != vec2: " << std::boolalpha << comp << std::endl;
 		std::cout << "---------------------------------------------------" << std::endl;
 	}
 
@@ -255,13 +259,17 @@ int main(void)
 		std::cout << "it2 <= it3: " << std::boolalpha << comp << std::endl;
 		comp = it2 >= it3;
 		std::cout << "it2 >= it3: " << std::boolalpha << comp << std::endl;
+		comp = it2 == it3;
+		std::cout << "it2 == it3: " << std::boolalpha << comp << std::endl;
+		comp = it2 != it3;
+		std::cout << "it2 != it3: " << std::boolalpha << comp << std::endl;
 
 		std::cout << C_BLUE << "const iterator" << C_DEF << std::endl;
 		const ft::vector<int> cvec(10, 5);
 		for (ft::vector<int>::const_iterator cit = cvec.begin(); cit != cvec.end(); cit++)
 		{
 			std::cout << *cit << " ";
-			*cit+=2;
+			//*cit+=2;
 		}
 		std::cout << std::endl;
 		for (ft::vector<int>::const_iterator cit = cvec.begin(); cit != cvec.end(); cit++)
