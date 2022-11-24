@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:56:54 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/24 13:20:08 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/24 15:03:23 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,37 @@ namespace ft
 			return(const_reverse_iterator(NULL));
 		}
 		//& modifiers
-		void clear();
-		void erase (iterator position);
+		void clear()
+		{
+			//iterator it = this->begin();
+			
+		}
+		void erase (iterator position)
+		{
+			if (*position->_left == NULL && *position->_right == NULL)
+			{
+				this->_alloc.destroy(&(*position));
+				this->_alloc.deallocate(&(*position));
+			}
+			else if (*position->_left == NULL || *position->_right == NULL)
+			{
+				if  (*position->_left == NULL)
+				{
+					*position->_data = *position->_right->_data;
+					this->erase(iterator(*position->_right));
+				}
+				else
+				{
+					*position->_data = *position->_left->_data;
+					this->erase(iterator(*position->_right));
+				}
+			}
+			else
+			{
+				*position->_data = *(position + 1)->_data;
+				this->erase(position + 1);
+			}
+		}
 		size_type erase (const key_type& k);
 	    void erase (iterator first, iterator last);
 		pair<iterator,bool> insert (const value_type& val);
