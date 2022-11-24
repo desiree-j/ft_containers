@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:56:54 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/24 13:08:02 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/24 13:20:08 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,65 @@ namespace ft
 		typedef ft::reverse_iterator<const_iterator>				const_reverse_iterator;
 
 		public:
-		explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type());
-		template <class InputIterator>  map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type());	
+		//& constructor, destructor
+		explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) : _root(NULL), _alloc(alloc), _comp(comp), _size(0){}
+		//todo constructor
+		template <class InputIterator>  
+		map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type());	
 		map (const map& x);
+		//todo destructor
 		~map();
-		allocator_type get_allocator() const;
+		allocator_type get_allocator() const
+		{
+			return (this->_alloc);
+		}
+		//todo copy assignment overload
 		map& operator= (const map& x);
 		//& position
-		iterator begin();
-		const_iterator begin() const;
-		iterator end();
-		const_iterator end() const;
-		reverse_iterator rbegin();
-		const_reverse_iterator rbegin() const;
-		reverse_iterator rend();
-		const_reverse_iterator rend() const;
+		iterator begin()
+		{
+			Node *tmp = this->_root;
+			while(tmp->left != NULL)
+				tmp = tmp->left;
+			return (iterator(tmp));
+		}
+		const_iterator begin() const
+		{
+			Node *tmp = this->_root;
+			while(tmp->left != NULL)
+				tmp = tmp->left;
+			return (const_iterator(tmp));
+		}
+		iterator end()
+		{
+			return (iterator(NULL));
+		}
+		const_iterator end() const
+		{
+			return (const_iterator(NULL));
+		}
+		reverse_iterator rbegin()
+		{
+			Node *tmp = this->_root;
+			while(tmp->right != NULL)
+				tmp = tmp->right;
+			return (reverse_iterator(tmp));
+		}
+		const_reverse_iterator rbegin() const
+		{
+			Node *tmp = this->_root;
+			while(tmp->right != NULL)
+				tmp = tmp->right;
+			return (const_reverse_iterator(tmp));
+		}
+		reverse_iterator rend()
+		{
+			return(reverse_iterator(NULL));
+		}
+		const_reverse_iterator rend() const
+		{
+			return(const_reverse_iterator(NULL));
+		}
 		//& modifiers
 		void clear();
 		void erase (iterator position);
