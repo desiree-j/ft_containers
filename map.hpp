@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:56:54 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/25 10:20:40 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/25 10:28:47 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,15 +177,26 @@ namespace ft
 		//todo swap
 		void swap (map& x);
 		//& element access	
-		//todo find
-		iterator find (const key_type& k);
-		const_iterator find (const key_type& k) const;
-		//todo operator[]
-		mapped_type& operator[] (const key_type& k);
+		iterator find (const key_type& k)
+		{
+			if (this->count() == 1)
+				return (this->lower_bound(k))
+			return (this->end());
+		}
+		const_iterator find (const key_type& k) const
+		{
+			if (this->count() == 1)
+				return (this->lower_bound(k))
+			return (this->end());
+		}
+		mapped_type& operator[] (const key_type& k)
+		{
+			return(*((this->insert(make_pair(k,mapped_type()))).first));
+		}
 		//& capacity
 		size_type count (const key_type& k) const
 		{
-			if (this->lower_bound() == k)
+			if (*(this->lower_bound()) == k)
 				return (1);
 			return (0)
 		}
