@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 16:56:15 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/25 15:23:16 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/25 15:33:56 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ int main (void)
 		ft::map<int, std::string> m;
 		ft::pair<int, std::string> p(5, "test");
 		std::cout << m.empty() << std::endl;
+		std::cout << m.max_size() << std::endl;
+		std::cout << m.size() << std::endl;
+		std::cout << m.count(5) << std::endl;
 		//m.insert(p);
 	}
 

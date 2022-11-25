@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 15:03:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/25 15:05:22 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/25 20:08:11 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,12 @@
 		typedef typename map::size_type					size_type;
 		typedef typename map::key_type					key_type;
 		typedef typename map::key_compare				key_compare;
+		typedef typename map::Node						Node;
 		
 
 		public:
 		mapIterator() : _ptr(NULL) {}
-		mapIterator(pointer ptr) : _ptr(ptr){}
+		mapIterator(Node *ptr) : _ptr(ptr){}
 		~mapIterator(void){}
 		mapIterator(const mapIterator& rhs)
 		{
@@ -52,7 +53,7 @@
 			return(!(*this == rhs));
 		}
 		//& (de)referencing
-        pointer operator->() const
+        Node *operator->() const
 		{
 			return (this->_ptr);
 		}
@@ -107,7 +108,7 @@
 			return (tmp);
 		}
 		private:
-		pointer		 _ptr;
+		Node		 *_ptr;
 		key_compare	_comp;
 	};
 

@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:56:54 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/25 15:23:50 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/25 20:09:52 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ namespace ft
 		typedef typename allocator_type::size_type					size_type;
 		typedef typename allocator_type::difference_type			difference_type;
 		typedef mapIterator<map>									iterator;
-		typedef const_mapIterator<const map>						const_iterator;
+		typedef mapIterator<const map>						const_iterator; //! change!!!
 		typedef ft::reverse_iterator<iterator>						reverse_iterator;
 		typedef ft::reverse_iterator<const_iterator>				const_reverse_iterator;
 		typedef ft::Node<key_type, mapped_type>						Node;
@@ -90,8 +90,8 @@ namespace ft
 		const_iterator begin() const
 		{
 			Node *tmp = this->_root;
-			while(tmp->left != NULL)
-				tmp = tmp->left;
+			while(tmp->_left != NULL)
+				tmp = tmp->_left;
 			return (const_iterator(tmp));
 		}
 		iterator end()
@@ -226,7 +226,7 @@ namespace ft
 		//& capacity
 		size_type count (const key_type& k) const
 		{
-			if (!this->_comp(k, this->lower_bound()))
+			if (!this->_comp(k, this->lower_bound(k)->_data->first))
 				return (1);
 			return (0);
 		}
@@ -268,9 +268,9 @@ namespace ft
 		}
 		const_iterator lower_bound (const key_type& k) const
 		{
-			for (const_iterator it = this->_begin(); it != this->end(); it++)
+			for (const_iterator it = this->begin(); it != this->end(); it++)
 			{
-				if(!this->_comp(*it->_data->first, k))
+				if(!this->_comp(it->_data->first, k))
 					return (it);
 			}
 			return (const_iterator(this->end()));
