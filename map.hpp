@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:56:54 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/25 09:55:16 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/25 10:20:40 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,11 @@
 #include "bst.hpp"
 #include "mapIterator.hpp"
 #include "reverse_iterator.hpp"
+# include <stdexcept> 
 
 namespace ft
 {
-	template < class Key, class T, class Compare = less<Key>, class Alloc = allocator<pair<const Key,T> > >
+	template < class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator<pair<const Key,T> > >
 	class map
 	{
 		public:
@@ -182,12 +183,22 @@ namespace ft
 		//todo operator[]
 		mapped_type& operator[] (const key_type& k);
 		//& capacity
-		//todo count
-		size_type count (const key_type& k) const;
-		//todo empty
-		bool empty() const;
-		//todo max_size
-		size_type max_size() const;
+		size_type count (const key_type& k) const
+		{
+			if (this->lower_bound() == k)
+				return (1);
+			return (0)
+		}
+		bool empty() const
+		{
+			if (this->_size == 0)
+				return (true);
+			return (false);
+		}
+		size_type max_size() const
+		{
+			return (this->_alloc.max_size());
+		}
 		size_type size() const
 		{
 			return (this->_size);
@@ -196,13 +207,15 @@ namespace ft
 		//todo equal range
 		pair<const_iterator,const_iterator> equal_range (const key_type& k) const;
 		pair<iterator,iterator> equal_range (const key_type& k);
-		//todo key_comp
-		key_compare key_comp() const;
+		key_compare key_comp() const
+		{
+			return (this->_comp);
+		}
 		iterator lower_bound (const key_type& k)
 		{
 			for (iterator it = this->_begin(); it != this->end(); it++)
 			{
-				if(!this->key_comp(*it->_data->first, k))
+				if(!this->_comp(*it->_data->first, k))
 					return (it);
 			}
 			return (iterator(this->end()));
@@ -211,7 +224,7 @@ namespace ft
 		{
 			for (const_iterator it = this->_begin(); it != this->end(); it++)
 			{
-				if(!this->key_comp(*it->_data->first, k))
+				if(!this->_comp(*it->_data->first, k))
 					return (it);
 			}
 			return (const_iterator(this->end()));
@@ -220,7 +233,7 @@ namespace ft
 		{
 			for (iterator it = this->_begin(); it != this->end(); it++)
 			{
-				if(this->key_comp(k, *it->_data->first))
+				if(this->_comp(k, *it->_data->first))
 					return (it);
 			}
 			return (iterator(this->end()));
@@ -229,7 +242,7 @@ namespace ft
 		{
 			for (const_iterator it = this->_begin(); it != this->end(); it++)
 			{
-				if(this->key_comp(k, *it->_data->first))
+				if(this->_comp(k, *it->_data->first))
 					return (it);
 			}
 			return (const_iterator(this->end()));

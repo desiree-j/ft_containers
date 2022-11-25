@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 17:55:11 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/24 15:57:44 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/25 10:14:32 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ namespace ft
 		Node 			*_left;
 		Node 			*_right;
 
-		Node(pair data, Node *parent): _data(data), _parent(parent), _left(NULL), _right(NULL){};
-		Node() : _data(new pair()), _parent(NULL), _left(NULL), _right(NULL);
+		//Node(pair data, Node *parent): _data(data), _parent(parent), _left(NULL), _right(NULL){};
+		//Node() : _data(new pair()), _parent(NULL), _left(NULL), _right(NULL);
 	};
 
 }
