@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 15:03:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/24 15:09:59 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/24 15:46:04 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 		typedef std::ptrdiff_t 							difference_type;
 		typedef std::bidirectional_iterator_tag			iterator_category;
 		typedef typename map::size_type					size_type;
+		typedef typename map::key_type					key_type;
 		
 
 		public:
@@ -66,7 +67,11 @@
 		//! change increment and decrement operator
 		mapIterator operator++()
 		{
-			this->_ptr++;
+			if (this->_ptr->right != NULL)
+			{
+				
+				while ()
+			}
 			return (*this);
 		}
 		mapIterator operator++(int)
@@ -77,7 +82,7 @@
 		}
 		mapIterator operator--()
 		{
-			this->_ptr--;
+			
 			return (*this);
 		}
 		mapIterator operator--(int)
@@ -94,11 +99,12 @@
 	class const_mapIterator
 	{
 		public:
+		typedef typename map::key_type				key_type;
 		typedef typename map::pointer				pointer;
 		typedef typename map::value_type			value_type;
 		typedef const value_type&					reference;
 		typedef std::ptrdiff_t 						difference_type;
-		typedef std::random_access_iterator_tag		iterator_category;
+		typedef std::bidirectional_iterator_tag		iterator_category;
 		typedef typename map::size_type				size_type;
 		
 

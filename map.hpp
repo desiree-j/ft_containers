@@ -6,13 +6,15 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:56:54 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/24 15:03:23 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/25 09:55:16 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAP_HPP
 # define MAP_HPP
 #include "bst.hpp"
+#include "mapIterator.hpp"
+#include "reverse_iterator.hpp"
 
 namespace ft
 {
@@ -21,7 +23,8 @@ namespace ft
 	{
 		public:
 		//& typedefs
-		typedef T													value_type;
+		typedef T													mapped_type;
+		typedef pair <Key,T>										value_type;
 		typedef Key													key_type;
 		typedef Compare												key_compare;
 		typedef Alloc												allocator_type;
@@ -35,6 +38,23 @@ namespace ft
 		typedef const_mapIterator<const map>						const_iterator;
 		typedef ft::reverse_iterator<iterator>						reverse_iterator;
 		typedef ft::reverse_iterator<const_iterator>				const_reverse_iterator;
+
+		//template <class Key, class T, class Compare, class Alloc>
+		//class map<Key,T,Compare,Alloc>::value_compare : binary_function<value_type,value_type,bool>
+		//{   // in C++98, it is required to inherit binary_function<value_type,value_type,bool>
+		//	friend class map;
+		//	public:
+		//	typedef bool result_type;
+		//	typedef value_type first_argument_type;
+		//	typedef value_type second_argument_type;
+		//	bool operator() (const value_type& x, const value_type& y) const
+		//	{
+		//		return comp(x.first, y.first);
+		//	}
+		//	protected:
+		//	Compare comp;
+		//	value_compare (Compare c) : comp(c) {}  // constructed with map's comparison object
+		//}
 
 		public:
 		//& constructor, destructor
@@ -97,6 +117,7 @@ namespace ft
 			return(const_reverse_iterator(NULL));
 		}
 		//& modifiers
+		//todo clear
 		void clear()
 		{
 			//iterator it = this->begin();
@@ -108,6 +129,7 @@ namespace ft
 			{
 				this->_alloc.destroy(&(*position));
 				this->_alloc.deallocate(&(*position));
+				this->_size--;
 			}
 			else if (*position->_left == NULL || *position->_right == NULL)
 			{
@@ -124,38 +146,100 @@ namespace ft
 			}
 			else
 			{
-				*position->_data = *(position + 1)->_data;
-				this->erase(position + 1);
+				iterator next = position;
+				next++;
+				*position->_data = *(next)->_data;
+				this->erase(next);
 			}
 		}
-		size_type erase (const key_type& k);
-	    void erase (iterator first, iterator last);
+		size_type erase (const key_type& k)
+		{
+			for (iterator it = this->begin(); it != this->end(); i++)
+			{
+				if (*it->_data->_first == k)
+				{
+					this->erase(it);
+					return (1);
+				}
+			}
+			return (0);
+		}
+	    void erase (iterator first, iterator last)
+		{
+			for (; first != last; first++)
+				erase(first);
+		}
+		//todo insert
 		pair<iterator,bool> insert (const value_type& val);
 		iterator insert (iterator position, const value_type& val);
 		template <class InputIterator>  void insert (InputIterator first, InputIterator last);
+		//todo swap
 		void swap (map& x);
 		//& element access	
+		//todo find
 		iterator find (const key_type& k);
 		const_iterator find (const key_type& k) const;
+		//todo operator[]
 		mapped_type& operator[] (const key_type& k);
 		//& capacity
+		//todo count
 		size_type count (const key_type& k) const;
+		//todo empty
 		bool empty() const;
+		//todo max_size
 		size_type max_size() const;
-		size_type size() const;
+		size_type size() const
+		{
+			return (this->_size);
+		}
 		//& comparision
+		//todo equal range
 		pair<const_iterator,const_iterator> equal_range (const key_type& k) const;
-		pair<iterator,iterator>             equal_range (const key_type& k);
+		pair<iterator,iterator> equal_range (const key_type& k);
+		//todo key_comp
 		key_compare key_comp() const;
-		iterator lower_bound (const key_type& k);
-		const_iterator lower_bound (const key_type& k) const;
-		iterator upper_bound (const key_type& k);
-		const_iterator upper_bound (const key_type& k) const;
+		iterator lower_bound (const key_type& k)
+		{
+			for (iterator it = this->_begin(); it != this->end(); it++)
+			{
+				if(!this->key_comp(*it->_data->first, k))
+					return (it);
+			}
+			return (iterator(this->end()));
+		}
+		const_iterator lower_bound (const key_type& k) const
+		{
+			for (const_iterator it = this->_begin(); it != this->end(); it++)
+			{
+				if(!this->key_comp(*it->_data->first, k))
+					return (it);
+			}
+			return (const_iterator(this->end()));
+		}
+		iterator upper_bound (const key_type& k)
+		{
+			for (iterator it = this->_begin(); it != this->end(); it++)
+			{
+				if(this->key_comp(k, *it->_data->first))
+					return (it);
+			}
+			return (iterator(this->end()));
+		}
+		const_iterator upper_bound (const key_type& k) const
+		{
+			for (const_iterator it = this->_begin(); it != this->end(); it++)
+			{
+				if(this->key_comp(k, *it->_data->first))
+					return (it);
+			}
+			return (const_iterator(this->end()));
+		}
+		//todo value_comp()
 		value_compare value_comp() const;
 		
 
 		private:
-		Node 			*_root;
+		ft::Node 		*_root;
 		allocator_type 	_alloc;
 		key_compare		_comp;
 		size_type 		_size:
