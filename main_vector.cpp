@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 12:29:11 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/23 18:13:30 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/25 13:57:48 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <string>
 #include <deque>
 #include "incl.hpp"
-#if 1  //CREATE A REAL STL EXAMPLE
+#if 0  //CREATE A REAL STL EXAMPLE
 	#include <vector>
 	namespace ft = std; 
 #else

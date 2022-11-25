@@ -6,20 +6,20 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:56:54 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/25 10:28:47 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/25 15:23:50 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAP_HPP
 # define MAP_HPP
-#include "bst.hpp"
 #include "mapIterator.hpp"
 #include "reverse_iterator.hpp"
+#include "utils.hpp"
 # include <stdexcept> 
 
 namespace ft
 {
-	template < class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator<pair<const Key,T> > >
+	template < class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator<ft::pair<const Key,T> > >
 	class map
 	{
 		public:
@@ -39,6 +39,7 @@ namespace ft
 		typedef const_mapIterator<const map>						const_iterator;
 		typedef ft::reverse_iterator<iterator>						reverse_iterator;
 		typedef ft::reverse_iterator<const_iterator>				const_reverse_iterator;
+		typedef ft::Node<key_type, mapped_type>						Node;
 
 		//template <class Key, class T, class Compare, class Alloc>
 		//class map<Key,T,Compare,Alloc>::value_compare : binary_function<value_type,value_type,bool>
@@ -62,10 +63,16 @@ namespace ft
 		explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) : _root(NULL), _alloc(alloc), _comp(comp), _size(0){}
 		//todo constructor
 		template <class InputIterator>  
-		map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type());	
+		map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) : _alloc(alloc), _comp(comp)
+		{
+			for (; first != last; first++)
+			{
+				this->insert(*first);
+			}
+		}
 		map (const map& x);
 		//todo destructor
-		~map();
+		~map() {}
 		allocator_type get_allocator() const
 		{
 			return (this->_alloc);
@@ -155,7 +162,7 @@ namespace ft
 		}
 		size_type erase (const key_type& k)
 		{
-			for (iterator it = this->begin(); it != this->end(); i++)
+			for (iterator it = this->begin(); it != this->end(); it++)
 			{
 				if (*it->_data->_first == k)
 				{
@@ -171,8 +178,31 @@ namespace ft
 				erase(first);
 		}
 		//todo insert
-		pair<iterator,bool> insert (const value_type& val);
-		iterator insert (iterator position, const value_type& val);
+		pair<iterator,bool> insert (const value_type& val)
+		{	
+			iterator it = this->find(val->first);
+			if (it != this->end())
+				return (ft::make_pair(it, false));
+			else
+			{
+				Node *node = this->find_next(this->_root, val->first);
+				node->_data = val;
+				this->_size++;
+				return(ft::make_pair(find(val->first), true));
+			}
+		}
+		iterator insert (iterator position, const value_type& val)
+		{
+			iterator it = this->find();
+			if (it != this->end())
+				return (ft::make_pair(it, false));
+			else
+			{
+				//! check if position == lower_bound???
+				Node *node = this->find_next(position, val->first);
+				node->data = val;
+			}
+		}
 		template <class InputIterator>  void insert (InputIterator first, InputIterator last);
 		//todo swap
 		void swap (map& x);
@@ -180,13 +210,13 @@ namespace ft
 		iterator find (const key_type& k)
 		{
 			if (this->count() == 1)
-				return (this->lower_bound(k))
+				return (this->lower_bound(k));
 			return (this->end());
 		}
 		const_iterator find (const key_type& k) const
 		{
 			if (this->count() == 1)
-				return (this->lower_bound(k))
+				return (this->lower_bound(k));
 			return (this->end());
 		}
 		mapped_type& operator[] (const key_type& k)
@@ -196,9 +226,9 @@ namespace ft
 		//& capacity
 		size_type count (const key_type& k) const
 		{
-			if (*(this->lower_bound()) == k)
+			if (!this->_comp(k, this->lower_bound()))
 				return (1);
-			return (0)
+			return (0);
 		}
 		bool empty() const
 		{
@@ -215,9 +245,14 @@ namespace ft
 			return (this->_size);
 		}
 		//& comparision
-		//todo equal range
-		pair<const_iterator,const_iterator> equal_range (const key_type& k) const;
-		pair<iterator,iterator> equal_range (const key_type& k);
+		pair<const_iterator,const_iterator> equal_range (const key_type& k) const
+		{
+			return(make_pair(this->lower_bound(k), this->upper_bound(k)));
+		}
+		pair<iterator,iterator> equal_range (const key_type& k)
+		{
+			return(make_pair(this->lower_bound(k), this->upper_bound(k)));
+		}
 		key_compare key_comp() const
 		{
 			return (this->_comp);
@@ -259,14 +294,46 @@ namespace ft
 			return (const_iterator(this->end()));
 		}
 		//todo value_comp()
-		value_compare value_comp() const;
+		//value_compare value_comp() const;
 		
 
 		private:
-		ft::Node 		*_root;
+		Node 			*_root;
 		allocator_type 	_alloc;
 		key_compare		_comp;
-		size_type 		_size:
+		size_type 		_size;
+
+		Node *find_next(Node *start, key_type k)
+		{
+			if (start == NULL)
+			{
+				start = this->_alloc.allocate(1);
+				return (start);
+			}
+			if (this->_comp(start->data->first, k))
+			{
+				if (start->right != NULL)
+					find_next(start->right);
+				else
+				{
+					start->right = this->_alloc.allocate(1);
+					return (start->right);
+				}
+			}
+			else
+			{
+				if (start->left != NULL)
+					find_next(start->left);
+				else
+				{
+					start->left = this->_alloc.allocate(1);
+					start->left->parent = start;
+					start->left->left = NULL;
+					start->left->right = NULL;
+					return (start->left);
+				}
+			}
+		}
 
 	};
 	template <class Key, class T, class Compare, class Alloc>  bool operator== ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs );

@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 16:56:15 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/23 17:00:23 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/25 15:23:16 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <string>
 #include <deque>
 #include "incl.hpp"
-#if  1 //CREATE A REAL STL EXAMPLE
+#if  0 //CREATE A REAL STL EXAMPLE
 	#include <map>
 	namespace ft = std; 
 #else
@@ -26,7 +26,10 @@
 int main (void)
 {
 	{ //& constructor, deconstructor
-		ft::map<int, string> m;
+		ft::map<int, std::string> m;
+		ft::pair<int, std::string> p(5, "test");
+		std::cout << m.empty() << std::endl;
+		//m.insert(p);
 	}
 
 

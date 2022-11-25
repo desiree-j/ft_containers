@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 15:03:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/24 15:46:04 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/25 15:05:22 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 		typedef std::bidirectional_iterator_tag			iterator_category;
 		typedef typename map::size_type					size_type;
 		typedef typename map::key_type					key_type;
+		typedef typename map::key_compare				key_compare;
 		
 
 		public:
@@ -67,10 +68,24 @@
 		//! change increment and decrement operator
 		mapIterator operator++()
 		{
-			if (this->_ptr->right != NULL)
+			key_type k = this->_ptr->_data->first;
+			if (this->_ptr->_right != NULL)
 			{
-				
-				while ()
+				this->_ptr = this->ptr->_right;
+				while (this->_ptr->_left != NULL)
+					this->_ptr = this->_ptr->_left;
+				// geh nach rechts und dann ganz nach links unten
+			}
+			else  if (this->_ptr->_parent != NULL && this->_comp(k,this->_ptr->_parent->_data->first))
+			{
+				this->_ptr = this->_ptr->_parent;
+			}
+			else
+			{
+				//geh so lange zum parent bis parent > this oder parent == NULL
+				while (this->_ptr->_parent != NULL && !this->_comp(k ,this->_ptr->_parent->_data->first))
+					this->_ptr = this->_ptr->_parent;
+				this->_ptr = this->_ptr->_parent;
 			}
 			return (*this);
 		}
@@ -92,7 +107,8 @@
 			return (tmp);
 		}
 		private:
-		pointer _ptr;
+		pointer		 _ptr;
+		key_compare	_comp;
 	};
 
 	template <typename map>

@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:56:26 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/23 17:52:47 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/25 15:12:20 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,19 @@ namespace ft
     {
         return (pair<T1,T2>(x,y));
     }
+
+    //& Node for tree (map)
+    template <class T1, class T2> 
+	struct Node
+	{
+		pair<T1, T2>	*_data;
+		Node 			*_parent;
+		Node 			*_left;
+		Node 			*_right;
+
+		//Node(pair data, Node *parent): _data(data), _parent(parent), _left(NULL), _right(NULL){};
+		Node() : _data(new ft::pair<T1, T2>()), _parent(NULL), _left(NULL), _right(NULL){}
+	};
 
 }
 #endif
