@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:56:26 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/25 15:12:20 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/26 10:51:50 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,11 +151,7 @@ namespace ft
 
         pair() : first(first_type()), second(second_type()) {}
         template<class U, class V> 
-        pair (const pair<U,V>& pr)
-        {
-            this->first = first_type(pr.first);
-            this->second = second_type(pr.second);
-        }
+        pair (const pair<U,V>& pr) : first(first_type(pr.first)), second(second_type(pr.second)){ }
         pair (const first_type& a, const second_type& b) : first(a), second(b) {}
         pair& operator= (const pair& pr)
         {
@@ -209,7 +205,7 @@ namespace ft
     template <class T1, class T2> 
 	struct Node
 	{
-		pair<T1, T2>	*_data;
+		pair<const T1, T2>	*_data;
 		Node 			*_parent;
 		Node 			*_left;
 		Node 			*_right;

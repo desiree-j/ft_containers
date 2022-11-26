@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 15:03:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/25 20:08:11 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/26 09:43:43 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,11 +123,13 @@
 		typedef std::ptrdiff_t 						difference_type;
 		typedef std::bidirectional_iterator_tag		iterator_category;
 		typedef typename map::size_type				size_type;
+		typedef typename map::key_compare			key_compare;
+		typedef typename map::Node					Node;
 		
 
 		public:
 		const_mapIterator() : _ptr(NULL) {}
-		const_mapIterator(pointer ptr) : _ptr(ptr){}
+		const_mapIterator(Node *ptr) : _ptr(ptr){}
 		~const_mapIterator(void){}
 		const_mapIterator(const const_mapIterator& rhs)
 		{
@@ -150,7 +152,7 @@
 			return(!(*this == rhs));
 		}
 		//& (de)referencing
-        const pointer operator->() const
+        const Node *operator->() const
 		{
 			return (this->_ptr);
 		}
@@ -163,7 +165,25 @@
 		//! change increment and decrement operator
 		const_mapIterator operator++()
 		{
-			this->_ptr++;
+			key_type k = this->_ptr->_data->first;
+			if (this->_ptr->_right != NULL)
+			{
+				this->_ptr = this->ptr->_right;
+				while (this->_ptr->_left != NULL)
+					this->_ptr = this->_ptr->_left;
+				// geh nach rechts und dann ganz nach links unten
+			}
+			else  if (this->_ptr->_parent != NULL && this->_comp(k,this->_ptr->_parent->_data->first))
+			{
+				this->_ptr = this->_ptr->_parent;
+			}
+			else
+			{
+				//geh so lange zum parent bis parent > this oder parent == NULL
+				while (this->_ptr->_parent != NULL && !this->_comp(k ,this->_ptr->_parent->_data->first))
+					this->_ptr = this->_ptr->_parent;
+				this->_ptr = this->_ptr->_parent;
+			}
 			return (*this);
 		}
 		const_mapIterator operator++(int)
@@ -184,7 +204,9 @@
 			return (tmp);
 		}
 		private:
-		pointer _ptr;
+		Node		 *_ptr;
+		key_compare	_comp;
+
 	};
 
 #endif

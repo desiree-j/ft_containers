@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:56:54 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/25 20:09:52 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/26 10:49:34 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@ namespace ft
 		typedef Key													key_type;
 		typedef Compare												key_compare;
 		typedef Alloc												allocator_type;
-		typedef typename allocator_type::reference					reference;
-		typedef typename allocator_type::const_reference			const_reference;
-		typedef typename allocator_type::pointer					pointer;
-		typedef typename allocator_type::const_pointer				const_pointer;
+		typedef value_type&											reference;
+		typedef const value_type&									const_reference;
+		typedef typename allocator_type::pointer											pointer;
+		typedef const value_type*									const_pointer;
 		typedef typename allocator_type::size_type					size_type;
 		typedef typename allocator_type::difference_type			difference_type;
 		typedef mapIterator<map>									iterator;
-		typedef mapIterator<const map>						const_iterator; //! change!!!
+		typedef const_mapIterator<const map>						const_iterator; 
 		typedef ft::reverse_iterator<iterator>						reverse_iterator;
 		typedef ft::reverse_iterator<const_iterator>				const_reverse_iterator;
 		typedef ft::Node<key_type, mapped_type>						Node;
@@ -83,8 +83,8 @@ namespace ft
 		iterator begin()
 		{
 			Node *tmp = this->_root;
-			while(tmp->left != NULL)
-				tmp = tmp->left;
+			while(tmp->_left != NULL)
+				tmp = tmp->_left;
 			return (iterator(tmp));
 		}
 		const_iterator begin() const
@@ -180,15 +180,16 @@ namespace ft
 		//todo insert
 		pair<iterator,bool> insert (const value_type& val)
 		{	
-			iterator it = this->find(val->first);
+			iterator it = this->find(val.first);
 			if (it != this->end())
 				return (ft::make_pair(it, false));
 			else
 			{
-				Node *node = this->find_next(this->_root, val->first);
-				node->_data = val;
+				Node *node = this->find_next(this->_root, val.first);
+				node->_data = this->_alloc.allocate(1);
+				this->_alloc.construct(node->_data, val);
 				this->_size++;
-				return(ft::make_pair(find(val->first), true));
+				return(ft::make_pair(find(val.first), true));
 			}
 		}
 		iterator insert (iterator position, const value_type& val)
@@ -209,7 +210,7 @@ namespace ft
 		//& element access	
 		iterator find (const key_type& k)
 		{
-			if (this->count() == 1)
+			if (this->count(k) == 1)
 				return (this->lower_bound(k));
 			return (this->end());
 		}
@@ -226,6 +227,8 @@ namespace ft
 		//& capacity
 		size_type count (const key_type& k) const
 		{
+			if (this->_size == 0)
+				return(0);
 			if (!this->_comp(k, this->lower_bound(k)->_data->first))
 				return (1);
 			return (0);
@@ -259,9 +262,9 @@ namespace ft
 		}
 		iterator lower_bound (const key_type& k)
 		{
-			for (iterator it = this->_begin(); it != this->end(); it++)
+			for (iterator it = this->begin(); it != this->end(); it++)
 			{
-				if(!this->_comp(*it->_data->first, k))
+				if(!this->_comp(it->_data->first, k))
 					return (it);
 			}
 			return (iterator(this->end()));
@@ -303,36 +306,38 @@ namespace ft
 		key_compare		_comp;
 		size_type 		_size;
 
-		Node *find_next(Node *start, key_type k)
+		Node *find_next(Node *start, const key_type &k)
 		{
+			std::allocator<Node> tmp;
 			if (start == NULL)
 			{
-				start = this->_alloc.allocate(1);
+				start = tmp.allocate(1);
 				return (start);
 			}
-			if (this->_comp(start->data->first, k))
+			if (this->_comp(start->_data->first, k))
 			{
-				if (start->right != NULL)
-					find_next(start->right);
+				if (start->_right != NULL)
+					find_next(start->_right, k);
 				else
 				{
-					start->right = this->_alloc.allocate(1);
-					return (start->right);
+					start->_right = tmp.allocate(1);
+					return (start->_right);
 				}
 			}
 			else
 			{
-				if (start->left != NULL)
-					find_next(start->left);
+				if (start->_left != NULL)
+					this->find_next(start->_left, k);
 				else
 				{
-					start->left = this->_alloc.allocate(1);
-					start->left->parent = start;
-					start->left->left = NULL;
-					start->left->right = NULL;
-					return (start->left);
+					start->_left = tmp.allocate(1);
+					tmp.construct(start->_left->_parent, *start);
+					start->_left->_left = NULL;
+					start->_left->_right = NULL;
+					return (start->_left);
 				}
 			}
+			return (start);
 		}
 
 	};
