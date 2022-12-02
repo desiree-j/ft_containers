@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:56:54 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/02 16:43:42 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/02 17:57:53 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ namespace ft
 		}
 		map (const map& x);
 		//todo destructor
-		~map() {std::cout << C_GREEN << "test" << C_DEF << std::endl;}
+		~map() {}
 		allocator_type get_allocator() const
 		{
 			return (this->_alloc);
@@ -94,7 +94,7 @@ namespace ft
 			{
 				tmp = tmp->_left;
 			}
-			std::cout << C_GREEN << "begin" << C_DEF << std::endl;
+			//std::cout << C_GREEN << "begin" << C_DEF << std::endl;
 			return (const_iterator(tmp));
 		}
 		iterator end()
@@ -193,7 +193,7 @@ namespace ft
 				this->_alloc.construct(node->_data, val);
 				this->_size++;
 				it = this->find(val.first);
-				std::cout << C_GREEN << "test" << C_DEF << std::endl;
+				//std::cout << C_GREEN << "test" << C_DEF << std::endl;
 				return(ft::make_pair(it, true));
 			}
 		}
@@ -217,7 +217,6 @@ namespace ft
 		{
 			if (this->count(k) == 1)
 			{
-				std::cout << C_GREEN << "find" << C_DEF << std::endl;
 				return (this->lower_bound(k));
 			}
 			return (this->end());
@@ -239,7 +238,7 @@ namespace ft
 				return(0);
 			const_iterator it = this->lower_bound(k);
 			const_iterator it2 = this->upper_bound(k);
-			std::cout << C_GREEN << "count" << C_DEF << std::endl;
+			//std::cout << C_GREEN << "count" << C_DEF << std::endl;
 			if (it == it2)
 				return (0);
 			return (1);
@@ -287,7 +286,7 @@ namespace ft
 				if(!this->_comp(it->_data->first, k))
 					return (it);
 			}
-			std::cout << C_GREEN << "lower" << C_DEF << std::endl;
+			//std::cout << C_GREEN << "lower" << C_DEF << std::endl;
 			return (const_iterator(this->end()));
 		}
 		iterator upper_bound (const key_type& k)
@@ -303,7 +302,7 @@ namespace ft
 		{
 			for (const_iterator it = this->begin(); it != this->end(); it++)
 			{
-			std::cout << C_GREEN << "upper "<< it->_data->first << C_DEF << std::endl;
+			//std::cout << C_GREEN << "upper "<< it->_data->first << C_DEF << std::endl;
 
 				if(this->_comp(k, it->_data->first))
 					return (it);
@@ -324,7 +323,7 @@ namespace ft
 		{
 			std::allocator<Node> tmp;
 			//std::allocator<Node*> p;
-			if (start == NULL)
+			if (start == NULL) //empty map
 			{
 				this->_root = tmp.allocate(1);
 				this->_root->_left = NULL;
@@ -338,24 +337,27 @@ namespace ft
 				//tmp.construct(start->_right, NULL);
 				return (this->_root);
 			}
-			if (this->_comp(start->_data->first, k))
+			if (this->_comp(start->_data->first, k)) //new element is bigger than start
 			{
 				if (start->_right != NULL)
 					find_next(start->_right, k);
 				else
 				{
 					start->_right = tmp.allocate(1);
+					start->_right->_parent = start;
+					start->_right->_left = NULL;
+					start->_right->_right = NULL;
 					return (start->_right);
 				}
 			}
-			else
+			else // new element is smaller than start
 			{
 				if (start->_left != NULL)
 					this->find_next(start->_left, k);
 				else
 				{
 					start->_left = tmp.allocate(1);
-					tmp.construct(start->_left->_parent, *start);
+					start->_left->_parent =  start;
 					start->_left->_left = NULL;
 					start->_left->_right = NULL;
 					return (start->_left);
