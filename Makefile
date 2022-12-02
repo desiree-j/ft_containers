@@ -6,7 +6,7 @@
 #    By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 07:05:44 by djedasch          #+#    #+#              #
-#    Updated: 2022/11/23 15:13:33 by djedasch         ###   ########.fr        #
+#    Updated: 2022/11/26 20:43:28 by djedasch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ OBJS		= $(SRCS:.cpp=.o)
 
 CC			= c++
 
-CFLACS 		= -Wall -Werror -Wextra -std=c++98
+CFLACS 		= -Wall -Werror -Wextra -std=c++98 -g3
 
 all: $(NAME)
 

@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:56:54 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/26 10:49:34 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/02 16:43:42 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ namespace ft
 		}
 		map (const map& x);
 		//todo destructor
-		~map() {}
+		~map() {std::cout << C_GREEN << "test" << C_DEF << std::endl;}
 		allocator_type get_allocator() const
 		{
 			return (this->_alloc);
@@ -90,8 +90,11 @@ namespace ft
 		const_iterator begin() const
 		{
 			Node *tmp = this->_root;
-			while(tmp->_left != NULL)
+			while(tmp != NULL && tmp->_left != NULL)
+			{
 				tmp = tmp->_left;
+			}
+			std::cout << C_GREEN << "begin" << C_DEF << std::endl;
 			return (const_iterator(tmp));
 		}
 		iterator end()
@@ -189,7 +192,9 @@ namespace ft
 				node->_data = this->_alloc.allocate(1);
 				this->_alloc.construct(node->_data, val);
 				this->_size++;
-				return(ft::make_pair(find(val.first), true));
+				it = this->find(val.first);
+				std::cout << C_GREEN << "test" << C_DEF << std::endl;
+				return(ft::make_pair(it, true));
 			}
 		}
 		iterator insert (iterator position, const value_type& val)
@@ -211,7 +216,10 @@ namespace ft
 		iterator find (const key_type& k)
 		{
 			if (this->count(k) == 1)
+			{
+				std::cout << C_GREEN << "find" << C_DEF << std::endl;
 				return (this->lower_bound(k));
+			}
 			return (this->end());
 		}
 		const_iterator find (const key_type& k) const
@@ -229,9 +237,12 @@ namespace ft
 		{
 			if (this->_size == 0)
 				return(0);
-			if (!this->_comp(k, this->lower_bound(k)->_data->first))
-				return (1);
-			return (0);
+			const_iterator it = this->lower_bound(k);
+			const_iterator it2 = this->upper_bound(k);
+			std::cout << C_GREEN << "count" << C_DEF << std::endl;
+			if (it == it2)
+				return (0);
+			return (1);
 		}
 		bool empty() const
 		{
@@ -270,12 +281,13 @@ namespace ft
 			return (iterator(this->end()));
 		}
 		const_iterator lower_bound (const key_type& k) const
-		{
-			for (const_iterator it = this->begin(); it != this->end(); it++)
+		{				
+			for (const_iterator it  = this->begin(); it != this->end(); it++)
 			{
 				if(!this->_comp(it->_data->first, k))
 					return (it);
 			}
+			std::cout << C_GREEN << "lower" << C_DEF << std::endl;
 			return (const_iterator(this->end()));
 		}
 		iterator upper_bound (const key_type& k)
@@ -289,9 +301,11 @@ namespace ft
 		}
 		const_iterator upper_bound (const key_type& k) const
 		{
-			for (const_iterator it = this->_begin(); it != this->end(); it++)
+			for (const_iterator it = this->begin(); it != this->end(); it++)
 			{
-				if(this->_comp(k, *it->_data->first))
+			std::cout << C_GREEN << "upper "<< it->_data->first << C_DEF << std::endl;
+
+				if(this->_comp(k, it->_data->first))
 					return (it);
 			}
 			return (const_iterator(this->end()));
@@ -309,10 +323,20 @@ namespace ft
 		Node *find_next(Node *start, const key_type &k)
 		{
 			std::allocator<Node> tmp;
+			//std::allocator<Node*> p;
 			if (start == NULL)
 			{
-				start = tmp.allocate(1);
-				return (start);
+				this->_root = tmp.allocate(1);
+				this->_root->_left = NULL;
+				this->_root->_right = NULL;
+				this->_root->_parent = NULL;
+				////start->_parent = tmp.allocate(1);
+				//tmp.construct(start->_parent, NULL);
+				////start->_left = tmp.allocate(1);
+				//tmp.construct(start->_left, NULL);
+				////start->_right = tmp.allocate(1);
+				//tmp.construct(start->_right, NULL);
+				return (this->_root);
 			}
 			if (this->_comp(start->_data->first, k))
 			{

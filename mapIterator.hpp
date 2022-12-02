@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 15:03:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/26 09:43:43 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/02 16:49:15 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,7 @@
 			key_type k = this->_ptr->_data->first;
 			if (this->_ptr->_right != NULL)
 			{
-				this->_ptr = this->ptr->_right;
+				this->_ptr = this->_ptr->_right;
 				while (this->_ptr->_left != NULL)
 					this->_ptr = this->_ptr->_left;
 				// geh nach rechts und dann ganz nach links unten
@@ -189,7 +189,7 @@
 		const_mapIterator operator++(int)
 		{
 			const_mapIterator tmp = *this;
-			this->_ptr++;
+			++(*this);
 			return (tmp);
 		}
 		const_mapIterator operator--()

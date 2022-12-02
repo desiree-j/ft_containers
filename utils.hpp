@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:56:26 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/26 10:51:50 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/11/26 18:58:42 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,7 @@ namespace ft
     template <class T1, class T2>  
     pair<T1,T2> make_pair (T1 x, T2 y)
     {
+        std::cout << C_GREEN << "test" << C_DEF << std::endl;
         return (pair<T1,T2>(x,y));
     }
 
