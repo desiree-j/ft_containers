@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 16:56:15 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/02 18:32:07 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/03 08:16:57 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <string>
 #include <deque>
 #include "incl.hpp"
-#if  0 //CREATE A REAL STL EXAMPLE
+#if  1 //CREATE A REAL STL EXAMPLE
 	#include <map>
 	namespace ft = std; 
 #else
@@ -41,7 +41,10 @@ int main (void)
 		std::cout << m.count(5) << std::endl;
 		std::cout << m.count(6) << std::endl;
 		std::cout << m.count(4) << std::endl;
-		//ft::map<int, std::string>::iterator it;
+		ft::map<int, std::string>::iterator it = m.begin();
+		std::cout << it->first << std::endl;
+		--it;
+		std::cout << it->first << std::endl;
 		//std::cout << m.find(5)->_data->first << std::endl;
 		//std::cout << it->_data->first << std::endl;
 		

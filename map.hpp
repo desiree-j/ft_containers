@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:56:54 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/02 17:57:53 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/03 08:10:48 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ namespace ft
 			Node *tmp = this->_root;
 			while(tmp->_left != NULL)
 				tmp = tmp->_left;
-			return (iterator(tmp));
+			return (iterator(tmp, this->_root));
 		}
 		const_iterator begin() const
 		{
@@ -95,37 +95,37 @@ namespace ft
 				tmp = tmp->_left;
 			}
 			//std::cout << C_GREEN << "begin" << C_DEF << std::endl;
-			return (const_iterator(tmp));
+			return (const_iterator(tmp, this->_root));
 		}
 		iterator end()
 		{
-			return (iterator(NULL));
+			return (iterator(NULL, this->_root));
 		}
 		const_iterator end() const
 		{
-			return (const_iterator(NULL));
+			return (const_iterator(NULL, this->_root));
 		}
 		reverse_iterator rbegin()
 		{
 			Node *tmp = this->_root;
 			while(tmp->right != NULL)
 				tmp = tmp->right;
-			return (reverse_iterator(tmp));
+			return (reverse_iterator(tmp, this->_root));
 		}
 		const_reverse_iterator rbegin() const
 		{
 			Node *tmp = this->_root;
 			while(tmp->right != NULL)
 				tmp = tmp->right;
-			return (const_reverse_iterator(tmp));
+			return (const_reverse_iterator(tmp, this->_root));
 		}
 		reverse_iterator rend()
 		{
-			return(reverse_iterator(NULL));
+			return(reverse_iterator(NULL, this->_root));
 		}
 		const_reverse_iterator rend() const
 		{
-			return(const_reverse_iterator(NULL));
+			return(const_reverse_iterator(NULL, this->_root));
 		}
 		//& modifiers
 		//todo clear
@@ -167,7 +167,7 @@ namespace ft
 		{
 			for (iterator it = this->begin(); it != this->end(); it++)
 			{
-				if (*it->_data->_first == k)
+				if (*it->_first == k)
 				{
 					this->erase(it);
 					return (1);
@@ -193,7 +193,6 @@ namespace ft
 				this->_alloc.construct(node->_data, val);
 				this->_size++;
 				it = this->find(val.first);
-				//std::cout << C_GREEN << "test" << C_DEF << std::endl;
 				return(ft::make_pair(it, true));
 			}
 		}
@@ -238,7 +237,6 @@ namespace ft
 				return(0);
 			const_iterator it = this->lower_bound(k);
 			const_iterator it2 = this->upper_bound(k);
-			//std::cout << C_GREEN << "count" << C_DEF << std::endl;
 			if (it == it2)
 				return (0);
 			return (1);
@@ -274,7 +272,7 @@ namespace ft
 		{
 			for (iterator it = this->begin(); it != this->end(); it++)
 			{
-				if(!this->_comp(it->_data->first, k))
+				if(!this->_comp(it->first, k))
 					return (it);
 			}
 			return (iterator(this->end()));
@@ -283,17 +281,16 @@ namespace ft
 		{				
 			for (const_iterator it  = this->begin(); it != this->end(); it++)
 			{
-				if(!this->_comp(it->_data->first, k))
+				if(!this->_comp(it->first, k))
 					return (it);
 			}
-			//std::cout << C_GREEN << "lower" << C_DEF << std::endl;
 			return (const_iterator(this->end()));
 		}
 		iterator upper_bound (const key_type& k)
 		{
 			for (iterator it = this->_begin(); it != this->end(); it++)
 			{
-				if(this->_comp(k, *it->_data->first))
+				if(this->_comp(k, *it->first))
 					return (it);
 			}
 			return (iterator(this->end()));
@@ -302,9 +299,8 @@ namespace ft
 		{
 			for (const_iterator it = this->begin(); it != this->end(); it++)
 			{
-			//std::cout << C_GREEN << "upper "<< it->_data->first << C_DEF << std::endl;
 
-				if(this->_comp(k, it->_data->first))
+				if(this->_comp(k, it->first))
 					return (it);
 			}
 			return (const_iterator(this->end()));

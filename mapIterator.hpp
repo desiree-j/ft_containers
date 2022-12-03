@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 15:03:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/02 18:31:09 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/03 08:21:35 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 
 		public:
 		mapIterator() : _ptr(NULL) {}
-		mapIterator(Node *ptr) : _ptr(ptr){}
+		mapIterator(Node *ptr, Node *root) : _ptr(ptr), _root(root){}
 		~mapIterator(void){}
 		mapIterator(const mapIterator& rhs)
 		{
@@ -53,9 +53,9 @@
 			return(!(*this == rhs));
 		}
 		//& (de)referencing
-        Node *operator->() const
+        pointer operator->() const
 		{
-			return (this->_ptr);
+			return (this->_ptr->_data);
 		}
         reference operator[](int n) const
 		{
@@ -63,30 +63,30 @@
 		}
 		reference operator*(void) const
 		{
-			return (*(this->_ptr));
+			return (*(this->_ptr->_data));
 		}
 		//& increment, decrement
 		//! change increment and decrement operator
 		mapIterator operator++()
 		{
 			key_type k = this->_ptr->_data->first;
-			if (this->_ptr->_right != NULL)
+			if (this->_ptr->right() != NULL)
 			{
-				this->_ptr = this->_ptr->_right;
-				while (this->_ptr->_left != NULL)
-					this->_ptr = this->_ptr->_left;
+				this->_ptr = this->_ptr->right();
+				while (this->_ptr->left() != NULL)
+					this->_ptr = this->_ptr->left();
 				// geh nach rechts und dann ganz nach links unten
 			}
-			else  if (this->_ptr->_parent != NULL && this->_comp(k,this->_ptr->_parent->_data->first))
+			else  if (this->_ptr->parent() != NULL && this->_comp(k,this->_ptr->parent()->_data->first))
 			{
-				this->_ptr = this->_ptr->_parent;
+				this->_ptr = this->_ptr->parent();
 			}
 			else
 			{
 				//geh so lange zum parent bis parent > this oder parent == NULL
-				while (this->_ptr->_parent != NULL && !this->_comp(k ,this->_ptr->_parent->_data->first))
-					this->_ptr = this->_ptr->_parent;
-				this->_ptr = this->_ptr->_parent;
+				while (this->_ptr->parent() != NULL && !this->_comp(k ,this->_ptr->parent()->_data->first))
+					this->_ptr = this->_ptr->parent();
+				this->_ptr = this->_ptr->parent();
 			}
 			return (*this);
 		}
@@ -98,7 +98,36 @@
 		}
 		mapIterator operator--()
 		{
-			
+			if (!this->_ptr)
+			{
+				this->_ptr = this->_root;
+				while (this->_ptr->right() != NULL)
+					this->_ptr =  this->_ptr->right();
+				return (*this);
+			}
+			key_type k = this->_ptr->_data->first;
+			if (this->_ptr->left() != NULL)
+			{
+				this->_ptr = this->_ptr->left();
+				while (this->_ptr->right() != NULL)
+					this->_ptr = this->_ptr->right();
+				// geh nach links und dann ganz nach rechts unten
+			}
+			else  if (this->_ptr->parent() != NULL && this->_comp(this->_ptr->parent()->_data->first, k))
+			{
+				this->_ptr = this->_ptr->parent();
+			}
+			else
+			{
+				//geh so lange zum parent bis parent < this oder parent == NULL
+				Node *tmp = this->_ptr;
+				while (this->_ptr->parent() != NULL && !this->_comp(k ,this->_ptr->parent()->_data->first))
+					this->_ptr = this->_ptr->parent();
+				if (!this->_ptr->parent())
+					this->_ptr = tmp;
+				else
+					this->_ptr = this->_ptr->parent();
+			}
 			return (*this);
 		}
 		mapIterator operator--(int)
@@ -108,7 +137,8 @@
 			return (tmp);
 		}
 		private:
-		Node		 *_ptr;
+		Node		*_ptr;
+		Node		*_root;
 		key_compare	_comp;
 	};
 
@@ -129,7 +159,7 @@
 
 		public:
 		const_mapIterator() : _ptr(NULL) {}
-		const_mapIterator(Node *ptr) : _ptr(ptr){}
+		const_mapIterator(Node *ptr, Node *root) : _ptr(ptr), _root(root){}
 		~const_mapIterator(void){}
 		const_mapIterator(const const_mapIterator& rhs)
 		{
@@ -152,13 +182,13 @@
 			return(!(*this == rhs));
 		}
 		//& (de)referencing
-        const Node *operator->() const
+        const pointer operator->() const
 		{
-			return (this->_ptr);
+			return (this->_ptr->_data);
 		}
 		reference operator*(void) const
 		{
-			const value_type *tmp = (this->_ptr);
+			const value_type *tmp = (this->_ptr->_data);
 			return (*tmp);
 		}
 		//& increment, decrement
@@ -166,28 +196,28 @@
 		const_mapIterator operator++()
 		{
 			if (!this->_ptr)
-				return (this->_ptr);
+				return (*this);
 			key_type k = this->_ptr->_data->first;
-			if (this->_ptr->_right != NULL)
+			if (this->_ptr->right() != NULL)
 			{
-				this->_ptr = this->_ptr->_right;
-				while (this->_ptr->_left != NULL)
-					this->_ptr = this->_ptr->_left;
+				this->_ptr = this->_ptr->right();
+				while (this->_ptr->left() != NULL)
+					this->_ptr = this->_ptr->left();
 				// geh nach rechts und dann ganz nach links unten
 			}
-			else  if (this->_ptr->_parent != NULL && this->_comp(k,this->_ptr->_parent->_data->first))
+			else  if (this->_ptr->parent() != NULL && this->_comp(k,this->_ptr->parent()->_data->first))
 			{
-				this->_ptr = this->_ptr->_parent;
+				this->_ptr = this->_ptr->parent();
 			}
 			else
 			{
 				//geh so lange zum parent bis parent > this oder parent == NULL
-				while (this->_ptr->_parent != NULL && !this->_comp(k ,this->_ptr->_parent->_data->first))
-					this->_ptr = this->_ptr->_parent;
-				if (!this->_ptr->_parent)
+				while (this->_ptr->parent() != NULL && !this->_comp(k ,this->_ptr->parent()->_data->first))
+					this->_ptr = this->_ptr->parent();
+				if (!this->_ptr->parent())
 					this->_ptr = NULL;
 				else
-					this->_ptr = this->_ptr->_parent;
+					this->_ptr = this->_ptr->parent();
 			}
 			return (*this);
 		}
@@ -199,7 +229,36 @@
 		}
 		const_mapIterator operator--()
 		{
-			this->_ptr--;
+			if (!this->_ptr)
+			{
+				this->_ptr = this->_root;
+				while (this->_ptr->right() != NULL)
+					this->_ptr =  this->_ptr->right();
+				return (*this);
+			}
+			key_type k = this->_ptr->_data->first;
+			if (this->_ptr->left() != NULL)
+			{
+				this->_ptr = this->_ptr->left();
+				while (this->_ptr->right() != NULL)
+					this->_ptr = this->_ptr->right();
+				// geh nach links und dann ganz nach rechts unten
+			}
+			else  if (this->_ptr->parent() != NULL && this->_comp(this->_ptr->parent()->_data->first, k))
+			{
+				this->_ptr = this->_ptr->parent();
+			}
+			else
+			{
+				//geh so lange zum parent bis parent < this oder parent == NULL
+				Node *tmp = this->_ptr;
+				while (this->_ptr->parent() != NULL && !this->_comp(k ,this->_ptr->parent()->_data->first))
+					this->_ptr = this->_ptr->parent();
+				if (!this->_ptr->parent())
+					this->_ptr = tmp;
+				else
+					this->_ptr = this->_ptr->parent();
+			}
 			return (*this);
 		}
 		const_mapIterator operator--(int)
@@ -209,7 +268,8 @@
 			return (tmp);
 		}
 		private:
-		Node		 *_ptr;
+		Node		*_ptr;
+		Node		*_root;
 		key_compare	_comp;
 
 	};
