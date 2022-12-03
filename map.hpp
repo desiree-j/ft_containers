@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:56:54 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/03 08:10:48 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/03 10:26:33 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ namespace ft
 		public:
 		//& constructor, destructor
 		explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) : _root(NULL), _alloc(alloc), _comp(comp), _size(0){}
-		//todo constructor
 		template <class InputIterator>  
 		map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) : _alloc(alloc), _comp(comp)
 		{
@@ -70,15 +69,38 @@ namespace ft
 				this->insert(*first);
 			}
 		}
-		map (const map& x);
-		//todo destructor
-		~map() {}
+		map (const map& x)
+		{
+			this->_alloc = x._alloc;
+			this->_comp = x._comp;
+			this->_size = 0;
+			this->_root = NULL;
+			this->insert(x._root);
+			for (iterator it =  x.begin; it != x.end(); it++)
+			{
+				this->insert(it);
+			}
+		}
+		~map() 
+		{
+			this->clear();
+		}
 		allocator_type get_allocator() const
 		{
 			return (this->_alloc);
 		}
-		//todo copy assignment overload
-		map& operator= (const map& x);
+		map& operator= (const map& x)
+		{
+			this->_alloc = x._alloc;
+			this->_comp = x._comp;
+			this->clear();
+			this->insert(x._root);
+			for (iterator it =  x.begin; it != x.end(); it++)
+			{
+				this->insert(it);
+			}
+			return (*this);
+		}
 		//& position
 		iterator begin()
 		{
@@ -128,10 +150,12 @@ namespace ft
 			return(const_reverse_iterator(NULL, this->_root));
 		}
 		//& modifiers
-		//todo clear
 		void clear()
 		{
-			//iterator it = this->begin();
+			for(iterator it = this->begin(); it != this->end(); it++)
+			{
+				this->erase(it);
+			}
 			
 		}
 		void erase (iterator position)
@@ -180,7 +204,6 @@ namespace ft
 			for (; first != last; first++)
 				erase(first);
 		}
-		//todo insert
 		pair<iterator,bool> insert (const value_type& val)
 		{	
 			iterator it = this->find(val.first);
@@ -200,17 +223,38 @@ namespace ft
 		{
 			iterator it = this->find();
 			if (it != this->end())
-				return (ft::make_pair(it, false));
+				return (it);
 			else
 			{
-				//! check if position == lower_bound???
-				Node *node = this->find_next(position, val->first);
-				node->data = val;
+				//// check if position == lower_bound???
+				if (this->_comp(position->first, val->first))
+					Node *node = this->find_next(position, val->first);
+				else
+					Node *node = this->find_next(this->_root, val->first);
+				node->_data = this->_alloc.allocate(1);
+				this->_alloc.construct(node->_data, val);
+				this->_size++;
 			}
+			return(this->find(val.first));
 		}
-		template <class InputIterator>  void insert (InputIterator first, InputIterator last);
-		//todo swap
-		void swap (map& x);
+		template <class InputIterator>  
+		void insert (InputIterator first, InputIterator last)
+		{
+			for (; first != last; first++)
+				insert(*first);
+		}
+		void swap (map& x)
+		{
+			map &tmp = x;
+			x._alloc = this->_alloc;
+			x._comp = this->_comp;
+			x._root = this->_root;
+			x._size = this->_size;
+			this._alloc = tmp->_alloc;
+			this._comp = tmp->_comp;
+			this._root = tmp->_root;
+			this._size = tmp->_size;
+		}
 		//& element access	
 		iterator find (const key_type& k)
 		{

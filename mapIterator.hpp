@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 15:03:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/03 08:21:35 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/03 10:00:39 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,6 @@
         pointer operator->() const
 		{
 			return (this->_ptr->_data);
-		}
-        reference operator[](int n) const
-		{
-			return (*(this->_ptr + n));
 		}
 		reference operator*(void) const
 		{
