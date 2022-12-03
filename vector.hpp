@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/23 18:16:51 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/03 12:12:05 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -490,9 +490,7 @@ namespace ft
 	template <class T, class Alloc>  
 	void swap (vector<T,Alloc>& x, vector<T,Alloc>& y)
 	{
-		vector<T, Alloc> &tmp(x);
-		x = y;
-		y = tmp;
+		x.swap(y);
 	}
 }
 
