@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:56:54 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/03 12:49:50 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/03 13:36:48 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,8 +162,8 @@ namespace ft
 		{
 			if (position.left() == NULL && position.right() == NULL)
 			{
-				//this->_alloc.destroy(&(*position));
-				//this->_alloc.deallocate(&(*position));
+				this->_alloc.destroy(&(*position));
+				this->_alloc.deallocate((*position), 1);
 				this->_size--;
 			}
 			else if (position.left() == NULL || position.right() == NULL)
@@ -191,7 +191,7 @@ namespace ft
 		{
 			for (iterator it = this->begin(); it != this->end(); it++)
 			{
-				if (*it->_first == k)
+				if (it->first == k)
 				{
 					this->erase(it);
 					return (1);

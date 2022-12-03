@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:56:26 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/03 12:57:07 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/03 13:38:41 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,6 @@ namespace ft
             this->second = second_type(pr.second);
             return (*this);            
         }
-
         first_type  first;
         second_type second;
     };

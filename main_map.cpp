@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 16:56:15 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/03 12:57:17 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/03 13:35:14 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <string>
 #include <deque>
 #include "incl.hpp"
-#if  1 //CREATE A REAL STL EXAMPLE
+#if  0 //CREATE A REAL STL EXAMPLE
 	#include <map>
 	namespace ft = std; 
 #else
@@ -45,8 +45,9 @@ int main (void)
 		std::cout << it->first << std::endl;
 		--it;
 		std::cout << it->first << std::endl;
-		//std::cout << m.find(5)->_data->first << std::endl;
-		//std::cout << it->_data->first << std::endl;
+		m.insert(p3);
+		std::cout << m.size() << std::endl;
+		m.erase(7);
 		
 	}
 

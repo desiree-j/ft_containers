@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 15:03:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/03 12:56:47 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/03 13:34:37 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 		typedef typename map::pointer					pointer;
 		typedef typename map::reference					reference;
 		typedef typename map::value_type				value_type;
+		typedef const value_type&						const_reference;
 		typedef std::ptrdiff_t 							difference_type;
 		typedef std::bidirectional_iterator_tag			iterator_category;
 		typedef typename map::size_type					size_type;
@@ -59,9 +60,7 @@
 		}
 		reference operator*(void) const
 		{
-			value_type *tmp = (this->_ptr->_data);
-			return (*tmp);
-			//return (*(this->_ptr->_data));
+			return (*(this->_ptr->_data));
 		}
 		//& increment, decrement
 		mapIterator operator++()
@@ -140,6 +139,10 @@
 		Node *left()
 		{
 			return (this->_ptr->left());
+		}
+		Node	*getNode()
+		{
+			return (this->_ptr);
 		}
 		private:
 		Node		*_ptr;
@@ -271,13 +274,17 @@
 			--(*this);
 			return (tmp);
 		}
-		Node *right()
+		Node 	*right()
 		{
 			return (this->_ptr->right());
 		}
-		Node *left()
+		Node 	*left()
 		{
 			return (this->_ptr->left());
+		}
+		Node	*getNode()
+		{
+			return (this->_ptr);
 		}
 		private:
 		Node		*_ptr;
