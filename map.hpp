@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:56:54 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/03 12:12:24 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/03 12:49:50 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ namespace ft
 		}
 		~map() 
 		{
-			this->clear();
+			//this->clear();
 		}
 		allocator_type get_allocator() const
 		{
@@ -160,30 +160,30 @@ namespace ft
 		}
 		void erase (iterator position)
 		{
-			if (*position->_left == NULL && *position->_right == NULL)
+			if (position.left() == NULL && position.right() == NULL)
 			{
-				this->_alloc.destroy(&(*position));
-				this->_alloc.deallocate(&(*position));
+				//this->_alloc.destroy(&(*position));
+				//this->_alloc.deallocate(&(*position));
 				this->_size--;
 			}
-			else if (*position->_left == NULL || *position->_right == NULL)
+			else if (position.left() == NULL || position.right() == NULL)
 			{
-				if  (*position->_left == NULL)
+				if  (position.left() == NULL)
 				{
-					*position->_data = *position->_right->_data;
-					this->erase(iterator(*position->_right));
+					*position = *(position.right()->_data);
+					this->erase(iterator(position.right(), this->_root));
 				}
 				else
 				{
-					*position->_data = *position->_left->_data;
-					this->erase(iterator(*position->_right));
+					*position = *(position.left())->_data;
+					this->erase(iterator(position.right(), this->_root));
 				}
 			}
 			else
 			{
 				iterator next = position;
 				next++;
-				*position->_data = *(next)->_data;
+				*position = *next;
 				this->erase(next);
 			}
 		}
@@ -222,15 +222,16 @@ namespace ft
 		iterator insert (iterator position, const value_type& val)
 		{
 			iterator it = this->find();
+			Node *node;
 			if (it != this->end())
 				return (it);
 			else
 			{
 				//// check if position == lower_bound???
 				if (this->_comp(position->first, val->first))
-					Node *node = this->find_next(position, val->first);
+					node = this->find_next(position, val->first);
 				else
-					Node *node = this->find_next(this->_root, val->first);
+					node = this->find_next(this->_root, val->first);
 				node->_data = this->_alloc.allocate(1);
 				this->_alloc.construct(node->_data, val);
 				this->_size++;
@@ -407,22 +408,22 @@ namespace ft
 		}
 
 	};
-	template <class Key, class T, class Compare, class Alloc>  
-	bool operator== ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs )
-	{
-		if (lhs.size() != rhs.size)
-			return (false);
-		map<Key, T, Compare, Alloc>::iterator itl = lhs.begin();
-		map<Key, T, Compare, Alloc>::iterator itr = rhs.begin();	
-		while (itl != lhs.end())
-		{
-			if (itl->first != itr->first || itl->second != itr->second)
-				return (false);
-			itl++;
-			itr++;
-		}
-		return(true);
-	}
+	//template <class Key, class T, class Compare, class Alloc>  
+	//bool operator== ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs )
+	//{
+	//	if (lhs.size() != rhs.size())
+	//		return (false);
+	//	map<Key, T, Compare, Alloc>::iterator itl = lhs.begin();
+	//	map<Key, T, Compare, Alloc>::iterator itr = rhs.begin();	
+	//	while (itl != lhs.end())
+	//	{
+	//		if (itl->first != itr->first || itl->second != itr->second)
+	//			return (false);
+	//		itl++;
+	//		itr++;
+	//	}
+	//	return(true);
+	//}
 	template <class Key, class T, class Compare, class Alloc>  
 	bool operator!= ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs )
 	{

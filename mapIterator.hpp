@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 15:03:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/03 10:00:39 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/03 12:56:47 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,11 @@
 		}
 		reference operator*(void) const
 		{
-			return (*(this->_ptr->_data));
+			value_type *tmp = (this->_ptr->_data);
+			return (*tmp);
+			//return (*(this->_ptr->_data));
 		}
 		//& increment, decrement
-		//! change increment and decrement operator
 		mapIterator operator++()
 		{
 			key_type k = this->_ptr->_data->first;
@@ -117,7 +118,7 @@
 			{
 				//geh so lange zum parent bis parent < this oder parent == NULL
 				Node *tmp = this->_ptr;
-				while (this->_ptr->parent() != NULL && !this->_comp(k ,this->_ptr->parent()->_data->first))
+				while (this->_ptr->parent() != NULL && !this->_comp(this->_ptr->parent()->_data->first, k))
 					this->_ptr = this->_ptr->parent();
 				if (!this->_ptr->parent())
 					this->_ptr = tmp;
@@ -131,6 +132,14 @@
 			mapIterator tmp = *this;
 			--(*this);
 			return (tmp);
+		}
+		Node *right()
+		{
+			return (this->_ptr->right());
+		}
+		Node *left()
+		{
+			return (this->_ptr->left());
 		}
 		private:
 		Node		*_ptr;
@@ -188,7 +197,6 @@
 			return (*tmp);
 		}
 		//& increment, decrement
-		//! change increment and decrement operator
 		const_mapIterator operator++()
 		{
 			if (!this->_ptr)
@@ -262,6 +270,14 @@
 			const_mapIterator tmp = *this;
 			--(*this);
 			return (tmp);
+		}
+		Node *right()
+		{
+			return (this->_ptr->right());
+		}
+		Node *left()
+		{
+			return (this->_ptr->left());
 		}
 		private:
 		Node		*_ptr;
