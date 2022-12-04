@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 16:56:15 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/04 09:26:33 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/04 10:01:13 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,9 @@ int main (void)
 		m.erase(7);
 		std::cout << m.size() << std::endl;
 		m.erase(3);
+		std::cout << m.size() << std::endl;
+		m.erase(6);
+		m.erase(5);
 		std::cout << m.size() << std::endl;
 	}
 

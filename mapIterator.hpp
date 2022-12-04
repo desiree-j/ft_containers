@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 15:03:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/04 09:09:06 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/04 09:55:21 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,10 @@ namespace ft
 		Node	*getNode()
 		{
 			return (this->_ptr);
+		}
+		Node	*parent()
+		{
+			return (this->_ptr->_parent);
 		}
 		private:
 		Node		*_ptr;
@@ -288,6 +292,10 @@ namespace ft
 		Node	*getNode()
 		{
 			return (this->_ptr);
+		}
+		Node	*parent()
+		{
+			return (this->_ptr->_parent);
 		}
 		private:
 		Node		*_ptr;

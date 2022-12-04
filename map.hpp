@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:56:54 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/04 09:26:23 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/04 10:02:33 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,8 +163,16 @@ namespace ft
 		{
 			if (position.left() == NULL && position.right() == NULL)
 			{
+				if (position.parent() == NULL)
+					this->_root = NULL;
+				else if(position.getNode() == position.parent()->left())
+					position.parent()->_left = NULL;
+				else
+					position.parent()->_right = NULL;
+				std::allocator<Node> tmp;
 				this->_alloc.destroy(&(*position));
 				this->_alloc.deallocate(&(*position), 1);
+				tmp.deallocate(position.getNode(),1);
 				//this->_alloc.destroy(&((const_cast<pair<const key_type, mapped_type>& >(*position))));
 				//this->_alloc.deallocate(&(const_cast<pair<const key_type, mapped_type>& >(*position)), 1);
 				this->_size--;
