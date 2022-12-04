@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:56:54 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/04 09:18:44 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/04 09:26:23 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ namespace ft
 		}
 		~map() 
 		{
-			this->clear();
+			//this->clear();
 		}
 		allocator_type get_allocator() const
 		{
@@ -152,9 +152,10 @@ namespace ft
 		//& modifiers
 		void clear()
 		{
-			for(iterator it = this->begin(); it != this->end(); it++)
+			while (this->size() > 0)
+			//for(iterator it = this->begin(); it != this->end(); it++)
 			{
-				this->erase(it);
+				this->erase(this->begin());
 			}
 			
 		}
@@ -162,8 +163,10 @@ namespace ft
 		{
 			if (position.left() == NULL && position.right() == NULL)
 			{
-				this->_alloc.destroy(&((const_cast<pair<const key_type, mapped_type>& >(*position))));
-				this->_alloc.deallocate(&(const_cast<pair<const key_type, mapped_type>& >(*position)), 1);
+				this->_alloc.destroy(&(*position));
+				this->_alloc.deallocate(&(*position), 1);
+				//this->_alloc.destroy(&((const_cast<pair<const key_type, mapped_type>& >(*position))));
+				//this->_alloc.deallocate(&(const_cast<pair<const key_type, mapped_type>& >(*position)), 1);
 				this->_size--;
 			}
 			else if (position.left() == NULL || position.right() == NULL)
@@ -177,7 +180,9 @@ namespace ft
 				}
 				else
 				{
-					*position = *(position.left())->_data;
+					this->_alloc.destroy(&(*position));
+					this->_alloc.construct(&(*position), *(position.left()->_data));
+					//*position = *(position.left())->_data;
 					this->erase(iterator(position.right(), this->_root));
 				}
 			}
@@ -186,6 +191,8 @@ namespace ft
 				iterator next = position;
 				next++;
 				*position = *next;
+				this->_alloc.destroy(&(*position));
+				this->_alloc.construct(&(*position), *(next));
 				this->erase(next);
 			}
 		}
