@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:56:54 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/03 13:36:48 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/04 09:18:44 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ namespace ft
 		public:
 		//& typedefs
 		typedef T													mapped_type;
-		typedef pair <Key,T>										value_type;
+		typedef pair <const Key,T>									value_type;
 		typedef Key													key_type;
 		typedef Compare												key_compare;
 		typedef Alloc												allocator_type;
@@ -83,7 +83,7 @@ namespace ft
 		}
 		~map() 
 		{
-			//this->clear();
+			this->clear();
 		}
 		allocator_type get_allocator() const
 		{
@@ -162,15 +162,17 @@ namespace ft
 		{
 			if (position.left() == NULL && position.right() == NULL)
 			{
-				this->_alloc.destroy(&(*position));
-				this->_alloc.deallocate((*position), 1);
+				this->_alloc.destroy(&((const_cast<pair<const key_type, mapped_type>& >(*position))));
+				this->_alloc.deallocate(&(const_cast<pair<const key_type, mapped_type>& >(*position)), 1);
 				this->_size--;
 			}
 			else if (position.left() == NULL || position.right() == NULL)
 			{
 				if  (position.left() == NULL)
 				{
-					*position = *(position.right()->_data);
+					this->_alloc.destroy(&(*position));
+					this->_alloc.construct(&(*position), *(position.right()->_data));
+					//*position = *(position.right()->_data);
 					this->erase(iterator(position.right(), this->_root));
 				}
 				else

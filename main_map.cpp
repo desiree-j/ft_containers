@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 16:56:15 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/03 13:35:14 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/04 09:18:33 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ int main (void)
 {
 	{ //& constructor, deconstructor
 		ft::map<int, std::string> m; 
-		ft::pair<int, std::string> p(5, "test");
-		ft::pair<int, std::string> p2(6, "map");
-		ft::pair<int, std::string> p3(3, "insert");
+		ft::pair< int, std::string> p(5, "test");
+		ft::pair< int, std::string> p2(6, "map");
+		ft::pair< int, std::string> p3(3, "insert");
 		std::cout << m.empty() << std::endl;
 		std::cout << m.max_size() << std::endl;
 		std::cout << m.size() << std::endl;
@@ -48,7 +48,9 @@ int main (void)
 		m.insert(p3);
 		std::cout << m.size() << std::endl;
 		m.erase(7);
-		
+		std::cout << m.size() << std::endl;
+		m.erase(3);
+		std::cout << m.size() << std::endl;
 	}
 
 

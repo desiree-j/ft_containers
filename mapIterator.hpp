@@ -6,13 +6,15 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 15:03:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/03 13:34:37 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/04 09:09:06 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAPITERATOR_HPP
 # define MAPITERATOR_HPP
-
+#include "utils.hpp"
+namespace ft
+{
 	template <typename map>
 	class mapIterator
 	{
@@ -154,15 +156,16 @@
 	class const_mapIterator
 	{
 		public:
-		typedef typename map::key_type				key_type;
-		typedef typename map::pointer				pointer;
-		typedef typename map::value_type			value_type;
-		typedef const value_type&					reference;
-		typedef std::ptrdiff_t 						difference_type;
-		typedef std::bidirectional_iterator_tag		iterator_category;
-		typedef typename map::size_type				size_type;
-		typedef typename map::key_compare			key_compare;
-		typedef typename map::Node					Node;
+		typedef typename map::key_type							key_type;
+		typedef typename map::mapped_type						mapped_type;
+		typedef typename map::pointer							pointer;
+		typedef pair< const key_type, const mapped_type>	value_type;
+		typedef const value_type&								reference;
+		typedef std::ptrdiff_t 									difference_type;
+		typedef std::bidirectional_iterator_tag					iterator_category;
+		typedef typename map::size_type							size_type;
+		typedef typename map::key_compare						key_compare;
+		typedef typename map::Node								Node;
 		
 
 		public:
@@ -292,5 +295,5 @@
 		key_compare	_comp;
 
 	};
-
+}
 #endif

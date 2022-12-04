@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:56:26 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/03 13:38:41 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/04 09:18:01 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,8 +155,10 @@ namespace ft
         pair (const first_type& a, const second_type& b) : first(a), second(b) {}
         pair& operator= (const pair& pr)
         {
-            this->first = first_type(pr.first);
-            this->second = second_type(pr.second);
+            this->~pair();
+            new(this) pair(pr.first, pr.second);
+            //this->first = first_type(pr.first);
+            //this->second = second_type(pr.second);
             return (*this);            
         }
         first_type  first;
@@ -210,7 +212,7 @@ namespace ft
 		Node 			*_right;
 
 		//Node(pair data, Node *parent): _data(data), _parent(parent), _left(NULL), _right(NULL){};
-		Node() : _data(new ft::pair<T1, T2>()), _parent(NULL), _left(NULL), _right(NULL){}
+		Node() : _data(new ft::pair<const T1, T2>()), _parent(NULL), _left(NULL), _right(NULL){}
         Node *left() { return (this->_left);}
         Node *right() { return(this->_right);}
         Node *parent() { return(this->_parent);}
