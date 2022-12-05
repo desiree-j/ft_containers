@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:56:54 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/04 10:02:33 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/05 13:24:40 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,15 +75,13 @@ namespace ft
 			this->_comp = x._comp;
 			this->_size = 0;
 			this->_root = NULL;
-			this->insert(x._root);
-			for (iterator it =  x.begin; it != x.end(); it++)
-			{
-				this->insert(it);
-			}
+			this->copyTree(x._root);
+			//this->insert(*(x._root->_data));
+
 		}
 		~map() 
 		{
-			//this->clear();
+			this->clear();
 		}
 		allocator_type get_allocator() const
 		{
@@ -423,7 +421,14 @@ namespace ft
 			}
 			return (start);
 		}
-
+		void	copyTree(Node *root)
+		{
+			this->insert(*(root->_data));
+			if (root->left() != NULL)
+				copyTree(root->left());
+			if (root->right() != NULL)
+				copyTree(root->right());
+		}
 	};
 	//template <class Key, class T, class Compare, class Alloc>  
 	//bool operator== ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs )

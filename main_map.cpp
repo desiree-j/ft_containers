@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 16:56:15 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/04 10:01:13 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/05 13:25:03 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,22 @@
 
 #include <stdlib.h>
 
+template <class T1, class T2>
+void	print_map(ft::map<T1, T2> m)
+{
+	if (m.empty())
+		std::cout << "the vector is empty";
+	else
+	{
+		std::cout << C_YELLOW <<"all elements" << C_DEF << std:: endl;
+		for (typename ft::map<T1, T2>::iterator it = m.begin(); it != m.end(); it++)
+		{
+			std::cout << C_GREEN<<"["<<  it->first << "]=" << it->second << "  ";
+		}
+	}
+	std::cout << C_DEF<< std::endl;
+}
+
 int main (void)
 {
 	{ //& constructor, deconstructor
@@ -35,12 +51,13 @@ int main (void)
 		std::cout << m.size() << std::endl;
 		std::cout << m.count(5) << std::endl;
 		m.insert(p);
-		std::cout << "insert 2" << std::endl;
+		print_map(m);
 		m.insert(p2);
 		m.insert(p3);
-		std::cout << m.count(5) << std::endl;
-		std::cout << m.count(6) << std::endl;
-		std::cout << m.count(4) << std::endl;
+		print_map(m);
+		std::cout <<"count(5) = " << m.count(5) << std::endl;
+		std::cout <<"count(6) = " << m.count(6) << std::endl;
+		std::cout <<"count(4) = " << m.count(4) << std::endl;
 		ft::map<int, std::string>::iterator it = m.begin();
 		std::cout << it->first << std::endl;
 		--it;
@@ -52,7 +69,7 @@ int main (void)
 		m.erase(3);
 		std::cout << m.size() << std::endl;
 		m.erase(6);
-		m.erase(5);
+		//m.erase(5);
 		std::cout << m.size() << std::endl;
 	}
 

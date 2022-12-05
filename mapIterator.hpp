@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 15:03:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/04 09:55:21 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/05 13:18:06 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,7 @@ namespace ft
 		typedef typename map::key_type							key_type;
 		typedef typename map::mapped_type						mapped_type;
 		typedef typename map::pointer							pointer;
-		typedef pair< const key_type, const mapped_type>	value_type;
+		typedef pair< const key_type, const mapped_type>		value_type;
 		typedef const value_type&								reference;
 		typedef std::ptrdiff_t 									difference_type;
 		typedef std::bidirectional_iterator_tag					iterator_category;
@@ -203,8 +203,7 @@ namespace ft
 		}
 		reference operator*(void) const
 		{
-			const value_type *tmp = (this->_ptr->_data);
-			return (*tmp);
+			return (*(this->_ptr->_data));
 		}
 		//& increment, decrement
 		const_mapIterator operator++()
