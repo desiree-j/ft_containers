@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:56:54 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/05 13:24:40 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/05 13:44:08 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ namespace ft
 			this->_comp = x._comp;
 			this->_size = 0;
 			this->_root = NULL;
-			this->copyTree(x._root);
+			if (x._root != NULL)
+				this->copyTree(x._root);
 			//this->insert(*(x._root->_data));
 
 		}
