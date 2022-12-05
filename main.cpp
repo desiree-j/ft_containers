@@ -8,7 +8,7 @@
 	#include <vector>
 	namespace ft = std;
 #else
-	//#include "map.hpp"
+	#include "map.hpp"
 	#include "stack.hpp"
 	#include "vector.hpp"
 #endif
@@ -46,7 +46,7 @@ public:
 };
 
 
-	int main(int argc, char** argv) 
+int main(int argc, char** argv) 
 {
 	if (argc != 2)
 	{

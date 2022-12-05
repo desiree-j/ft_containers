@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:56:54 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/05 13:44:08 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/05 16:53:05 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,11 +93,8 @@ namespace ft
 			this->_alloc = x._alloc;
 			this->_comp = x._comp;
 			this->clear();
-			this->insert(x._root);
-			for (iterator it =  x.begin; it != x.end(); it++)
-			{
-				this->insert(it);
-			}
+			if (x._root != NULL)
+				this->copyTree(x._root);
 			return (*this);
 		}
 		//& position
@@ -243,7 +240,6 @@ namespace ft
 				return (it);
 			else
 			{
-				//// check if position == lower_bound???
 				if (this->_comp(position->first, val->first))
 					node = this->find_next(position, val->first);
 				else
@@ -289,7 +285,15 @@ namespace ft
 		}
 		mapped_type& operator[] (const key_type& k)
 		{
-			return(*((this->insert(make_pair(k,mapped_type()))).first));
+			iterator it = this->find(k);
+			if (it != this->end())
+				return (it->second);
+			else
+			{
+				it = insert(make_pair(k, mapped_type())).first;
+				return (it->second);
+			}
+				//return(((this->insert(make_pair(k,mapped_type())))->first));
 		}
 		//& capacity
 		size_type count (const key_type& k) const
@@ -386,18 +390,13 @@ namespace ft
 				this->_root->_left = NULL;
 				this->_root->_right = NULL;
 				this->_root->_parent = NULL;
-				////start->_parent = tmp.allocate(1);
-				//tmp.construct(start->_parent, NULL);
-				////start->_left = tmp.allocate(1);
-				//tmp.construct(start->_left, NULL);
-				////start->_right = tmp.allocate(1);
-				//tmp.construct(start->_right, NULL);
 				return (this->_root);
 			}
 			if (this->_comp(start->_data->first, k)) //new element is bigger than start
 			{
 				if (start->_right != NULL)
-					find_next(start->_right, k);
+					return(find_next(start->_right, k));
+
 				else
 				{
 					start->_right = tmp.allocate(1);
@@ -410,7 +409,7 @@ namespace ft
 			else // new element is smaller than start
 			{
 				if (start->_left != NULL)
-					this->find_next(start->_left, k);
+					return(this->find_next(start->_left, k));
 				else
 				{
 					start->_left = tmp.allocate(1);
