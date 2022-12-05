@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 15:03:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/05 13:18:06 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/05 17:25:07 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,11 +134,11 @@ namespace ft
 			--(*this);
 			return (tmp);
 		}
-		Node *right()
+		Node 	*right()
 		{
 			return (this->_ptr->right());
 		}
-		Node *left()
+		Node 	*left()
 		{
 			return (this->_ptr->left());
 		}

@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:56:54 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/05 16:53:05 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/05 18:08:53 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,7 @@ namespace ft
 		}
 		void erase (iterator position)
 		{
+			std::allocator<Node> tmp;
 			if (position.left() == NULL && position.right() == NULL)
 			{
 				if (position.parent() == NULL)
@@ -165,40 +166,61 @@ namespace ft
 					position.parent()->_left = NULL;
 				else
 					position.parent()->_right = NULL;
-				std::allocator<Node> tmp;
+				//std::allocator<Node> tmp;
 				this->_alloc.destroy(&(*position));
 				this->_alloc.deallocate(&(*position), 1);
 				tmp.deallocate(position.getNode(),1);
-				//this->_alloc.destroy(&((const_cast<pair<const key_type, mapped_type>& >(*position))));
-				//this->_alloc.deallocate(&(const_cast<pair<const key_type, mapped_type>& >(*position)), 1);
-				this->_size--;
 			}
 			else if (position.left() == NULL || position.right() == NULL)
 			{
+				iterator next = position;
+				next++;
+				Node *pos = position.getNode();
+				if (position.getNode() == this->_root)
+					this->_root = next.getNode();
+				else if (pos->_parent->_left == position.getNode())
+					pos->_parent->_left = position.left();
+				else
+					pos->_parent->_right = position.right();
 				if  (position.left() == NULL)
 				{
+					pos->_right->_parent = position.parent();
 					this->_alloc.destroy(&(*position));
-					this->_alloc.construct(&(*position), *(position.right()->_data));
-					//*position = *(position.right()->_data);
-					this->erase(iterator(position.right(), this->_root));
+					this->_alloc.deallocate(&(*position), 1);
+					tmp.deallocate(position.getNode(),1);
 				}
 				else
 				{
+					pos->_left->_parent = position.parent();
 					this->_alloc.destroy(&(*position));
-					this->_alloc.construct(&(*position), *(position.left()->_data));
-					//*position = *(position.left())->_data;
-					this->erase(iterator(position.right(), this->_root));
+					this->_alloc.deallocate(&(*position), 1);
+					tmp.deallocate(position.getNode(),1);
 				}
 			}
 			else
 			{
+				//if root -> this->root = next
+				// baum links von position wird an ganz linkes blatt von next gehangen
 				iterator next = position;
 				next++;
-				*position = *next;
+				Node *temp = next.getNode();
+				Node *pos = position.getNode();
+				if (position.getNode() == this->_root)
+					this->_root = next.getNode();
+				else if (pos->_parent->_left == position.getNode())
+					pos->_parent->_left = position.left();
+				else
+					pos->_parent->_right = position.right();
+				temp->_parent = position.parent();
+				while (temp->left() != NULL)
+					temp = temp->left();
+				temp->_left = position.left();
+				pos->_left->_parent = temp;
 				this->_alloc.destroy(&(*position));
-				this->_alloc.construct(&(*position), *(next));
-				this->erase(next);
+				this->_alloc.deallocate(&(*position), 1);
+				tmp.deallocate(position.getNode(),1);
 			}
+			this->_size--;
 		}
 		size_type erase (const key_type& k)
 		{
@@ -214,8 +236,15 @@ namespace ft
 		}
 	    void erase (iterator first, iterator last)
 		{
-			for (; first != last; first++)
-				erase(first);
+			iterator tmp = first;
+			while (first != last)
+			{
+				first++;
+				this->erase(tmp);
+				tmp = first;
+			}
+			//for (; first != last; first++)
+			//	erase(first);
 		}
 		pair<iterator,bool> insert (const value_type& val)
 		{	

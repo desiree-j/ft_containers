@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 16:56:15 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/05 15:26:06 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/05 16:59:27 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int main (void)
 		print_map(m);
 		m.erase(5);
 		print_map(m);
-		//m.erase(6);
+		m.erase(6);
 		print_map(m);
 		m2.insert(p4);
 		m2.insert(p5);
@@ -98,6 +98,7 @@ int main (void)
 		std::cout << C_BLUE << "erase range " << C_DEF << std::endl;
 		it = m.begin();
 		++it;
+		it++;
 		m.erase(m.begin(), it);
 		print_map(m);
 
