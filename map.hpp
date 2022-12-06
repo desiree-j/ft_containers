@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:56:54 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/06 13:51:13 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/06 14:02:02 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,18 @@ namespace ft
 		typedef ft::reverse_iterator<const_iterator>				const_reverse_iterator;
 		typedef ft::Node<key_type, mapped_type>						Node;
 
-		//template <class Key, class T, class Compare, class Alloc>
-		//class map<Key,T,Compare,Alloc>::value_compare : binary_function<value_type,value_type,bool>
-		//{   // in C++98, it is required to inherit binary_function<value_type,value_type,bool>
-		//	friend class map;
-		//	public:
-		//	typedef bool result_type;
-		//	typedef value_type first_argument_type;
-		//	typedef value_type second_argument_type;
-		//	bool operator() (const value_type& x, const value_type& y) const
-		//	{
-		//		return comp(x.first, y.first);
-		//	}
-		//	protected:
-		//	Compare comp;
-		//	value_compare (Compare c) : comp(c) {}  // constructed with map's comparison object
-		//}
+		class value_compare : std::binary_function<value_type,value_type,bool>
+		{
+			friend class map;
+			public:
+			bool operator() (const value_type& x, const value_type& y) const
+			{
+				return _comp(x.first, y.first);
+			}
+			protected:
+			Compare _comp;
+			value_compare (Compare c) : _comp(c) {}  
+		};
 
 		public:
 		//& constructor, destructor
@@ -401,8 +397,10 @@ namespace ft
 			}
 			return (const_iterator(this->end()));
 		}
-		//todo value_comp()
-		//value_compare value_comp() const;
+		value_compare value_comp() const
+		{
+			return(value_compare(this->_comp));
+		}
 		
 
 		private:
@@ -461,22 +459,6 @@ namespace ft
 				copyTree(root->right());
 		}
 	};
-	//template <class Key, class T, class Compare, class Alloc>  
-	//bool operator== ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs )
-	//{
-	//	if (lhs.size() != rhs.size())
-	//		return (false);
-	//	map<Key, T, Compare, Alloc>::iterator itl = lhs.begin();
-	//	map<Key, T, Compare, Alloc>::iterator itr = rhs.begin();	
-	//	while (itl != lhs.end())
-	//	{
-	//		if (itl->first != itr->first || itl->second != itr->second)
-	//			return (false);
-	//		itl++;
-	//		itr++;
-	//	}
-	//	return(true);
-	//}
 	template <class Key, class T, class Compare, class Alloc>  
 	bool operator== ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs )
 	{

@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 16:56:15 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/06 13:50:37 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/06 14:29:58 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,17 @@
 #else
 	#include "map.hpp"
 #endif
-
+#include <string>
 #include <stdlib.h>
 
 template <class T1, class T2>
-void	print_map(ft::map<T1, T2> m)
+void	print_map(ft::map<T1, T2> m, std::string name)
 {
 	if (m.empty())
-		std::cout << "the map is empty";
+		std::cout << "the map "<< name <<" is empty";
 	else
 	{
+		std::cout<< C_BLUE << name << " : ";
 		for (typename ft::map<T1, T2>::iterator it = m.begin(); it != m.end(); it++)
 		{
 			std::cout << C_GREEN<<"["<<  it->first << "]=" << it->second << "  ";
@@ -56,10 +57,10 @@ int main (void)
 		std::cout <<"count(5) = " << m.count(5) << std::endl;
 		std::cout << C_BLUE << "insert elements" << C_DEF << std::endl;
 		m.insert(p);
-		print_map(m);
+		print_map(m, "m");
 		m.insert(p2);
 		m.insert(p3);
-		print_map(m);
+		print_map(m, "m");
 		std::cout <<"count(5) = " << m.count(5) << std::endl;
 		std::cout <<"count(6) = " << m.count(6) << std::endl;
 		std::cout <<"count(4) = " << m.count(4) << std::endl;
@@ -68,63 +69,66 @@ int main (void)
 		std::cout << it->first << std::endl;
 		--it;
 		std::cout << it->first << std::endl;
+		std::cout << "---------------------------------------------------" << std::endl;
 		std::cout << C_BLUE << "insert element that is already in map " << C_DEF << std::endl;
 		m.insert(p3);
-		print_map(m);
+		print_map(m, "m");
 		std::cout << C_BLUE << "copy assignment overload" << C_DEF << std::endl;
 		ft::map<int, std::string> m2;
 		m2. insert(p);
 		std::cout << "before: " << std::endl;
-		print_map(m2);
+		print_map(m2, "m2");
 		m2 = m; 
 		std::cout << "after: " << std::endl;
-		print_map(m2);
+		print_map(m2, "m2");
 		std::cout << C_BLUE << "erase element that is not in map " << C_DEF << std::endl;
 		m.erase(7);
-		print_map(m);
+		print_map(m, "m");
 		std::cout << C_BLUE << "erase element that is in map " << C_DEF << std::endl;
 		m.erase(3);
-		print_map(m);
+		print_map(m, "m");
 		m.erase(5);
-		print_map(m);
+		print_map(m, "m");
 		std::cout << C_BLUE << "erase with iterator" << C_DEF << std::endl;
 		m.erase(m.begin());
-		print_map(m);
+		print_map(m, "m");
 		m2.insert(p4);
 		m2.insert(p5);
 		m2.insert(p6);
 		std::cout << C_BLUE << "insert range " << C_DEF << std::endl;
 		m.insert(m2.begin(), m2.end());
-		print_map(m2);
+		print_map(m2, "m2");
 		std::cout << C_BLUE << "erase range " << C_DEF << std::endl;
 		it = m.begin();
 		++it;
 		it++;
 		m.erase(m.begin(), it);
-		print_map(m);
+		print_map(m, "m");
 		std::cout << C_BLUE << "range constructor " << C_DEF << std::endl;
 		ft::map<int, std::string> m3(m2.begin(), m2.end());
-		print_map(m3);
+		print_map(m3, "m3");
 		std::cout << C_BLUE << "clear " << C_DEF << std::endl;
 		m3.clear();
-		print_map(m3);
+		print_map(m3, "m3");
+		std::cout << "---------------------------------------------------" << std::endl;
 		std::cout << C_BLUE << "swap " << C_DEF << std::endl;
 		std::cout << "before: " << std::endl;
-		print_map(m);
-		print_map(m2);
+		print_map(m, "m");
+		print_map(m2, "m2");
 		m2.swap(m);
 		std::cout << "after: " << std::endl;
-		print_map(m);
-		print_map(m2);
+		print_map(m, "m");
+		print_map(m2, "m2");
 		std::cout << C_BLUE << "non member function swap " << C_DEF << std::endl;	
 		std::cout << "before: " << std::endl;
-		print_map(m);
-		print_map(m2);
+		print_map(m, "m");
+		print_map(m2, "m2");
 		swap(m, m2);
 		std::cout << "after: " << std::endl;
-		print_map(m);
-		print_map(m2);
+		print_map(m, "m");
+		print_map(m2, "m2");
 
+		std::cout << "---------------------------------------------------" << std::endl;
 		std::cout << C_BLUE << "comparision" << C_DEF << std::endl;	
 		bool comp = (m < m2);
 		std::cout << "m < m2: " << std::boolalpha << comp << std::endl;
@@ -138,6 +142,12 @@ int main (void)
 		std::cout << "m == m2: " << std::boolalpha << comp << std::endl;
 		comp = m != m2;
 		std::cout << "m != m2: " << std::boolalpha << comp << std::endl;
+		std::cout << "---------------------------------------------------" << std::endl;
+
+		std::cout << C_BLUE << "value_compare" << C_DEF << std::endl;
+		std::cout << " p < p2: "<<std::boolalpha << m.value_comp()(p, p2) << std::endl;
+		std::cout << C_BLUE << "key_compare" << C_DEF << std::endl;
+		std::cout << " p < p2: "<<std::boolalpha << m.key_comp()(p.first, p2.first) << std::endl;
 		std::cout << "---------------------------------------------------" << std::endl;
 	}
 
