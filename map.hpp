@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:56:54 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/05 18:08:53 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/06 13:51:13 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ namespace ft
 		//& constructor, destructor
 		explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) : _root(NULL), _alloc(alloc), _comp(comp), _size(0){}
 		template <class InputIterator>  
-		map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) : _alloc(alloc), _comp(comp)
+		map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) : _root(NULL), _alloc(alloc), _comp(comp), _size(0)
 		{
 			for (; first != last; first++)
 			{
@@ -77,7 +77,6 @@ namespace ft
 			this->_root = NULL;
 			if (x._root != NULL)
 				this->copyTree(x._root);
-			//this->insert(*(x._root->_data));
 
 		}
 		~map() 
@@ -287,15 +286,18 @@ namespace ft
 		}
 		void swap (map& x)
 		{
-			map &tmp = x;
-			x._alloc = this->_alloc;
-			x._comp = this->_comp;
-			x._root = this->_root;
-			x._size = this->_size;
-			this._alloc = tmp->_alloc;
-			this._comp = tmp->_comp;
-			this._root = tmp->_root;
-			this._size = tmp->_size;
+			Node 			*tmpRoot = this->_root;
+			allocator_type 	tmpAlloc = this->_alloc;
+			key_compare		tmpComp = this->_comp;
+			size_type 		tmpSize = this->_size;
+			this->_alloc = x._alloc;
+			this->_comp = x._comp;
+			this->_root = x._root;
+			this->_size = x._size;
+			x._alloc = tmpAlloc;
+			x._comp = tmpComp;
+			x._root = tmpRoot;
+			x._size = tmpSize;
 		}
 		//& element access	
 		iterator find (const key_type& k)
@@ -476,6 +478,22 @@ namespace ft
 	//	return(true);
 	//}
 	template <class Key, class T, class Compare, class Alloc>  
+	bool operator== ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs )
+	{
+		if (lhs.size() != rhs.size())
+			return (false);
+		typename map<Key,T,Compare,Alloc>::const_iterator it = lhs.begin();
+		typename map<Key,T,Compare,Alloc>::const_iterator it2 = rhs.begin();
+		while (it != lhs.end())
+		{
+			if (it->first != it2->first || it->second != it2->second)
+				return (false);
+			it++;
+			it2++;
+		}
+		return (true);
+	}
+	template <class Key, class T, class Compare, class Alloc>  
 	bool operator!= ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs )
 	{
 		return (!(lhs==rhs));
@@ -483,7 +501,20 @@ namespace ft
 	template <class Key, class T, class Compare, class Alloc>  
 	bool operator<  ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs )
 	{
-		return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), lhs.end()));
+		typename map<Key,T,Compare,Alloc>::const_iterator first1 = lhs.begin();
+		typename map<Key,T,Compare,Alloc>::const_iterator first2 = rhs.begin();
+		typename map<Key,T,Compare,Alloc>::const_iterator last1 = lhs.end();
+		typename map<Key,T,Compare,Alloc>::const_iterator last2 = rhs.end();
+		while (first1!=last1)
+		{
+			if (first2==last2 || (first2->first < first1->first || first2->second < first1->second)) 
+				return false;
+			else if (first1->first < first2->first || (first1->first == first2->first && first1->second < first2->second)) 
+				return true;
+			++first1;
+			++first2;
+		}
+		return (first2!=last2);
 	}
 	template <class Key, class T, class Compare, class Alloc>  
 	bool operator<= ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs )

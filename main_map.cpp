@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 16:56:15 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/05 16:59:27 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/06 13:50:37 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ int main (void)
 		print_map(m);
 		m.erase(5);
 		print_map(m);
-		m.erase(6);
+		std::cout << C_BLUE << "erase with iterator" << C_DEF << std::endl;
+		m.erase(m.begin());
 		print_map(m);
 		m2.insert(p4);
 		m2.insert(p5);
@@ -101,8 +102,43 @@ int main (void)
 		it++;
 		m.erase(m.begin(), it);
 		print_map(m);
+		std::cout << C_BLUE << "range constructor " << C_DEF << std::endl;
+		ft::map<int, std::string> m3(m2.begin(), m2.end());
+		print_map(m3);
+		std::cout << C_BLUE << "clear " << C_DEF << std::endl;
+		m3.clear();
+		print_map(m3);
+		std::cout << C_BLUE << "swap " << C_DEF << std::endl;
+		std::cout << "before: " << std::endl;
+		print_map(m);
+		print_map(m2);
+		m2.swap(m);
+		std::cout << "after: " << std::endl;
+		print_map(m);
+		print_map(m2);
+		std::cout << C_BLUE << "non member function swap " << C_DEF << std::endl;	
+		std::cout << "before: " << std::endl;
+		print_map(m);
+		print_map(m2);
+		swap(m, m2);
+		std::cout << "after: " << std::endl;
+		print_map(m);
+		print_map(m2);
 
+		std::cout << C_BLUE << "comparision" << C_DEF << std::endl;	
+		bool comp = (m < m2);
+		std::cout << "m < m2: " << std::boolalpha << comp << std::endl;
+		comp = m > m2;
+		std::cout << "m > m2: " << std::boolalpha << comp << std::endl;
+		comp = m >= m2;
+		std::cout << "m >= m2: " << std::boolalpha << comp << std::endl;
+		comp = m <= m2;
+		std::cout << "m <= m2: " << std::boolalpha << comp << std::endl;
+		comp = m == m2;
+		std::cout << "m == m2: " << std::boolalpha << comp << std::endl;
+		comp = m != m2;
+		std::cout << "m != m2: " << std::boolalpha << comp << std::endl;
+		std::cout << "---------------------------------------------------" << std::endl;
 	}
-
 
 }
