@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:56:54 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/06 14:02:02 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/06 16:35:46 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -306,7 +306,7 @@ namespace ft
 		}
 		const_iterator find (const key_type& k) const
 		{
-			if (this->count() == 1)
+			if (this->count(k) == 1)
 				return (this->lower_bound(k));
 			return (this->end());
 		}
@@ -317,7 +317,7 @@ namespace ft
 				return (it->second);
 			else
 			{
-				it = insert(make_pair(k, mapped_type())).first;
+				it = insert(ft::make_pair(k, mapped_type())).first;
 				return (it->second);
 			}
 				//return(((this->insert(make_pair(k,mapped_type())))->first));
@@ -341,7 +341,8 @@ namespace ft
 		}
 		size_type max_size() const
 		{
-			return (this->_alloc.max_size());
+			std::allocator<Node> tmp;
+			return (tmp.max_size());
 		}
 		size_type size() const
 		{
@@ -350,11 +351,11 @@ namespace ft
 		//& comparision
 		pair<const_iterator,const_iterator> equal_range (const key_type& k) const
 		{
-			return(make_pair(this->lower_bound(k), this->upper_bound(k)));
+			return(ft::make_pair(this->lower_bound(k), this->upper_bound(k)));
 		}
 		pair<iterator,iterator> equal_range (const key_type& k)
 		{
-			return(make_pair(this->lower_bound(k), this->upper_bound(k)));
+			return(ft::make_pair(this->lower_bound(k), this->upper_bound(k)));
 		}
 		key_compare key_comp() const
 		{
@@ -380,9 +381,9 @@ namespace ft
 		}
 		iterator upper_bound (const key_type& k)
 		{
-			for (iterator it = this->_begin(); it != this->end(); it++)
+			for (iterator it = this->begin(); it != this->end(); it++)
 			{
-				if(this->_comp(k, *it->first))
+				if(this->_comp(k, it->first))
 					return (it);
 			}
 			return (iterator(this->end()));
