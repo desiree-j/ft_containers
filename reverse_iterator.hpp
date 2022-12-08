@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:53:38 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/22 16:15:44 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/08 16:17:12 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,9 @@ namespace ft
 			}
 			reference operator*()
 			{
-				return (*(this->_it - 1));
+				iterator_type it = this->_it;
+				it--;
+				return (*(it));
 			}
 			reverse_iterator operator+(difference_type n)
 			{
