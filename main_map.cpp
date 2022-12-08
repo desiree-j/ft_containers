@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 16:56:15 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/08 14:14:28 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/08 14:29:20 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,7 @@ int main (void)
 		it4++;
 		std::cout << " *it2 < *it3: "<<std::boolalpha << m4.value_comp()(*it4, *it5) << std::endl;
 		std::cout << " p < p2: "<<std::boolalpha << m.key_comp()(it4->first, it5->first) << std::endl;
-		m[35] = "checking";
+		m[9] = "checking";
 		print_map(m, "m");
 	}
 

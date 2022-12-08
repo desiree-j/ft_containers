@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:56:54 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/08 14:15:26 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/08 14:32:24 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,6 @@ namespace ft
 		void clear()
 		{
 			while (this->size() > 0)
-			//for(iterator it = this->begin(); it != this->end(); it++)
 			{
 				this->erase(this->begin());
 			}
@@ -154,7 +153,7 @@ namespace ft
 		void erase (iterator position)
 		{
 			std::allocator<Node> tmp;
-			if (position.left() == NULL && position.right() == NULL)
+			if (position.left() == NULL && position.right() == NULL) //if position is leaf
 			{
 				if (position.parent() == NULL)
 					this->_root = NULL;
@@ -166,57 +165,107 @@ namespace ft
 				this->_alloc.deallocate(&(*position), 1);
 				tmp.deallocate(position.getNode(),1);
 			}
-			else if (position.left() == NULL || position.right() == NULL)
+			else if (position.right() == NULL)
 			{
-				iterator next = position;
-				next++;
+				Node *temp = position.left(); //new Node at position
 				Node *pos = position.getNode();
 				if (position.getNode() == this->_root)
-					this->_root = next.getNode();
-				else if (pos->_parent->_left == position.getNode())
-					pos->_parent->_left = position.left();
+					this->_root = temp;
+				else if (pos->_parent->_left == position.getNode()) //position is left child
+					pos->_parent->_left = temp;
 				else
-					pos->_parent->_right = position.right();
-				if  (position.left() == NULL)
-				{
-					pos->_right->_parent = position.parent();
-					this->_alloc.destroy(&(*position));
-					this->_alloc.deallocate(&(*position), 1);
-					tmp.deallocate(position.getNode(),1);
-				}
-				else
-				{
-					pos->_left->_parent = position.parent();
-					this->_alloc.destroy(&(*position));
-					this->_alloc.deallocate(&(*position), 1);
-					tmp.deallocate(position.getNode(),1);
-				}
+					pos->_parent->_right = temp;
+				temp->_parent = position.parent();
+				this->_alloc.destroy(&(*position));
+				this->_alloc.deallocate(&(*position), 1);
+				tmp.deallocate(position.getNode(),1);
 			}
-			else
+			else //position has left and right child
 			{
-				//if root -> this->root = next
-				// baum links von position wird an ganz linkes blatt von next gehangen
-				iterator next = position;
-				next++;
-				Node *temp = next.getNode();
+				Node *temp = position.right(); //new Node at position
 				Node *pos = position.getNode();
 				if (position.getNode() == this->_root)
-					this->_root = next.getNode();
-				else if (pos->_parent->_left == position.getNode())
-					pos->_parent->_left = position.left();
+					this->_root = temp;
+				else if (pos->_parent->_left == position.getNode()) //position is left child
+					pos->_parent->_left = temp;
 				else
-					pos->_parent->_right = position.right();
+					pos->_parent->_right = temp;
 				temp->_parent = position.parent();
 				while (temp->left() != NULL)
 					temp = temp->left();
 				temp->_left = position.left();
-				pos->_left->_parent = temp;
+				if (pos->left() != NULL)
+					pos->_left->_parent = temp;
 				this->_alloc.destroy(&(*position));
 				this->_alloc.deallocate(&(*position), 1);
 				tmp.deallocate(position.getNode(),1);
 			}
 			this->_size--;
 		}
+		//void erase (iterator position)
+		//{
+		//	std::allocator<Node> tmp;
+		//	if (position.left() == NULL && position.right() == NULL)
+		//	{
+		//		if (position.parent() == NULL)
+		//			this->_root = NULL;
+		//		else if(position.getNode() == position.parent()->left())
+		//			position.parent()->_left = NULL;
+		//		else
+		//			position.parent()->_right = NULL;
+		//		this->_alloc.destroy(&(*position));
+		//		this->_alloc.deallocate(&(*position), 1);
+		//		tmp.deallocate(position.getNode(),1);
+		//	}
+		//	else if (position.left() == NULL || position.right() == NULL)
+		//	{
+		//		iterator next = position;
+		//		next++;
+		//		Node *pos = position.getNode();
+		//		if (position.getNode() == this->_root)
+		//			this->_root = next.getNode();
+		//		else if (pos->_parent->_left == position.getNode())
+		//			pos->_parent->_left = position.left();
+		//		else
+		//			pos->_parent->_right = position.right();
+		//		if  (position.left() == NULL)
+		//		{
+		//			pos->_right->_parent = position.parent();
+		//			this->_alloc.destroy(&(*position));
+		//			this->_alloc.deallocate(&(*position), 1);
+		//			tmp.deallocate(position.getNode(),1);
+		//		}
+		//		else
+		//		{
+		//			pos->_left->_parent = position.parent();
+		//			this->_alloc.destroy(&(*position));
+		//			this->_alloc.deallocate(&(*position), 1);
+		//			tmp.deallocate(position.getNode(),1);
+		//		}
+		//	}
+		//	else
+		//	{
+		//		iterator next = position;
+		//		next++;
+		//		Node *temp = next.getNode();
+		//		Node *pos = position.getNode();
+		//		if (position.getNode() == this->_root)
+		//			this->_root = next.getNode();
+		//		else if (pos->_parent->_left == position.getNode())
+		//			pos->_parent->_left = position.left();
+		//		else
+		//			pos->_parent->_right = position.right();
+		//		temp->_parent = position.parent();
+		//		while (temp->left() != NULL)
+		//			temp = temp->left();
+		//		temp->_left = position.left();
+		//		pos->_left->_parent = temp;
+		//		this->_alloc.destroy(&(*position));
+		//		this->_alloc.deallocate(&(*position), 1);
+		//		tmp.deallocate(position.getNode(),1);
+		//	}
+		//	this->_size--;
+		//}
 		size_type erase (const key_type& k)
 		{
 			for (iterator it = this->begin(); it != this->end(); it++)
