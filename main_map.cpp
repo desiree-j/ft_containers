@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 16:56:15 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/08 14:29:20 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/08 15:09:08 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,16 @@ int main (void)
 		ft::pair< int, std::string> p4(2, "this");
 		ft::pair< int, std::string> p5(16, "for");
 		ft::pair< int, std::string> p6(30, "map");
+		ft::pair< int, std::string> pp(5, "an");
 		std::cout <<"is empty: " << std::boolalpha << m.empty() << std::endl;
 		std::cout << "maxsize: " <<m.max_size() << std::endl;
 		std::cout << "size: " <<m.size() << std::endl;
 		std::cout <<"count(5) = " << m.count(5) << std::endl;
 		std::cout << C_BLUE << "insert elements" << C_DEF << std::endl;
 		m.insert(p);
+		m.insert(pp);
 		print_map(m, "m");
-		m.insert(p2);
+		m.insert(m.begin(), p2);
 		m.insert(p3);
 		print_map(m, "m");
 		std::cout <<"count(5) = " << m.count(5) << std::endl;
@@ -97,9 +99,12 @@ int main (void)
 		m2.insert(p4);
 		m2.insert(p5);
 		m2.insert(p6);
+		print_map(m2, "m2");
 		std::cout << C_BLUE << "insert range " << C_DEF << std::endl;
 		it = m2.end();
-		(--it);
+		--(--(--it));
+		//--it;
+		//--it;
 		m.insert(m2.begin(), it);
 		print_map(m, "m");
 		std::cout << C_BLUE << "erase range " << C_DEF << std::endl;

@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:56:54 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/08 14:32:24 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/08 15:11:27 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -307,16 +307,16 @@ namespace ft
 		}
 		iterator insert (iterator position, const value_type& val)
 		{
-			iterator it = this->find();
+			iterator it = this->find(val.first);
 			Node *node;
 			if (it != this->end())
 				return (it);
 			else
 			{
-				if (this->_comp(position->first, val->first))
-					node = this->find_next(position, val->first);
+				if (this->_comp(position->first, val.first))
+					node = this->find_next(position.getNode(), val.first);
 				else
-					node = this->find_next(this->_root, val->first);
+					node = this->find_next(this->_root, val.first);
 				node->_data = this->_alloc.allocate(1);
 				this->_alloc.construct(node->_data, val);
 				this->_size++;
