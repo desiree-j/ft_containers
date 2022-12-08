@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:56:26 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/04 09:18:01 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/07 16:04:08 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,11 +207,10 @@ namespace ft
 	struct Node
 	{
 		pair<const T1, T2>	*_data;
-		Node 			*_parent;
-		Node 			*_left;
-		Node 			*_right;
+		Node 		    *_parent;
+		Node 		    *_left;
+		Node 		    *_right;
 
-		//Node(pair data, Node *parent): _data(data), _parent(parent), _left(NULL), _right(NULL){};
 		Node() : _data(new ft::pair<const T1, T2>()), _parent(NULL), _left(NULL), _right(NULL){}
         Node *left() { return (this->_left);}
         Node *right() { return(this->_right);}

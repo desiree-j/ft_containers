@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 16:56:15 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/06 15:03:35 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/08 14:14:28 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,10 @@ int main (void)
 		m2.insert(p5);
 		m2.insert(p6);
 		std::cout << C_BLUE << "insert range " << C_DEF << std::endl;
-		m.insert(m2.begin(), m2.end());
-		print_map(m2, "m2");
+		it = m2.end();
+		(--it);
+		m.insert(m2.begin(), it);
+		print_map(m, "m");
 		std::cout << C_BLUE << "erase range " << C_DEF << std::endl;
 		it = m.begin();
 		++it;
@@ -147,6 +149,10 @@ int main (void)
 		std::cout << "---------------------------------------------------" << std::endl;
 
 		std::cout << C_BLUE << "value_compare" << C_DEF << std::endl;
+		ft::map<int, std::string>::iterator it2 = m.begin();
+		ft::map<int, std::string>::iterator it3 = m.begin();
+		it3++;
+		std::cout << " *it2 < *it3: "<<std::boolalpha << m.value_comp()(*it2, *it3) << std::endl;
 		std::cout << " p < p2: "<<std::boolalpha << m.value_comp()(p, p2) << std::endl;
 		std::cout << C_BLUE << "key_compare" << C_DEF << std::endl;
 		std::cout << " p < p2: "<<std::boolalpha << m.key_comp()(p.first, p2.first) << std::endl;
@@ -167,8 +173,14 @@ int main (void)
 		std::cout << C_BLUE << "const equal range" << C_DEF << std::endl;
 		std::cout << "m4.equal_range(3): " << m4.equal_range(3).first->first << " " << m4.equal_range(3).second->first<< std::endl;
 		std::cout <<"m4.find(3) = " << m4.find(3)->first<< " " << m4.find(3)->second << std::endl;
-
-		
+		std::cout << C_BLUE << "const value_compare" << C_DEF << std::endl;
+		ft::map<int, std::string>::const_iterator it4 = m4.begin();
+		ft::map<int, std::string>::const_iterator it5 = m4.begin();
+		it4++;
+		std::cout << " *it2 < *it3: "<<std::boolalpha << m4.value_comp()(*it4, *it5) << std::endl;
+		std::cout << " p < p2: "<<std::boolalpha << m.key_comp()(it4->first, it5->first) << std::endl;
+		m[35] = "checking";
+		print_map(m, "m");
 	}
 
 }

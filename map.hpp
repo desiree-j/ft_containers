@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:56:54 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/06 16:35:46 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/08 14:15:26 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,11 @@ namespace ft
 		template <class InputIterator>  
 		map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) : _root(NULL), _alloc(alloc), _comp(comp), _size(0)
 		{
-			for (; first != last; first++)
-			{
-				this->insert(*first);
-			}
+			this->insert(first, last);
+			//for (; first != last; first++)
+			//{
+			//	this->insert(*first);
+			//}
 		}
 		map (const map& x)
 		{
@@ -161,7 +162,6 @@ namespace ft
 					position.parent()->_left = NULL;
 				else
 					position.parent()->_right = NULL;
-				//std::allocator<Node> tmp;
 				this->_alloc.destroy(&(*position));
 				this->_alloc.deallocate(&(*position), 1);
 				tmp.deallocate(position.getNode(),1);
@@ -312,15 +312,8 @@ namespace ft
 		}
 		mapped_type& operator[] (const key_type& k)
 		{
-			iterator it = this->find(k);
-			if (it != this->end())
-				return (it->second);
-			else
-			{
-				it = insert(ft::make_pair(k, mapped_type())).first;
-				return (it->second);
-			}
-				//return(((this->insert(make_pair(k,mapped_type())))->first));
+			iterator it = insert(ft::make_pair(k, mapped_type())).first;
+			return (it->second);
 		}
 		//& capacity
 		size_type count (const key_type& k) const

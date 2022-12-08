@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:34 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/23 16:41:19 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/07 15:53:28 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,19 @@ namespace ft
 	
 
 		public:
-		explicit stack (const container_type& ctnr = container_type())
-		{
-			this->c = ctnr;
-		}
+		explicit stack (const container_type& ctnr = container_type()) : c(ctnr) {}
+		stack( const stack& other ) : c(other.c) {}
 		bool empty() const
 		{
 			return (c.empty());
 		}
 		void pop()
 		{
-			c.erase(c.end() - 1);
+			c.pop_back();
 		}
 		void push (const value_type& val)
 		{
-			c.insert(c.end(), val);
+			c.push_back(val);
 		}
 		size_type size() const
 		{
@@ -53,11 +51,11 @@ namespace ft
 		}
 		value_type& top()
 		{
-			return (*(c.end() - 1));
+			return (c.back());
 		}
 		const value_type& top() const
 		{
-			return (*(c.end() - 1));
+			return (c.back());
 		}
 		template <class fT, class fContainer>  
 		friend bool operator== (const stack<fT,fContainer>& lhs, const stack<fT,fContainer>& rhs);

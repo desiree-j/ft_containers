@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 15:03:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/05 17:25:07 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/08 13:20:50 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,12 @@ namespace ft
 		mapIterator(const mapIterator& rhs)
 		{
 			this->_ptr = rhs._ptr;
+			this->_root = rhs._root;
 		}
 		mapIterator& operator=(const mapIterator& rhs)
 		{
 			this->_ptr = rhs._ptr;
+			this->_root = rhs._root;
 			return (*this);
 		}
 		//& comparison
@@ -96,10 +98,10 @@ namespace ft
 		}
 		mapIterator operator--()
 		{
-			if (!this->_ptr)
+			if (!this->_ptr && this->_root)
 			{
 				this->_ptr = this->_root;
-				while (this->_ptr->right() != NULL)
+				while (this->_ptr && this->_ptr->right() != NULL)
 					this->_ptr =  this->_ptr->right();
 				return (*this);
 			}
@@ -164,7 +166,7 @@ namespace ft
 		typedef typename map::mapped_type						mapped_type;
 		typedef typename map::pointer							pointer;
 		typedef pair< const key_type, const mapped_type>		value_type;
-		typedef const value_type&								reference;
+		typedef pair< const key_type, mapped_type>&				reference;
 		typedef std::ptrdiff_t 									difference_type;
 		typedef std::bidirectional_iterator_tag					iterator_category;
 		typedef typename map::size_type							size_type;
@@ -179,10 +181,12 @@ namespace ft
 		const_mapIterator(const const_mapIterator& rhs)
 		{
 			this->_ptr = rhs._ptr;
+			this->_root = rhs._root;
 		}
 		const_mapIterator& operator=(const const_mapIterator& rhs)
 		{
 			this->_ptr = rhs._ptr;
+			this->_root = rhs._root;
 			return (*this);
 		}
 		//& comparison
@@ -297,8 +301,8 @@ namespace ft
 			return (this->_ptr->_parent);
 		}
 		private:
-		Node		*_ptr;
-		Node		*_root;
+		Node	*_ptr;
+		Node	*_root;
 		key_compare	_comp;
 
 	};
