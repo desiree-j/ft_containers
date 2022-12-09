@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 16:56:15 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/09 10:41:51 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/09 13:49:02 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,14 +102,10 @@ int main (void)
 		print_map(m2, "m2");
 		std::cout << C_BLUE << "insert range " << C_DEF << std::endl;
 		it = m2.end();
-		it--;
-		std::cout << ((it--)--)->first << std::endl;
-		std::cout << it->first << std::endl;
-		std::cout << ((--it)--)->first << std::endl;
-		std::cout << it->first << std::endl;
+		std::cout << (--(--it))->first << std::endl;
 		//--it;
 		//--it;
-		//m.insert(m2.begin(), it);
+		m.insert(m2.begin(), it);
 		print_map(m, "m");
 		std::cout << C_BLUE << "erase range " << C_DEF << std::endl;
 		it = m.begin();
