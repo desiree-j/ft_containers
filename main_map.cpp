@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 16:56:15 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/08 15:59:02 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/09 10:41:51 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ int main (void)
 		ft::map<int, std::string>::iterator it = m.begin();
 		std::cout << C_BLUE << "key of first element" << C_DEF << std::endl;
 		std::cout << it->first << std::endl;
-		--it;
-		std::cout << it->first << std::endl;
+		//--it;
+		//std::cout << it->first << std::endl;
 		std::cout << "---------------------------------------------------" << std::endl;
 		std::cout << C_BLUE << "insert element that is already in map " << C_DEF << std::endl;
 		m.insert(p3);
@@ -102,10 +102,14 @@ int main (void)
 		print_map(m2, "m2");
 		std::cout << C_BLUE << "insert range " << C_DEF << std::endl;
 		it = m2.end();
-		--(--(--it));
+		it--;
+		std::cout << ((it--)--)->first << std::endl;
+		std::cout << it->first << std::endl;
+		std::cout << ((--it)--)->first << std::endl;
+		std::cout << it->first << std::endl;
 		//--it;
 		//--it;
-		m.insert(m2.begin(), it);
+		//m.insert(m2.begin(), it);
 		print_map(m, "m");
 		std::cout << C_BLUE << "erase range " << C_DEF << std::endl;
 		it = m.begin();
