@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 16:56:15 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/09 14:00:34 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/09 14:11:15 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,17 @@ void	print_map(ft::map<T1, T2> m, std::string name)
 	}
 	std::cout << C_DEF<< std::endl;
 	std::cout << "size: "<<m.size() << std::endl;
+}
+template <typename MAP, typename U, typename V>
+void	ft_insert(MAP &mp, U param, V param2)
+{
+	//iterator tmp;
+
+	//std::cout << "\t-- [" << iter++ << "] --" << std::endl;
+	mp.insert(param, param2);
+	//std::cout << "insert return: " << printPair(tmp);
+	//printSize(mp);
+	print_map(mp, "mp");
 }
 
 int main (void)
@@ -188,6 +199,11 @@ int main (void)
 		print_map(m, "m");
 		std::cout <<(*it).second << std::endl;
 		std::cout <<(*it4).second << std::endl;
+		std::cout << "---------------------------------------------------" << std::endl;
+		ft::map<int, std::string> mp2;
+		ft_insert(mp2, mp2.begin(), ft::make_pair(1337, "beauty"));
+		ft_insert(mp2, mp2.end(), ft::make_pair(1000, "Hello"));
+		ft_insert(mp2, mp2.end(), ft::make_pair(1500, "World"));
 	}
 
 }

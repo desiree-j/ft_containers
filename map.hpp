@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:56:54 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/09 08:57:31 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/09 14:26:35 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ namespace ft
 		iterator begin()
 		{
 			Node *tmp = this->_root;
-			while(tmp->_left != NULL)
+			while(tmp != NULL && tmp->_left != NULL)
 				tmp = tmp->_left;
 			return (iterator(tmp, this->_root));
 		}
@@ -103,7 +103,6 @@ namespace ft
 			{
 				tmp = tmp->_left;
 			}
-			//std::cout << C_GREEN << "begin" << C_DEF << std::endl;
 			return (const_iterator(tmp, this->_root));
 		}
 		iterator end()
@@ -238,6 +237,11 @@ namespace ft
 		}
 		iterator insert (iterator position, const value_type& val)
 		{
+			if (position == this->end())
+			{
+				this->insert(val);
+				return (this->find(val.first));
+			}
 			iterator it = this->find(val.first);
 			Node *node;
 			if (it != this->end())
