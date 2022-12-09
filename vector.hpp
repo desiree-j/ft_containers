@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/03 12:12:05 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/09 09:16:22 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 
 namespace ft
 {
-
 	template <class T, class Alloc =  std::allocator<T> >
 	class vector
 	{

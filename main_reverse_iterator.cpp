@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 14:09:01 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/18 12:33:29 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/09 09:23:06 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,19 @@
 #else
 	#include "utils.hpp"
 	#include "reverse_iterator.hpp"
+	#include "vector.hpp"
 #endif
 
 #include <stdlib.h>
 
 int	main(void)
 {
-	std::vector<int> vec;
+	ft::vector<int> vec;
 	for(int i = 0; i < 15; i++)
 	{
 		vec.push_back(i);
 	}
-	std::vector<int>::iterator it = vec.begin();
+	ft::vector<int>::iterator it = vec.begin();
 	it+=2;
 	ft::reverse_iterator<std::vector<int>::iterator> rev(it);
 	std::cout << *it <<" "<<*rev << std::endl;
@@ -46,4 +47,23 @@ int	main(void)
 	rev[0] = 42;
 	std::cout << rev[0] << std::endl;
 
+	//std::vector<int> vec;
+	//for(int i = 0; i < 15; i++)
+	//{
+	//	vec.push_back(i);
+	//}
+	//std::vector<int>::iterator it = vec.begin();
+	//it+=2;
+	//ft::reverse_iterator<std::vector<int>::iterator> rev(it);
+	//std::cout << *it <<" "<<*rev << std::endl;
+	//std::cout << *(rev++) << std::endl;
+	//std::cout << *rev << std::endl;
+	//std::cout << *(rev--) << std::endl;
+	//std::cout << *rev << std::endl;
+	//std::cout << *(rev - 2) << std::endl;
+	//std::cout << *rev << std::endl;
+	//std::cout << *rev.base() << std::endl;
+	//std::cout << *rev << std::endl;
+	//rev[0] = 42;
+	//std::cout << rev[0] << std::endl;
 }
