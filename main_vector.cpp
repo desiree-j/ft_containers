@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 12:29:11 by djedasch          #+#    #+#             */
-/*   Updated: 2022/11/25 13:57:48 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/09 15:46:40 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 #endif
 
 #include <stdlib.h>
+#include <list>
 
 template <class T>
 void	print_vector(ft::vector<T> vec)
@@ -61,7 +62,6 @@ int main(void)
 		print_vector(vec4);
 		vec4 = vec3;
 		print_vector(vec3);
-		//todo get_allocator
 		std::cout << "---------------------------------------------------" << std::endl;
 	}
 	{	//&capacity
@@ -277,5 +277,26 @@ int main(void)
 			std::cout << *cit << " ";
 		}
 		std::cout << std::endl;
+	}
+	{//& tester
+	std::list<int> lst;
+	std::list<int>::iterator lst_it;
+	for (int i = 1; i < 5; ++i)
+		lst.push_back(i * 3);
+
+	ft::vector<int> vct(lst.begin(), lst.end());
+	print_vector(vct);
+
+	lst_it = lst.begin();
+	for (int i = 1; lst_it != lst.end(); ++i)
+		*lst_it++ = i * 5;
+	vct.assign(lst.begin(), lst.end());
+	//printSize(vct);
+	print_vector(vct);
+
+	vct.insert(vct.end(), lst.rbegin(), lst.rend());
+	//printSize(vct);
+	print_vector(vct);
+	return (0);
 	}
 }

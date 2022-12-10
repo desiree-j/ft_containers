@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:56:54 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/09 14:26:35 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/10 09:33:47 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ namespace ft
 		typedef const value_type*									const_pointer;
 		typedef typename allocator_type::size_type					size_type;
 		typedef typename allocator_type::difference_type			difference_type;
-		typedef mapIterator<map>									iterator;
-		typedef const_mapIterator<const map>						const_iterator; 
+		typedef ft::Node<key_type, mapped_type>						Node;
+		typedef mapIterator<Node *, value_type>						iterator;
+		typedef mapIterator<const Node *,const value_type>			const_iterator; 
 		typedef ft::reverse_iterator<iterator>						reverse_iterator;
 		typedef ft::reverse_iterator<const_iterator>				const_reverse_iterator;
-		typedef ft::Node<key_type, mapped_type>						Node;
 
 		class value_compare : std::binary_function<value_type,value_type,bool>
 		{
