@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:56:54 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/10 09:33:47 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/10 10:19:51 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,36 +147,36 @@ namespace ft
 		void erase (iterator position)
 		{
 			std::allocator<Node> tmp;
-			if (position.left() == NULL && position.right() == NULL) //if position is leaf
+			Node *pos = position.getNode();
+			if (pos->_left == NULL && pos->_right == NULL) //if position is leaf
 			{
-				if (position.parent() == NULL)
+				if (pos->_parent == NULL)
 					this->_root = NULL;
-				else if(position.getNode() == position.parent()->left())
-					position.parent()->_left = NULL;
+				else if(pos == pos->_parent->left())
+					pos->_parent->_left = NULL;
 				else
-					position.parent()->_right = NULL;
+					pos->_parent->_right = NULL;
 				this->_alloc.destroy(&(*position));
 				this->_alloc.deallocate(&(*position), 1);
-				tmp.deallocate(position.getNode(),1);
+				tmp.deallocate(pos,1);
 			}
-			else if (position.right() == NULL)
+			else if (pos->_right == NULL)
 			{
-				Node *temp = position.left(); //new Node at position
-				Node *pos = position.getNode();
-				if (position.getNode() == this->_root)
+				Node *temp = pos->_left; //new Node at position
+				if (pos == this->_root)
 					this->_root = temp;
-				else if (pos->_parent->_left == position.getNode()) //position is left child
+				else if (pos->_parent->_left == pos) //position is left child
 					pos->_parent->_left = temp;
 				else
 					pos->_parent->_right = temp;
-				temp->_parent = position.parent();
+				temp->_parent = pos->_parent;
 				this->_alloc.destroy(&(*position));
 				this->_alloc.deallocate(&(*position), 1);
-				tmp.deallocate(position.getNode(),1);
+				tmp.deallocate(pos,1);
 			}
 			else //position has left and right child
 			{
-				Node *temp = position.right(); //new Node at position
+				Node *temp = pos->_right; //new Node at position
 				Node *pos = position.getNode();
 				if (position.getNode() == this->_root)
 					this->_root = temp;
@@ -184,10 +184,10 @@ namespace ft
 					pos->_parent->_left = temp;
 				else
 					pos->_parent->_right = temp;
-				temp->_parent = position.parent();
+				temp->_parent = pos->_parent;
 				while (temp->left() != NULL)
 					temp = temp->left();
-				temp->_left = position.left();
+				temp->_left = pos->_left;
 				if (pos->left() != NULL)
 					pos->_left->_parent = temp;
 				this->_alloc.destroy(&(*position));
@@ -234,6 +234,7 @@ namespace ft
 				it = this->find(val.first);
 				return(ft::make_pair(it, true));
 			}
+			return(ft::make_pair(it, true));
 		}
 		iterator insert (iterator position, const value_type& val)
 		{

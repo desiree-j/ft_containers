@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 09:23:05 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/10 09:49:36 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/10 10:24:50 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,6 @@ namespace ft
 		typedef const value_type&						const_reference;
 		typedef std::ptrdiff_t 							difference_type;
 		typedef std::bidirectional_iterator_tag			iterator_category;
-		//typedef typename map::size_type				size_type;
-		//typedef typename value_type::first_type			key_type;
-		//typedef typename map::key_compare				key_compare;
 		typedef nodePtr									node_pointer;
 		
 
@@ -46,16 +43,16 @@ namespace ft
 			return (*this);
 		}
 		//& comparison
-		bool operator==(const mapIterator &rhs) const
-		{
-			if(this->_ptr == rhs._ptr)
-				return (true);
-			return (false);
-		}
-		bool operator!=(const mapIterator &rhs) const
-		{
-			return(!(*this == rhs));
-		}
+		//bool operator==(const mapIterator &rhs) const
+		//{
+		//	if(this->_ptr == rhs._ptr)
+		//		return (true);
+		//	return (false);
+		//}
+		//bool operator!=(const mapIterator &rhs) const
+		//{
+		//	return(!(*this == rhs));
+		//}
 		//& (de)referencing
         pointer operator->() const
 		{
@@ -72,21 +69,15 @@ namespace ft
 			{
 				return (*this);
 			}
-			//key_type k = this->_ptr->_data->first;
 			if (this->_ptr->_right != NULL) // geh nach rechts und dann ganz nach links unten
 			{
 				this->_ptr = this->_ptr->_right;
 				while (this->_ptr->_left != NULL)
 					this->_ptr = this->_ptr->_left;
 			}
-			//else  if (this->_ptr->parent() != NULL && this->_comp(k,this->_ptr->parent()->_data->first))
-			//{
-			//	this->_ptr = this->_ptr->parent();
-			//}
 			else
 			{
 				node_pointer tmp = this->_ptr->_parent;
-				//geh so lange zum parent bis parent > this oder parent == NULL
 				while (tmp && this->_ptr == tmp->_right)
 				{
 					this->_ptr = tmp;
@@ -112,17 +103,12 @@ namespace ft
 					this->_ptr =  this->_ptr->_right;
 				return (*this);
 			}
-			//key_type k = this->_ptr->_data->first;
 			if (this->_ptr->_left != NULL) // geh nach links und dann ganz nach rechts unten
 			{
 				this->_ptr = this->_ptr->_left;
 				while (this->_ptr->_right != NULL)
 					this->_ptr = this->_ptr->_right;
 			}
-			//else  if (this->_ptr->parent() != NULL && this->_comp(this->_ptr->parent()->_data->first, k))
-			//{
-			//	this->_ptr = this->_ptr->parent();
-			//}
 			else
 			{
 				//geh so lange zum parent bis parent < this oder parent == NULL
@@ -142,35 +128,52 @@ namespace ft
 			--(*this);
 			return (tmp);
 		}
-		node_pointer 	right()
-		{
-			return (this->_ptr->right());
-		}
-		node_pointer 	left()
-		{
-			return (this->_ptr->_left);
-		}
 		node_pointer	getNode()
 		{
 			return (this->_ptr);
-		}
-		node_pointer	parent()
-		{
-			return (this->_ptr->_parent);
 		}
 		node_pointer getRoot()
 		{
 			return (this->_root);
 		}
-		node_pointer base()
+		node_pointer base() const
 		{
 			return (this->_ptr);
 		}
 		private:
 		mutable node_pointer		_ptr;
 		mutable node_pointer		_root;
-		//key_compare	_comp;
 	};
+	
+	template<typename n_ptr, typename v_type>
+	bool operator==(const mapIterator<n_ptr, v_type> &lhs, const mapIterator<n_ptr, v_type> &rhs) {
+		return (lhs.base() == rhs.base());	
+	}
+
+	template<typename n_ptr, typename v_type>
+	bool operator!=(const mapIterator<n_ptr, v_type> &lhs, const mapIterator<n_ptr, v_type> &rhs) {
+		return (lhs.base() != rhs.base());
+	}
+
+	template<typename n_ptr1, typename n_ptr2, typename v_type>
+	bool operator==(const mapIterator<n_ptr1, v_type> &lhs, const mapIterator<n_ptr2, v_type> &rhs) {
+		return (lhs.base() == rhs.base());	
+	}
+
+	template<typename n_ptr1, typename n_ptr2, typename v_type>
+	bool operator!=(const mapIterator<n_ptr1, v_type> &lhs, const mapIterator<n_ptr2, v_type> &rhs) {
+		return (lhs.base() != rhs.base());
+	}
+
+	template<typename n_ptr1, typename n_ptr2, typename v_type1, typename v_type2>
+	bool operator==(const mapIterator<n_ptr1, v_type1> &lhs, const mapIterator<n_ptr2, v_type2> &rhs) {
+		return (lhs.base() == rhs.base());	
+	}
+
+	template<typename n_ptr1, typename n_ptr2, typename v_type1, typename v_type2>
+	bool operator!=(const mapIterator<n_ptr1, v_type1> &lhs, const mapIterator<n_ptr2, v_type2> &rhs) {
+		return (lhs.base() != rhs.base());
+	}
 
 
 }
