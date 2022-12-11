@@ -1,7 +1,7 @@
 //#include "common.hpp"
 #include "map.hpp"
 #include <iostream>
-
+#include <list>
 
 
 static unsigned int i = 0;
@@ -71,8 +71,11 @@ void	printReverse(ft::map<T1, T2> &mp)
 	std::cout << "_______________________________________________" << std::endl;
 }
 
+//#define T1 char
+//#define T2 foo<float>
 #define T1 char
-#define T2 foo<float>
+#define T2 int
+typedef ft::pair<const T1, T2> T3;
 typedef typename ft::map<T1, T2> _map;
 typedef _map::const_iterator const_it;
 
@@ -105,21 +108,50 @@ void	ft_comp(const _map &mp, const const_it &it1, const const_it &it2)
 //	return (0);
 //}
 
-	ft::map<T1, T2> mp;
-	ft::map<T1, T2>::iterator it = mp.begin();
-	ft::map<T1, T2>::const_iterator cit = mp.begin();
+template <typename T>
+T	inc(T it, int n)
+{
+	while (n-- > 0)
+		++it;
+	return (it);
+}
 
-	ft::map<T1, T2>::reverse_iterator rit(it);
+template <typename T>
+T	dec(T it, int n)
+{
+	while (n-- > 0)
+		--it;
+	return (it);
+}
 
-	ft::map<T1, T2>::const_reverse_iterator crit(rit);
-	ft::map<T1, T2>::const_reverse_iterator crit_(it);
-	ft::map<T1, T2>::const_reverse_iterator crit_2(cit);
+int		main(void)
+{
+	std::list<T3> lst;
+	unsigned int lst_size = 5;
+	for (unsigned int i = 0; i < lst_size; ++i)
+		lst.push_back(T3('a' + i, (i + 1) * 7));
 
-	/* error expected
-	ft::map<T1, T2>::reverse_iterator rit_(crit);
-	ft::map<T1, T2>::reverse_iterator rit2(cit);
-	ft::map<T1, T2>::iterator it2(rit);
-	ft::map<T1, T2>::const_iterator cit2(crit);
-	*/
+	ft::map<T1, T2> mp(lst.begin(), lst.end());
+	ft::map<T1, T2>::iterator it_ = mp.begin();
+	ft::map<T1, T2>::reverse_iterator it(it_), ite;
+	printSize(mp);
 
-	std::cout << "OK" << std::endl;
+	std::cout << (it_ == it.base()) << std::endl;
+	std::cout << (it_ == dec(it, 3).base()) << std::endl;
+
+	printPair(it.base());
+	printPair(inc(it.base(), 1));
+
+	std::cout << "TEST OFFSET" << std::endl;
+	--it;
+	printPair(it);
+	printPair(it.base());
+
+	it = mp.rbegin(); ite = mp.rend();
+	while (it != ite)
+		std::cout << "[rev] " << printPair(it++, false) << std::endl;
+	printReverse(mp);
+
+	return (0);
+}
+

@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:56:54 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/11 08:56:13 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/11 09:11:26 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,24 +116,24 @@ namespace ft
 		reverse_iterator rbegin()
 		{
 			Node *tmp = this->_root;
-			while(tmp->right != NULL)
-				tmp = tmp->right;
-			return (reverse_iterator(tmp, this->_root));
+			while(tmp->_right != NULL)
+				tmp = tmp->_right;
+			return (reverse_iterator(iterator(tmp, this->_root)));
 		}
 		const_reverse_iterator rbegin() const
 		{
 			Node *tmp = this->_root;
-			while(tmp->right != NULL)
-				tmp = tmp->right;
-			return (const_reverse_iterator(tmp, this->_root));
+			while(tmp->_right != NULL)
+				tmp = tmp->_right;
+			return (const_reverse_iterator(iterator(tmp, this->_root)));
 		}
 		reverse_iterator rend()
 		{
-			return(reverse_iterator(NULL, this->_root));
+			return(reverse_iterator(iterator(NULL, this->_root)));
 		}
 		const_reverse_iterator rend() const
 		{
-			return(const_reverse_iterator(NULL, this->_root));
+			return(const_reverse_iterator(iterator(NULL, this->_root)));
 		}
 		//& modifiers
 		void clear()
