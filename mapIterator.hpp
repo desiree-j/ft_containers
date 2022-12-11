@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 09:23:05 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/10 10:24:50 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/11 08:59:22 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ namespace ft
 		~mapIterator(void){}
 		mapIterator(const mapIterator& rhs): _ptr(rhs._ptr), _root(rhs._root){}
 		template<typename node, typename val>
-		mapIterator(mapIterator<node, val> &copy) : _ptr(copy.base()) , _root(copy.getRoot()) {}
+		mapIterator(mapIterator<node, val> copy) : _ptr(copy.base()) , _root(copy.getRoot()) {}
 		mapIterator& operator=(const mapIterator& rhs)
 		{
 			this->_ptr = rhs._ptr;
@@ -132,7 +132,7 @@ namespace ft
 		{
 			return (this->_ptr);
 		}
-		node_pointer getRoot()
+		node_pointer getRoot() const
 		{
 			return (this->_root);
 		}

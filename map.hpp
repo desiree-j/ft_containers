@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:56:54 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/10 10:19:51 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/11 08:56:13 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ namespace ft
 		typedef const value_type*									const_pointer;
 		typedef typename allocator_type::size_type					size_type;
 		typedef typename allocator_type::difference_type			difference_type;
-		typedef ft::Node<key_type, mapped_type>						Node;
+		typedef ft::Node<const key_type, mapped_type>				Node;
 		typedef mapIterator<Node *, value_type>						iterator;
 		typedef mapIterator<const Node *,const value_type>			const_iterator; 
 		typedef ft::reverse_iterator<iterator>						reverse_iterator;
@@ -89,7 +89,7 @@ namespace ft
 			return (*this);
 		}
 		//& position
-		iterator begin()
+		iterator begin() 
 		{
 			Node *tmp = this->_root;
 			while(tmp != NULL && tmp->_left != NULL)
@@ -105,7 +105,7 @@ namespace ft
 			}
 			return (const_iterator(tmp, this->_root));
 		}
-		iterator end()
+		iterator end() 
 		{
 			return (iterator(NULL, this->_root));
 		}
@@ -383,7 +383,7 @@ namespace ft
 		}
 		
 
-		private:
+		protected:
 		Node 			*_root;
 		allocator_type 	_alloc;
 		key_compare		_comp;
