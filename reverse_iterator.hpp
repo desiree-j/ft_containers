@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:53:38 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/10 10:35:55 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/11 09:04:01 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ namespace ft
 	{
 		public:
 			typedef	Iter													iterator_type;
-			typedef typename ft::iterator_traits<Iter>::pointer			pointer;
+			typedef typename ft::iterator_traits<Iter>::pointer				pointer;
 			typedef typename ft::iterator_traits<Iter>::reference			reference;
 			typedef typename ft::iterator_traits<Iter>::value_type			value_type;
-			typedef typename ft::iterator_traits<Iter>::difference_type	difference_type;
+			typedef typename ft::iterator_traits<Iter>::difference_type		difference_type;
 			typedef typename ft::iterator_traits<Iter>::iterator_category	iterator_category;
 
 		public:

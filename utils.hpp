@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:56:26 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/10 10:43:25 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/11 09:04:47 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ namespace ft
     template <class Iterator> 
     class iterator_traits
     {
+        public:
         typedef typename Iterator::value_type            value_type;
         typedef typename Iterator::difference_type       difference_type;
         typedef typename Iterator::iterator_category     iterator_category;
@@ -31,6 +32,7 @@ namespace ft
     template <class T> 
     class iterator_traits<T*>
     {
+        public:
         typedef ptrdiff_t                	    difference_type;
         typedef T                        	    value_type;
         typedef T*                     	    	pointer;
@@ -40,6 +42,7 @@ namespace ft
     template <class T> 
     class iterator_traits<const T*>
     {
+        public:
         typedef ptrdiff_t           	         difference_type;
         typedef T               	             value_type;
         typedef const T*    	                 pointer;

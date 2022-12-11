@@ -87,20 +87,39 @@ void	ft_comp(const _map &mp, const const_it &it1, const const_it &it2)
 	std::cout << "key_comp: " << res[0] << " | " << "value_comp: " << res[1] << std::endl;
 }
 
-int		main(void)
-{
-	_map	mp;
+//int		main(void)
+//{
+//	_map	mp;
 
-	mp['a'] = 2.3;
-	mp['b'] = 1.4;
-	mp['c'] = 0.3;
-	mp['d'] = 4.2;
-	printSize(mp);
+//	mp['a'] = 2.3;
+//	mp['b'] = 1.4;
+//	mp['c'] = 0.3;
+//	mp['d'] = 4.2;
+//	printSize(mp);
 
-	for (const_it it1 = mp.begin(); it1 != mp.end(); ++it1)
-		for (const_it it2 = mp.begin(); it2 != mp.end(); ++it2)
-			ft_comp(mp, it1, it2);
+//	for (const_it it1 = mp.begin(); it1 != mp.end(); ++it1)
+//		for (const_it it2 = mp.begin(); it2 != mp.end(); ++it2)
+//			ft_comp(mp, it1, it2);
 
-	printSize(mp);
-	return (0);
-}
+//	printSize(mp);
+//	return (0);
+//}
+
+	ft::map<T1, T2> mp;
+	ft::map<T1, T2>::iterator it = mp.begin();
+	ft::map<T1, T2>::const_iterator cit = mp.begin();
+
+	ft::map<T1, T2>::reverse_iterator rit(it);
+
+	ft::map<T1, T2>::const_reverse_iterator crit(rit);
+	ft::map<T1, T2>::const_reverse_iterator crit_(it);
+	ft::map<T1, T2>::const_reverse_iterator crit_2(cit);
+
+	/* error expected
+	ft::map<T1, T2>::reverse_iterator rit_(crit);
+	ft::map<T1, T2>::reverse_iterator rit2(cit);
+	ft::map<T1, T2>::iterator it2(rit);
+	ft::map<T1, T2>::const_iterator cit2(crit);
+	*/
+
+	std::cout << "OK" << std::endl;
