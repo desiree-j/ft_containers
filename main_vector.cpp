@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 12:29:11 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/12 14:11:00 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/12 14:28:34 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,13 @@ void	print_vector(ft::vector<T> vec)
 		}
 	}
 	std::cout << std::endl;
+}
+void	checkErase(ft::vector<std::string> const &vct,
+					ft::vector<std::string>::const_iterator const &it)
+{
+	static int i = 0;
+	std::cout << "[" << i++ << "] " << "erase: " << it - vct.begin() << std::endl;
+	print_vector(vct);
 }
 
 int main(void) 
@@ -315,15 +322,9 @@ int main(void)
 	ft::vector<std::string> vcts(10);
 
 	for (unsigned long int i = 0; i < vcts.size(); ++i)
-		vcts[i] = std::string((vct.size() - i), i + 65);
+		vcts[i] = std::string((vcts.size() - i), i + 65);
+	checkErase(vcts, vcts.erase(vcts.begin() + 2));
 	return (0);
 	}
 }
 
-void	checkErase(ft::vector<std::string> const &vct,
-					ft::vector<std::string>::const_iterator const &it)
-{
-	static int i = 0;
-	std::cout << "[" << i++ << "] " << "erase: " << it - vct.begin() << std::endl;
-	//printSize(vct);
-}

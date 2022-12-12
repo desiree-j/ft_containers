@@ -13,16 +13,15 @@
 #ifndef VECTORITERATOR_HPP
 # define VECTORITERATOR_HPP
 
-	template <typename vector>
+	template <typename T, typename vector>
 	class vectorIterator
 	{
 		public:
-		typedef typename vector::pointer					pointer;
-		typedef typename vector::reference					reference;
-		typedef typename vector::value_type					value_type;
-		typedef std::ptrdiff_t 								difference_type;
-		typedef std::random_access_iterator_tag				iterator_category;
-		typedef typename vector::size_type					size_type;
+		typedef typename ft::iterator_traits<T>::pointer			pointer;
+		typedef typename ft::iterator_traits<T>::reference			reference;
+		typedef typename ft::iterator_traits<T>::value_type			value_type;
+		typedef typename ft::iterator_traits<T>::difference_type	difference_type;
+		typedef typename ft::iterator_traits<T>::iterator_category	iterator_category;
 		
 
 		public:
@@ -33,40 +32,15 @@
 		{
 			this->_ptr = rhs._ptr;
 		}
+		template<typename _T>
+		vectorIterator(const vectorIterator<_T, typename ft::enable_if<ft::are_same<_T, typename vector::pointer>::value, vector>::type>& copy) : _ptr(copy._ptr) {}
 		vectorIterator& operator=(const vectorIterator& rhs)
 		{
 			this->_ptr = rhs._ptr;
 			return (*this);
 		}
-		//& comparison
-		bool operator==(const vectorIterator &rhs) const
-		{
-			if(this->_ptr == rhs._ptr)
-				return (true);
-			return (false);
-		}
-		bool operator!=(const vectorIterator &rhs) const
-		{
-			return(!(*this == rhs));
-		}
-		bool operator<(const vectorIterator &rhs) const
-		{
-			if (this->_ptr < rhs._ptr)
-				return (true);
-			return(false);
-		}
-		bool operator>(const vectorIterator &rhs) const
-		{
-			return(rhs < *this);
-		}
-		bool operator<=(const vectorIterator &rhs) const
-		{
-			return(!(*this > rhs));
-		}
-		bool operator>=(const vectorIterator &rhs) const
-		{
-			return(!(*this < rhs));
-		}
+
+	
 		//& (de)referencing
         pointer operator->() const
 		{
@@ -115,9 +89,13 @@
 		{
 			return (this->_ptr - n);
 		}
-		difference_type operator-(const vectorIterator& it)
+		difference_type operator-(const vectorIterator& it) const
 		{
 			return (this->_ptr - it._ptr);
+		}
+		difference_type operator+(const vectorIterator& it) const
+		{
+			return (this->_ptr + it._ptr);
 		}
 		vectorIterator operator-=(difference_type n)
 		{
@@ -129,131 +107,109 @@
 			this->_ptr = this->_ptr + n;
 			return (*this);
 		}
-		private:
-		pointer _ptr;
-	};
-
-	template <typename vector>
-	class const_vectorIterator
-	{
-		public:
-		typedef typename vector::pointer				pointer;
-		typedef typename vector::value_type				value_type;
-		typedef const value_type&						reference;
-		typedef std::ptrdiff_t 							difference_type;
-		typedef std::random_access_iterator_tag			iterator_category;
-		typedef typename vector::size_type				size_type;
-		
-
-		public:
-		const_vectorIterator() : _ptr(NULL) {}
-		const_vectorIterator(pointer ptr) : _ptr(ptr){}
-		~const_vectorIterator(void){}
-		const_vectorIterator(const const_vectorIterator& rhs)
-		{
-			this->_ptr = rhs._ptr;
-		}
-		const_vectorIterator& operator=(const const_vectorIterator& rhs)
-		{
-			this->_ptr = rhs._ptr;
-			return (*this);
-		}
-		//& comparison
-		bool operator==(const const_vectorIterator &rhs) const
-		{
-			if(this->_ptr == rhs._ptr)
-				return (true);
-			return (false);
-		}
-		bool operator!=(const const_vectorIterator &rhs) const
-		{
-			return(!(*this == rhs));
-		}
-		bool operator<(const const_vectorIterator &rhs) const
-		{
-			if (this->_ptr < rhs._ptr)
-				return (true);
-			return(false);
-		}
-		bool operator>(const const_vectorIterator &rhs) const
-		{
-			return(rhs < *this);
-		}
-		bool operator<=(const const_vectorIterator &rhs) const
-		{
-			return(!(*this > rhs));
-		}
-		bool operator>=(const const_vectorIterator &rhs) const
-		{
-			return(!(*this < rhs));
-		}
-		//& (de)referencing
-        const pointer operator->() const
+		pointer getPtr() const
 		{
 			return (this->_ptr);
 		}
-        reference operator[](int n) const
-		{
-			const value_type ret= *(this->_ptr + n);
-			return (ret);
-		}
-		reference operator*(void) const
-		{
-			const value_type *tmp = (this->_ptr);
-			return (*tmp);
-		}
-		//& increment, decrement
-		const_vectorIterator &operator++()
-		{
-			this->_ptr++;
-			return (*this);
-		}
-		const_vectorIterator operator++(int)
-		{
-			const_vectorIterator tmp = *this;
-			this->_ptr++;
-			return (tmp);
-		}
-		const_vectorIterator &operator--()
-		{
-			this->_ptr--;
-			return (*this);
-		}
-		const_vectorIterator operator--(int)
-		{
-			const_vectorIterator tmp = *this;
-			--(*this);
-			return (tmp);
-		}
-		friend const_vectorIterator operator+(difference_type n , const const_vectorIterator& it)
-		{
-			return(const_vectorIterator(it._ptr + n));
-		}
-		const_vectorIterator operator+(difference_type n)
-		{
-			return (this->_ptr + n);
-		}
-		const_vectorIterator operator-(difference_type n)
-		{
-			return (this->_ptr - n);
-		}
-		difference_type operator-(const const_vectorIterator& it)
-		{
-			return (this->_ptr - it._ptr);
-		}
-		const_vectorIterator operator-=(difference_type n)
-		{
-			this->_ptr = this->_ptr - n;
-			return (*this);
-		}
-		const_vectorIterator operator+=(difference_type n)
-		{
-			this->_ptr = this->_ptr + n;
-			return (*this);
-		}
-		
-		private:
+		protected:
 		pointer _ptr;
 	};
+
+		//& ----------------- non member comparison -----------------------
+		
+		template<typename T, typename vector>
+		bool operator==(const vectorIterator<T, vector> &lhs, const vectorIterator<T, vector> &rhs) 
+		{
+			if(lhs.getPtr() == rhs.getPtr())
+				return (true);
+			return (false);
+		}
+		template<typename T, typename vector>
+		bool operator!=(const vectorIterator<T, vector> &lhs, const vectorIterator<T, vector> &rhs) 
+		{
+			return(!(lhs == rhs));
+		}
+		template<typename T, typename vector>
+		bool operator<(const vectorIterator<T, vector> &lhs, const vectorIterator<T, vector> &rhs) 
+		{
+			if (lhs.getPtr() < rhs.getPtr())
+				return (true);
+			return(false);
+		}
+		template<typename T, typename vector>
+		bool operator>(const vectorIterator<T, vector> &lhs, const vectorIterator<T, vector> &rhs) 
+		{
+			return(rhs < lhs);
+		}
+		template<typename T, typename vector>
+		bool operator<=(const vectorIterator<T, vector> &lhs, const vectorIterator<T, vector> &rhs) 
+		{
+			return(!(lhs > rhs));
+		}
+		template<typename T, typename vector>
+		bool operator>=(const vectorIterator<T, vector> &lhs, const vectorIterator<T, vector> &rhs) 
+		{
+			return(!(lhs < rhs));
+		}
+
+
+		template<typename T,typename T2, typename vector>
+		bool operator==(const vectorIterator<T, vector> &lhs, const vectorIterator<T2, vector> &rhs) 
+		{
+			if(lhs.getPtr() == rhs.getPtr())
+				return (true);
+			return (false);
+		}
+		template<typename T,typename T2, typename vector>
+		bool operator!=(const vectorIterator<T, vector> &lhs, const vectorIterator<T2, vector> &rhs)  
+		{
+			return(!(lhs == rhs));
+		}
+		template<typename T,typename T2, typename vector>
+		bool operator<(const vectorIterator<T, vector> &lhs, const vectorIterator<T2, vector> &rhs) 
+		{
+			if (lhs.getPtr() < rhs.getPtr())
+				return (true);
+			return(false);
+		}
+		template<typename T,typename T2, typename vector>
+		bool operator>(const vectorIterator<T, vector> &lhs, const vectorIterator<T2, vector> &rhs) 
+		{
+			return(rhs < lhs);
+		}
+		template<typename T,typename T2, typename vector>
+		bool operator<=(const vectorIterator<T, vector> &lhs, const vectorIterator<T2, vector> &rhs) 
+		{
+			return(!(lhs > rhs));
+		}
+		template<typename T,typename T2, typename vector>
+		bool operator>=(const vectorIterator<T, vector> &lhs, const vectorIterator<T2, vector> &rhs) 
+		{
+			return(!(lhs < rhs));
+		}
+
+		template<typename T2, typename vector>
+		vectorIterator<T2, vector> operator+(typename vectorIterator<T2, vector>::difference_type offset, const vectorIterator<T2, vector> &rhs) 
+		{
+			return (vectorIterator<T2, vector>(rhs.getPtr() + offset));
+		}
+
+		template<typename T1, typename vector>
+		vectorIterator<T1, vector> operator+(const vectorIterator<T1, vector> &lhs, typename vectorIterator<T1, vector>::difference_type offset) 
+		{
+			return (vectorIterator<T1, vector>(lhs.getPtr + offset));
+		}
+
+		template<typename T2, typename vector>
+		vectorIterator<T2, vector> operator-(typename vectorIterator<T2, vector>::difference_type offset, const vectorIterator<T2, vector> &rhs) 
+		{
+			return (vectorIterator<T2, vector>(rhs.getPtr - offset));
+		}
+
+		template<typename T1, typename vector>
+		vectorIterator<T1, vector> operator-(const vectorIterator<T1, vector> &lhs, typename vectorIterator<T1, vector>::difference_type offset) 
+		{
+			return (vectorIterator<T1, vector>(lhs.getPtr - offset));
+		}
 
 #endif

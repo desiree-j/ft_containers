@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:56:26 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/11 09:04:47 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/12 14:34:05 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,5 +221,10 @@ namespace ft
         Node *parent() { return(this->_parent);}
 	};
 
+    template<typename, typename>
+	struct are_same : public false_type {};
+	
+	template<typename T>
+	struct are_same<T, T> : public true_type {};
 }
 #endif
