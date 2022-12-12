@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 12:29:11 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/09 15:46:40 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/12 14:11:00 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,6 +263,7 @@ int main(void)
 		std::cout << "it2 == it3: " << std::boolalpha << comp << std::endl;
 		comp = it2 != it3;
 		std::cout << "it2 != it3: " << std::boolalpha << comp << std::endl;
+		std::cout << it2 - it3 << std::endl;
 
 		std::cout << C_BLUE << "const iterator" << C_DEF << std::endl;
 		const ft::vector<int> cvec(10, 5);
@@ -297,6 +298,32 @@ int main(void)
 	vct.insert(vct.end(), lst.rbegin(), lst.rend());
 	//printSize(vct);
 	print_vector(vct);
+	vct.insert(vct.end(), lst.rbegin(), lst.rend());
+	ft::vector<int>::iterator it = vct.begin(), ite = vct.end();
+	ft::vector<int> vct_range(it, --(--ite));
+	it = vct.begin();
+	for (int i = 0; it != ite; ++it)
+		*it = ++i * 5;
+
+	it = vct.begin();
+	ft::vector<int> vct_copy(vct);
+	for (int i = 0; it != ite; ++it)
+		*it = ++i * 7;
+	vct = vct_copy;
+	vct_copy = vct_range;
+	vct_range.clear();
+	ft::vector<std::string> vcts(10);
+
+	for (unsigned long int i = 0; i < vcts.size(); ++i)
+		vcts[i] = std::string((vct.size() - i), i + 65);
 	return (0);
 	}
+}
+
+void	checkErase(ft::vector<std::string> const &vct,
+					ft::vector<std::string>::const_iterator const &it)
+{
+	static int i = 0;
+	std::cout << "[" << i++ << "] " << "erase: " << it - vct.begin() << std::endl;
+	//printSize(vct);
 }

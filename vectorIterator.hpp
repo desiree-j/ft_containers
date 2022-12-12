@@ -81,7 +81,7 @@
 			return (*(this->_ptr));
 		}
 		//& increment, decrement
-		vectorIterator operator++()
+		vectorIterator &operator++()
 		{
 			this->_ptr++;
 			return (*this);
@@ -92,7 +92,7 @@
 			this->_ptr++;
 			return (tmp);
 		}
-		vectorIterator operator--()
+		vectorIterator &operator--()
 		{
 			this->_ptr--;
 			return (*this);
@@ -114,6 +114,10 @@
 		vectorIterator operator-(difference_type n)
 		{
 			return (this->_ptr - n);
+		}
+		difference_type operator-(const vectorIterator& it)
+		{
+			return (this->_ptr - it._ptr);
 		}
 		vectorIterator operator-=(difference_type n)
 		{
@@ -199,7 +203,7 @@
 			return (*tmp);
 		}
 		//& increment, decrement
-		const_vectorIterator operator++()
+		const_vectorIterator &operator++()
 		{
 			this->_ptr++;
 			return (*this);
@@ -210,7 +214,7 @@
 			this->_ptr++;
 			return (tmp);
 		}
-		const_vectorIterator operator--()
+		const_vectorIterator &operator--()
 		{
 			this->_ptr--;
 			return (*this);
@@ -232,6 +236,10 @@
 		const_vectorIterator operator-(difference_type n)
 		{
 			return (this->_ptr - n);
+		}
+		difference_type operator-(const const_vectorIterator& it)
+		{
+			return (this->_ptr - it._ptr);
 		}
 		const_vectorIterator operator-=(difference_type n)
 		{

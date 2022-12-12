@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/09 15:38:56 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/12 14:01:20 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ namespace ft
 		{
 			for (size_type i = 0; i < this->_size; i++)
 			{
-				this->_alloc.destroy(this->_array[i]);
+				this->_alloc.destroy(&this->_array[i]);
 			}
 			this->_size = 0;
 		}
@@ -321,7 +321,7 @@ namespace ft
 		template <class InputIterator>    
 		void insert (iterator position, InputIterator first, InputIterator last, typename enable_if<!is_integral<InputIterator>::value>::type* = 0)
 		{
-			if (last <= first)
+			if (last == first)
 				return;
 			InputIterator tmp = first;
 			size_type n = 0;
