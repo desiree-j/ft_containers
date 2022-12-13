@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/13 14:01:01 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/13 18:00:32 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,19 +109,19 @@ namespace ft
 		}
 		reverse_iterator rbegin()
 		{
-			return (reverse_iterator(&this->_array[this->_size - 1]));
+			return (reverse_iterator(iterator(&this->_array[this->_size])));
 		}
 		const_reverse_iterator rbegin() const
 		{
-			return (const_reverse_iterator(&this->_array[this->_size - 1]));
+			return (const_reverse_iterator(const_iterator(&this->_array[this->_size])));
 		}
 		reverse_iterator rend()
 		{
-			return (reverse_iterator(&this->_array[- 1]));
+			return (reverse_iterator(iterator(&this->_array[0])));
 		}
 		const_reverse_iterator rend() const
 		{
-			return (const_reverse_iterator(&this->_array[- 1]));
+			return (const_reverse_iterator(const_iterator(&this->_array[0])));
 		}
 
 		//& modifiers
@@ -467,7 +467,7 @@ namespace ft
 	template <class T, class Alloc>  
 	bool operator<  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 	{
-		return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), lhs.end()));
+		return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
 	}
 	template <class T, class Alloc>  
 	bool operator<= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)

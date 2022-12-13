@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:53:38 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/13 13:51:37 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/13 18:18:48 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,56 +87,91 @@ namespace ft
 			}
 			reverse_iterator operator+(difference_type n)
 			{
-				return (this->_it - n);
+				this->_it - n;
+				return (*this);
 			}
 			reverse_iterator operator-(difference_type n)
 			{
-				return (this->_it + n);
+				this->_it + n;
+				return (*this);
+			}
+			difference_type operator-(const reverse_iterator& it) const
+			{
+				return (this->base() - it.base());
+			}
+			difference_type operator+(const reverse_iterator& it) const
+			{
+				return (this->base() + it.base());
 			}
 			reverse_iterator operator-=(difference_type n)
 			{
-				return (this->_it += n);
+				this->_it += n;
+				return (*this);
 			}
 			reverse_iterator operator+=(difference_type n)
 			{
-				return (this->_it -= n);
+				this->_it -= n;
+				return (*this);
 			}
 			
 			protected:
 				iterator_type _it;
 
 	};		
-		template<typename iterator>
-		bool operator==(const reverse_iterator<iterator> &lhs, const reverse_iterator<iterator> &rhs) 
-		{
-			return (lhs.base() == rhs.base());
-		}
-		template<typename iterator>
-		bool operator!=(const reverse_iterator<iterator> &lhs, const reverse_iterator<iterator> &rhs) 
-		{
-			return(!(lhs == rhs));
-		}
-		template<typename iterator>
-		bool operator<(const reverse_iterator<iterator> &lhs, const reverse_iterator<iterator> &rhs) 
-		{
-			return(lhs.base() > rhs.base() );
-		}
-		template<typename iterator>
-		bool operator>(const reverse_iterator<iterator> &lhs, const reverse_iterator<iterator> &rhs) 
-		{
-			return(rhs < lhs);
-		}
-		template<typename iterator>
-		bool operator<=(const reverse_iterator<iterator> &lhs, const reverse_iterator<iterator> &rhs) 
-		{
-			return(!(lhs > rhs));
-		}
-		template<typename iterator>
-		bool operator>=(const reverse_iterator<iterator> &lhs, const reverse_iterator<iterator> &rhs)  
-		{
-			return(!(lhs < rhs));
-		}
+	template<typename iterator>
+	bool operator==(const reverse_iterator<iterator> &lhs, const reverse_iterator<iterator> &rhs) 
+	{
+		return (lhs.base() == rhs.base());
+	}
+	template<typename iterator>
+	bool operator!=(const reverse_iterator<iterator> &lhs, const reverse_iterator<iterator> &rhs) 
+	{
+		return(!(lhs == rhs));
+	}
+	template<typename iterator>
+	bool operator<(const reverse_iterator<iterator> &lhs, const reverse_iterator<iterator> &rhs) 
+	{
+		return(lhs.base() > rhs.base() );
+	}
+	template<typename iterator>
+	bool operator>(const reverse_iterator<iterator> &lhs, const reverse_iterator<iterator> &rhs) 
+	{
+		return(rhs < lhs);
+	}
+	template<typename iterator>
+	bool operator<=(const reverse_iterator<iterator> &lhs, const reverse_iterator<iterator> &rhs) 
+	{
+		return(!(lhs > rhs));
+	}
+	template<typename iterator>
+	bool operator>=(const reverse_iterator<iterator> &lhs, const reverse_iterator<iterator> &rhs)  
+	{
+		return(!(lhs < rhs));
+	}
+	
+	template<typename iterator>
+	reverse_iterator<iterator> operator+(typename reverse_iterator<iterator>::difference_type offset, const reverse_iterator<iterator> &rhs) 
+	{
+		return (reverse_iterator<iterator>(rhs.base() - offset));
+	}
 
+	template<typename iterator>
+	reverse_iterator<iterator> operator+(const reverse_iterator<iterator> &lhs, typename reverse_iterator<iterator>::difference_type offset) 
+	{
+		return (reverse_iterator<iterator>(lhs.base() - offset));
+	}
+
+	template<typename iterator>
+	reverse_iterator<iterator> operator-(typename reverse_iterator<iterator>::difference_type offset, const reverse_iterator<iterator> &rhs) 
+	{
+		return (reverse_iterator<iterator>(rhs.base() + offset));
+	}
+
+	template<typename iterator>
+	reverse_iterator<iterator> operator-(const reverse_iterator<iterator> &lhs, typename reverse_iterator<iterator>::difference_type offset) 
+	{
+		return (reverse_iterator<iterator>(lhs.base() + offset));
+	}
 }
 
 #endif
