@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 09:23:05 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/11 08:59:22 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/13 13:24:41 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,7 @@ namespace ft
 			this->_root = rhs._root;
 			return (*this);
 		}
-		//& comparison
-		//bool operator==(const mapIterator &rhs) const
-		//{
-		//	if(this->_ptr == rhs._ptr)
-		//		return (true);
-		//	return (false);
-		//}
-		//bool operator!=(const mapIterator &rhs) const
-		//{
-		//	return(!(*this == rhs));
-		//}
+		
 		//& (de)referencing
         pointer operator->() const
 		{
@@ -96,17 +86,17 @@ namespace ft
 		
 		mapIterator &operator--()
 		{
-			if (!this->_ptr && this->_root)
+			if (!this->_ptr)
 			{
 				this->_ptr = this->_root;
 				while (this->_ptr && this->_ptr->_right != NULL)
 					this->_ptr =  this->_ptr->_right;
 				return (*this);
 			}
-			if (this->_ptr->_left != NULL) // geh nach links und dann ganz nach rechts unten
+			if (this->_ptr->_left) // geh nach links und dann ganz nach rechts unten
 			{
 				this->_ptr = this->_ptr->_left;
-				while (this->_ptr->_right != NULL)
+				while (this->_ptr->_right)
 					this->_ptr = this->_ptr->_right;
 			}
 			else
