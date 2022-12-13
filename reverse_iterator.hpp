@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:53:38 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/13 13:37:18 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/13 13:51:37 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ namespace ft
 			{
 				this->_it = rhs._it;
 			}
+			template <class It> 
+			reverse_iterator (const reverse_iterator<It>& other) : _it(other.base()) {}
 			reverse_iterator& operator=(const reverse_iterator& rhs)
 			{
 				this->_it = rhs._it;
