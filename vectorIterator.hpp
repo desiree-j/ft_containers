@@ -32,8 +32,8 @@ namespace ft
 		vectorIterator(pointer ptr) : _ptr(ptr){}
 		~vectorIterator(void){}
 		vectorIterator(const vectorIterator& rhs) : _ptr(rhs._ptr){}
-		template<typename _T>
-		vectorIterator(const vectorIterator<_T, typename ft::enable_if<ft::are_same<_T, typename vector::pointer>::value, vector>::type> &copy) : _ptr(copy._ptr) {}
+		template<typename t, typename vec>
+		vectorIterator(vectorIterator<t, vec> copy) : _ptr(copy.getPtr()){}
 		vectorIterator& operator=(const vectorIterator& rhs)
 		{
 			this->_ptr = rhs._ptr;

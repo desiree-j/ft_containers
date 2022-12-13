@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/12 17:32:03 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/13 14:01:01 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,7 @@ namespace ft
 		typedef ft::reverse_iterator<const_iterator>							const_reverse_iterator;
 
 		public:
-		explicit vector (const allocator_type& alloc = allocator_type()) : _size(0), _capacity(0), _array(NULL), _alloc(alloc)
-		{
-		}
+		explicit vector (const allocator_type& alloc = allocator_type()) : _size(0), _capacity(0), _array(NULL), _alloc(alloc){}
 		explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : _size(n), _capacity (n), _alloc(alloc)
 		{
 			this->_array = this->_alloc.allocate(this->_capacity);
@@ -268,7 +266,7 @@ namespace ft
 			{
 				if (first < last)
 					this->_alloc.destroy(&(*first));
-				this->_alloc.construct(first, first[len]);
+				this->_alloc.construct(&(*first), first[len]);
 			}
 			this->_size -= len;
 			return(tmp);
