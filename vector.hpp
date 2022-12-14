@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/13 18:00:32 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/14 15:00:19 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,15 +185,20 @@ namespace ft
 					this->_alloc.construct(&this->_array[i], *first);
 					first++;
 				}
+				for (size_type i = n; i < this->_size; i++)
+				{
+					this->_alloc.destroy(&(this->_array[i]));
+				}
 			}
-			if (this->_size < n)
-				this->_size = n;
+			this->_size = n;
 			
 		}
 		void assign (size_type n, const value_type& val)
 		{
 			if (n > this->_capacity)
 			{
+				if (this->_capacity == 0)
+					this->_capacity = n;					
 				while (this->_capacity < n)
 				{
 					this->_capacity *=2;
