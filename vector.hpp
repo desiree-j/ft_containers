@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/14 15:00:19 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/14 15:19:47 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -312,9 +312,10 @@ namespace ft
 			}
 			this->_size += n;
 			
-			for (iterator it = this->end() + n; it < (position + n); it--)
+			reverse_iterator end = reverse_iterator(position + n);
+			for (reverse_iterator it = this->rbegin(); it != end; it++)
 			{
-				this->_alloc.construct(&it[1], it[0]);
+				this->_alloc.construct(&(*it), *(it + n));
 			}
 			for (size_type i = 0; i < n; i++)
 			{
@@ -345,6 +346,11 @@ namespace ft
 				position = this->begin() + elem;
 			}
 			this->_size += n;
+			reverse_iterator end = reverse_iterator(position + n);
+			for (reverse_iterator it = this->rbegin(); it != end; it++)
+			{
+				this->_alloc.construct(&(*it), *(it + n));
+			}
 			for (size_type i = 0; i < n; i++)
 			{
 				this->_alloc.construct(&position[i], *first);
