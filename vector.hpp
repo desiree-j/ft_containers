@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/14 15:19:47 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/15 14:32:28 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ namespace ft
 		{
 			this->assign(first, last);
 		}
-		vector (const vector& x) : _size(x._size), _capacity(x._capacity), _alloc(x._alloc)
+		vector (const vector& x) : _size(x._size), _capacity(x._size), _alloc(x._alloc)
 		{
 			this->_array = this->_alloc.allocate(this->_capacity);
 			for (size_type i = 0; i < this->_size; i++)
@@ -418,7 +418,10 @@ namespace ft
 			{
 				if (n > this->_capacity)
 				{
-					realloc(n);
+					if (n < 2 * this->_size)
+						realloc(2 * this->_size);
+					else
+						realloc(n);
 				}
 				for (size_type i = this->_size; i < n; i++)
 				{
