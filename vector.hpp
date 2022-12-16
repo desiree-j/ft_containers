@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/16 09:22:15 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/16 09:51:13 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -356,8 +356,8 @@ namespace ft
 			}
 			for (size_type i = 0; i < n; i++)
 			{
-				this->_alloc.destroy(&position[i]);
 				this->_alloc.construct(&position[i], *first);
+				this->_alloc.destroy(&position[i]);
 				first++;
 			}
 		}
