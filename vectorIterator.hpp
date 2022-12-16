@@ -113,41 +113,6 @@ namespace ft
 
 	//& ----------------- non member comparison -----------------------
 	
-	//template<typename T, typename vector>
-	//bool operator==(const vectorIterator<T, vector> &lhs, const vectorIterator<T, vector> &rhs) 
-	//{
-	//	if(lhs.getPtr() == rhs.getPtr())
-	//		return (true);
-	//	return (false);
-	//}
-	//template<typename T, typename vector>
-	//bool operator!=(const vectorIterator<T, vector> &lhs, const vectorIterator<T, vector> &rhs) 
-	//{
-	//	return(!(lhs == rhs));
-	//}
-	//template<typename T, typename vector>
-	//bool operator<(const vectorIterator<T, vector> &lhs, const vectorIterator<T, vector> &rhs) 
-	//{
-	//	if (lhs.getPtr() < rhs.getPtr())
-	//		return (true);
-	//	return(false);
-	//}
-	//template<typename T, typename vector>
-	//bool operator>(const vectorIterator<T, vector> &lhs, const vectorIterator<T, vector> &rhs) 
-	//{
-	//	return(rhs < lhs);
-	//}
-	//template<typename T, typename vector>
-	//bool operator<=(const vectorIterator<T, vector> &lhs, const vectorIterator<T, vector> &rhs) 
-	//{
-	//	return(!(lhs > rhs));
-	//}
-	//template<typename T, typename vector>
-	//bool operator>=(const vectorIterator<T, vector> &lhs, const vectorIterator<T, vector> &rhs) 
-	//{
-	//	return(!(lhs < rhs));
-	//}
-
 
 	template<typename T,typename T2, typename vector, typename vector2>
 	bool operator==(const vectorIterator<T, vector> &lhs, const vectorIterator<T2, vector2> &rhs) 

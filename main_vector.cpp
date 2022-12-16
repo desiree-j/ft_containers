@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 12:29:11 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/15 14:33:14 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/16 07:41:37 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <string>
 #include <deque>
 #include "incl.hpp"
-#if 0  //CREATE A REAL STL EXAMPLE
+#if 1  //CREATE A REAL STL EXAMPLE
 	#include <vector>
 	namespace ft = std; 
 #else
@@ -127,46 +127,51 @@ int main(void)
 	//	print_vector(vec, "vec");
 	//	std::cout << "---------------------------------------------------" << std::endl;
 	//}
-	//{	//& modifiers
-	//	std::cout << C_MAGENTA << "Test modifier functions" << C_DEF << std::endl;
-	//	ft::vector<int> vec(1, 1);	
-	//	std::cout << C_BLUE << "before erase" << C_DEF << std::endl;
-	//	for(int i = 0; i < 15; i++)
-	//	{
-	//		vec.push_back(i);
-	//	}
-	//	print_vector(vec, "vec");
-	//	ft::vector<int>::iterator it = vec.begin();
-	//	it = vec.insert(it, 42);
-	//	std::cout << "new element = " << *it << std::endl;
-	//	std::cout << C_BLUE << "after erase" << C_DEF << std::endl;
-	//	print_vector(vec, "vec");
+	{	//& modifiers
+		std::cout << C_MAGENTA << "Test modifier functions" << C_DEF << std::endl;
+		ft::vector<int> vec(1, 1);	
+		std::cout << C_BLUE << "before erase" << C_DEF << std::endl;
+		for(int i = 0; i < 15; i++)
+		{
+			vec.push_back(i);
+		}
+		print_vector(vec, "vec");
+		ft::vector<int>::iterator it = vec.begin();
+		it = vec.insert(it, 42);
+		std::cout << "new element = " << *it << std::endl;
+		std::cout << C_BLUE << "after erase" << C_DEF << std::endl;
+		print_vector(vec, "vec");
 		
-	//	ft::vector<int> vec2(7, 1);	
-	//	std::cout << C_BLUE << "swap vec and vec2" << C_DEF << std::endl;
-	//	std::cout << C_BLUE << "before" << C_DEF << std::endl;
-	//	print_vector(vec, "vec");
-	//	std::cout << "size "<<vec.size() << ", capacity " << vec.capacity() << std::endl;
-	//	print_vector(vec2, "vec2");
-	//	std::cout << "size "<<vec2.size() << ", capacity " << vec2.capacity() << std::endl;
-	//	vec.swap(vec2);
-	//	std::cout << C_BLUE << "after" << C_DEF << std::endl;
-	//	print_vector(vec, "vec");
-	//	std::cout << "size "<<vec.size() << ", capacity " << vec.capacity() << std::endl;
-	//	print_vector(vec2, "vec2");
-	//	std::cout << "size "<<vec2.size() << ", capacity " << vec2.capacity() << std::endl;
-		
-	//	std::cout << C_BLUE << "assign size 25, value 5" << C_DEF << std::endl;
-	//	print_vector(vec2, "vec2");
-	//	vec.assign(25, 5);
-	//	print_vector(vec, "vec");
-	//	std::cout << C_BLUE << "assign range" << C_DEF << std::endl;
-	//	it = vec.begin();
-	//	ft::vector<int>::iterator it2 = vec.end();
-	//	vec2.assign(it, it2);
-	//	print_vector(vec2, "vec2");
-	//	std::cout << "---------------------------------------------------" << std::endl;
-	//}
+		ft::vector<int> vec2(7, 1);	
+		std::cout << C_BLUE << "swap vec and vec2" << C_DEF << std::endl;
+		std::cout << C_BLUE << "before" << C_DEF << std::endl;
+		print_vector(vec, "vec");
+		std::cout << "size "<<vec.size() << ", capacity " << vec.capacity() << std::endl;
+		print_vector(vec2, "vec2");
+		std::cout << "size "<<vec2.size() << ", capacity " << vec2.capacity() << std::endl;
+		vec.swap(vec2);
+		std::cout << C_BLUE << "after" << C_DEF << std::endl;
+		print_vector(vec, "vec");
+		std::cout << "size "<<vec.size() << ", capacity " << vec.capacity() << std::endl;
+		print_vector(vec2, "vec2");
+		std::cout << "size "<<vec2.size() << ", capacity " << vec2.capacity() << std::endl;
+		swap(vec, vec2);
+		std::cout << C_BLUE << "after" << C_DEF << std::endl;
+		print_vector(vec, "vec");
+		std::cout << "size "<<vec.size() << ", capacity " << vec.capacity() << std::endl;
+		print_vector(vec2, "vec2");
+		std::cout << "size "<<vec2.size() << ", capacity " << vec2.capacity() << std::endl;
+		std::cout << C_BLUE << "assign size 25, value 5" << C_DEF << std::endl;
+		print_vector(vec2, "vec2");
+		vec.assign(25, 5);
+		print_vector(vec, "vec");
+		std::cout << C_BLUE << "assign range" << C_DEF << std::endl;
+		it = vec.begin();
+		ft::vector<int>::iterator it2 = vec.end();
+		vec2.assign(it, it2);
+		print_vector(vec2, "vec2");
+		std::cout << "---------------------------------------------------" << std::endl;
+	}
 
 	//{	//& element access
 	//	std::cout << std::endl << C_MAGENTA << "Test element access functions" << C_DEF << std::endl;

@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/15 14:32:28 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/16 09:22:15 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,12 +197,14 @@ namespace ft
 		{
 			if (n > this->_capacity)
 			{
-				if (this->_capacity == 0)
-					this->_capacity = n;					
-				while (this->_capacity < n)
-				{
-					this->_capacity *=2;
-				}
+				if (this->_capacity < n)
+					this->_capacity = n;
+				//if (this->_capacity == 0)
+				//	this->_capacity = n;					
+				//while (this->_capacity < n)
+				//{
+				//	this->_capacity *=2;
+				//}
 				T* temp = this->_alloc.allocate(this->_capacity);
 				for (size_type i = 0; i < this->_size; i++)
 				{
@@ -349,10 +351,12 @@ namespace ft
 			reverse_iterator end = reverse_iterator(position + n);
 			for (reverse_iterator it = this->rbegin(); it != end; it++)
 			{
+				this->_alloc.destroy(&(*it));
 				this->_alloc.construct(&(*it), *(it + n));
 			}
 			for (size_type i = 0; i < n; i++)
 			{
+				this->_alloc.destroy(&position[i]);
 				this->_alloc.construct(&position[i], *first);
 				first++;
 			}
@@ -460,6 +464,7 @@ namespace ft
 			for (size_type i = 0; i < this->_size; i++)
 			{
 				this->_alloc.construct(&temp[i], this->_array[i]);
+				this->_alloc.destroy(&this->_array[i]);
 			}
 			if (this->_capacity > 0)
 				this->_alloc.deallocate(this->_array, this->_capacity);
@@ -471,6 +476,10 @@ namespace ft
 	template <class T, class Alloc>  
 	bool operator== (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 	{
+		if (lhs.size() != rhs.size())
+			return (false);
+		else if (lhs.size() == 0 && rhs.size() == 0)
+			return (true);
 		return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()) && ft::equal(rhs.begin(), rhs.end(), lhs.begin()));
 	}
 	template <class T, class Alloc>  
