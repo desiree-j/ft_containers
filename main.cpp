@@ -25,7 +25,7 @@ struct Buffer
 };
 
 
-#define COUNT (MAX_RAM / (int)sizeof(Buffer))
+#define COUNT 40000
 
 template<typename T>
 class MutantStack : public ft::stack<T>
@@ -49,11 +49,6 @@ public:
 
 int main(int argc, char** argv) 
 {
-	long long		time;
-	struct timeval	t;
-
-	gettimeofday(&t, NULL);
-	time = (t.tv_sec * 1000000 + t.tv_usec ) / 1000;
 	if (argc != 2)
 	{
 		std::cerr << "Usage: ./test seed" << std::endl;
@@ -121,8 +116,5 @@ int main(int argc, char** argv)
 		std::cout << *it;
 	}
 	std::cout << std::endl;
-	gettimeofday(&t, NULL);
-	time = (t.tv_sec * 1000000 + t.tv_usec - time) / 1000;
-	std::cout << time << std::endl;
 	return (0);
 }

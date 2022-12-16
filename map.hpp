@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:56:54 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/16 09:39:55 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/16 15:38:50 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ namespace ft
 		typedef mapIterator<const Node *,const value_type>			const_iterator; 
 		typedef ft::reverse_iterator<iterator>						reverse_iterator;
 		typedef ft::reverse_iterator<const_iterator>				const_reverse_iterator;
+		typedef typename allocator_type::template rebind<Node>::other	node_alloc;
 
 		class value_compare : std::binary_function<value_type,value_type,bool>
 		{
@@ -150,7 +151,8 @@ namespace ft
 		}
 		void erase (iterator position)
 		{
-			std::allocator<Node> tmp;
+			node_alloc tmp;
+			//std::allocator<Node> tmp;
 			Node *pos = position.getNode();
 			if (pos->_left == NULL && pos->_right == NULL) //if position is leaf
 			{
@@ -233,7 +235,7 @@ namespace ft
 				node->_data = this->_alloc.allocate(1);
 				this->_alloc.construct(node->_data, val);
 				this->_size++;
-				it = this->find(val.first);
+				it = iterator(node, this->_root);
 				return(ft::make_pair(it, true));
 			}
 			return(ft::make_pair(it, true));
@@ -294,8 +296,10 @@ namespace ft
 		}
 		const_iterator find (const key_type& k) const
 		{
-			if (this->count(k) == 1)
-				return (this->lower_bound(k));
+			const_iterator it = this->lower_bound(k);
+			const_iterator it2 = this->upper_bound(k);
+			if (it != it2)
+				return (it);
 			return (this->end());
 		}
 		mapped_type& operator[] (const key_type& k)
@@ -322,7 +326,8 @@ namespace ft
 		}
 		size_type max_size() const
 		{
-			std::allocator<Node> tmp;
+			node_alloc tmp;
+			//std::allocator<Node> tmp;
 			return (tmp.max_size());
 		}
 		size_type size() const
@@ -393,8 +398,8 @@ namespace ft
 
 		Node *find_next(Node *start, const key_type &k)
 		{
-			std::allocator<Node> tmp;
-			//std::allocator<Node*> p;
+			node_alloc tmp;
+			//std::allocator<Node> tmp;
 			if (start == NULL) //empty map
 			{
 				this->_root = tmp.allocate(1);
