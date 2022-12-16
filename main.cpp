@@ -2,6 +2,7 @@
 #include <string>
 #include <deque>
 #include "incl.hpp"
+# include <sys/time.h>
 #if 0 //CREATE A REAL STL EXAMPLE
 	#include <map>
 	#include <stack>
@@ -15,7 +16,7 @@
 
 #include <stdlib.h>
 
-#define MAX_RAM 4294967296
+#define MAX_RAM 4294967295
 #define BUFFER_SIZE 4096
 struct Buffer
 {
@@ -48,6 +49,11 @@ public:
 
 int main(int argc, char** argv) 
 {
+	long long		time;
+	struct timeval	t;
+
+	gettimeofday(&t, NULL);
+	time = (t.tv_sec * 1000000 + t.tv_usec ) / 1000;
 	if (argc != 2)
 	{
 		std::cerr << "Usage: ./test seed" << std::endl;
@@ -115,5 +121,8 @@ int main(int argc, char** argv)
 		std::cout << *it;
 	}
 	std::cout << std::endl;
+	gettimeofday(&t, NULL);
+	time = (t.tv_sec * 1000000 + t.tv_usec - time) / 1000;
+	std::cout << time << std::endl;
 	return (0);
 }

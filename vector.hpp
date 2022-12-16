@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/16 09:51:13 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/16 13:20:40 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,13 +256,13 @@ namespace ft
 		}
 		iterator erase (iterator position)
 		{
-			this->_alloc.destroy(&(*position));
 			iterator tmp = position;
 			for (; position < (this->end() - 1); position++)
 			{
-				this->_alloc.construct(&(*(position)), position[1]);
+				this->_alloc.destroy(&(*position));
+				this->_alloc.construct(&(*position), position[1]);
 			}
-			this->_size--;
+			this->_size -= 1;
 			return(tmp);
 		}
 		iterator erase (iterator first, iterator last)
@@ -271,8 +271,7 @@ namespace ft
 			iterator tmp = first;
 			for (; first < (this->end() - len); first++)
 			{
-				if (first < last)
-					this->_alloc.destroy(&(*first));
+				this->_alloc.destroy(&(*first));
 				this->_alloc.construct(&(*first), first[len]);
 			}
 			this->_size -= len;
