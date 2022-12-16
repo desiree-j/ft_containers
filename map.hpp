@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:56:54 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/13 13:42:12 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/16 09:39:55 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -465,6 +465,14 @@ namespace ft
 	template <class Key, class T, class Compare, class Alloc>  
 	bool operator<  ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs )
 	{
+		if(lhs.size() == 0)
+		{
+			if(rhs.size() == 0)
+				return (false);
+			return (true);
+		}
+		else if (rhs.size() == 0)
+			return (false);
 		typename map<Key,T,Compare,Alloc>::const_iterator first1 = lhs.begin();
 		typename map<Key,T,Compare,Alloc>::const_iterator first2 = rhs.begin();
 		typename map<Key,T,Compare,Alloc>::const_iterator last1 = lhs.end();

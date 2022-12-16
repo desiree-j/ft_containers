@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:34 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/07 15:53:28 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/16 09:31:30 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ namespace ft
 		public:
 		explicit stack (const container_type& ctnr = container_type()) : c(ctnr) {}
 		stack( const stack& other ) : c(other.c) {}
+		~stack(void){}
 		bool empty() const
 		{
 			return (c.empty());
