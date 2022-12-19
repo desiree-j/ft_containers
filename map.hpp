@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:56:54 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/16 15:38:50 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/19 14:05:29 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,6 @@ namespace ft
 		void erase (iterator position)
 		{
 			node_alloc tmp;
-			//std::allocator<Node> tmp;
 			Node *pos = position.getNode();
 			if (pos->_left == NULL && pos->_right == NULL) //if position is leaf
 			{
@@ -327,7 +326,6 @@ namespace ft
 		size_type max_size() const
 		{
 			node_alloc tmp;
-			//std::allocator<Node> tmp;
 			return (tmp.max_size());
 		}
 		size_type size() const
@@ -399,7 +397,6 @@ namespace ft
 		Node *find_next(Node *start, const key_type &k)
 		{
 			node_alloc tmp;
-			//std::allocator<Node> tmp;
 			if (start == NULL) //empty map
 			{
 				this->_root = tmp.allocate(1);
@@ -484,7 +481,7 @@ namespace ft
 		typename map<Key,T,Compare,Alloc>::const_iterator last2 = rhs.end();
 		while (first1!=last1)
 		{
-			if (first2==last2 || (first2->first < first1->first || first2->second < first1->second)) 
+			if (first2==last2 || (first2->first < first1->first) || (first1->first == first2->first && first1->second > first2->second)) 
 				return false;
 			else if (first1->first < first2->first || (first1->first == first2->first && first1->second < first2->second)) 
 				return true;
@@ -499,7 +496,7 @@ namespace ft
 		return (!(lhs > rhs));
 	}
 	template <class Key, class T, class Compare, class Alloc>  
-	bool operator>  ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs )
+	bool operator> ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs )
 	{
 		return (rhs < lhs);
 	}

@@ -25,7 +25,7 @@ struct Buffer
 };
 
 
-#define COUNT 40000
+#define COUNT 10000
 
 template<typename T>
 class MutantStack : public ft::stack<T>

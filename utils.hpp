@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:56:26 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/13 18:01:32 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/19 13:38:06 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,6 @@ namespace ft
         static const T value = v;
         typedef T value_type;
     };
-
-    // template <class T, T v> 
-    // const T integral_constant<T, v>::value;
-
     typedef integral_constant<bool, true>  true_type;
     typedef integral_constant<bool, false> false_type;
 
@@ -160,8 +156,6 @@ namespace ft
         {
             this->~pair();
             new(this) pair(pr.first, pr.second);
-            //this->first = first_type(pr.first);
-            //this->second = second_type(pr.second);
             return (*this);            
         }
         first_type  first;

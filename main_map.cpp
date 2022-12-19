@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 16:56:15 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/09 15:18:47 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/19 14:06:23 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,21 +42,14 @@ void	print_map(ft::map<T1, T2> m, std::string name)
 template <typename MAP, typename U, typename V>
 void	ft_insert(MAP &mp, U param, V param2)
 {
-	//iterator tmp;
-
-	//std::cout << "\t-- [" << iter++ << "] --" << std::endl;
 	mp.insert(param, param2);
-	//std::cout << "insert return: " << printPair(tmp);
-	//printSize(mp);
 	print_map(mp, "mp");
 }
-static unsigned int i = 0;
 
 void	ft_comp(const ft::map<int, std::string> &mp, const ft::map<int, std::string>::const_iterator &it1, const ft::map<int, std::string>::const_iterator &it2)
 {
 	bool res[2];
 
-	std::cout << "\t-- [" << ++i << "] --" << std::endl;
 	res[0] = mp.key_comp()(it1->first, it2->first);
 	res[1] = mp.value_comp()(*it1, *it2);
 	std::cout << "with [" << it1->first << " and " << it2->first << "]: ";
@@ -126,8 +119,6 @@ int main (void)
 		std::cout << C_BLUE << "insert range " << C_DEF << std::endl;
 		it = m2.end();
 		std::cout << (--(--it))->first << std::endl;
-		//--it;
-		//--it;
 		std::cout << "key: " << it->first << " | value: " << it->second<< std::endl;
 		m.insert(m2.begin(), it);
 		print_map(m, "m");
@@ -224,7 +215,6 @@ int main (void)
 				ft_comp(mp2, it1, it2);
 
 		
-	//printSize(mp);
 	}
 
 }

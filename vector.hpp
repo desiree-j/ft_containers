@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 06:57:50 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/16 13:20:40 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/19 13:50:20 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,12 +199,6 @@ namespace ft
 			{
 				if (this->_capacity < n)
 					this->_capacity = n;
-				//if (this->_capacity == 0)
-				//	this->_capacity = n;					
-				//while (this->_capacity < n)
-				//{
-				//	this->_capacity *=2;
-				//}
 				T* temp = this->_alloc.allocate(this->_capacity);
 				for (size_type i = 0; i < this->_size; i++)
 				{

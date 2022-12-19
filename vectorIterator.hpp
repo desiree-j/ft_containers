@@ -172,5 +172,17 @@ namespace ft
 	{
 		return (vectorIterator<T1, vector>(lhs.getPtr() - offset));
 	}
+
+	template<typename T,typename T2, typename vector, typename vector2>
+	typename vectorIterator<T, vector>::difference_type operator-(const vectorIterator<T, vector> &lhs, const vectorIterator<T2, vector2> &rhs) 
+	{
+		return (lhs.getPtr() - rhs.getPtr());
+	}
+	template<typename T,typename T2, typename vector, typename vector2>
+	typename vectorIterator<T, vector>::difference_type operator+(const vectorIterator<T, vector> &lhs, const vectorIterator<T2, vector2> &rhs) 
+	{
+		return (lhs.getPtr() + rhs.getPtr());
+	}
+
 }
 #endif

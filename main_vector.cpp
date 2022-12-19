@@ -6,7 +6,7 @@
 /*   By: djedasch <djedasch@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 12:29:11 by djedasch          #+#    #+#             */
-/*   Updated: 2022/12/16 13:03:24 by djedasch         ###   ########.fr       */
+/*   Updated: 2022/12/19 13:35:41 by djedasch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <string>
 #include <deque>
 #include "incl.hpp"
-#if 1  //CREATE A REAL STL EXAMPLE
+#if 0  //CREATE A REAL STL EXAMPLE
 	#include <vector>
 	namespace ft = std; 
 #else
@@ -239,7 +239,7 @@ int main(void)
 		}
 		std::cout << std::endl;
 		ft::vector<int>::iterator it2 = vec.begin();
-		ft::vector<int>::iterator it3 = vec.begin();
+		ft::vector<int>::const_iterator it3 = vec.begin();
 		std::cout << "*it2: "<<*it2 << std::endl;
 		std::cout << "*it2++: "<< *(it2++) << std::endl; 
 		std::cout << "*it2: "<<*it2 << std::endl;
@@ -261,7 +261,7 @@ int main(void)
 		std::cout << "it2 = 1 + it2; "<< *it2 << std::endl;
 		it2 -= 2;
 		std::cout << "it2 -= 2; "<<*it2 << std::endl;
-		it2 = it3;
+		it2 = vec.begin() +1 ;
 		std::cout <<"it2 + 2: "<< *(it2 + 2) << std::endl;
 		std::cout << "it2:"<< *it2 << std::endl;
 		std::cout << "*it2 = " << *it2 << ", *it3 = " << *it3 <<std::endl;
@@ -288,11 +288,6 @@ int main(void)
 			//*cit+=2;
 		}
 		std::cout << std::endl;
-		for (ft::vector<int>::const_iterator cit = cvec.begin(); cit != cvec.end(); cit++)
-		{
-			std::cout << *cit << " ";
-		}
-		std::cout << std::endl;
 	}
 	{//& tester
 	std::list<int> lst;
@@ -307,11 +302,9 @@ int main(void)
 	for (int i = 1; lst_it != lst.end(); ++i)
 		*lst_it++ = i * 5;
 	vct.assign(lst.begin(), lst.end());
-	//printSize(vct);
 	print_vector(vct, "vct");
 
 	vct.insert(vct.end(), lst.rbegin(), lst.rend());
-	//printSize(vct);
 	print_vector(vct, "vct");
 	vct.insert(vct.end(), lst.rbegin(), lst.rend());
 	ft::vector<int>::iterator it = vct.begin(), ite = vct.end();
